@@ -45,6 +45,9 @@ class DatabaseService {
     // get users(): Collection<User> {
     //     return this.db.collection(process.env.DB_USERS_COLLECTION as string)
     // }
+    get users(): Collection {
+        return this.db.collection(process.env.DB_USERS_COLLECTION as string)
+    }
 
     async close() {
         await this.client.close()
