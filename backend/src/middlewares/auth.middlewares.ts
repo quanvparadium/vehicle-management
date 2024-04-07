@@ -14,17 +14,18 @@ export const loginValidator = validate(
                 options: async (value, { req }) => {
                     console.log('Value', value)
                     console.log('Password:', req.body.password)
-                    const result = await databaseService.users.findOne({
+                    const user = await databaseService.users.findOne({
                         username: value,
                         password: req.body?.password || ''
                     })
-                    if (result === null) {
+                    if (user === null) {
                         throw new ErrorWithStatus({
                             message: 'Tài khoản không tồn tại trong cơ sở dữ liệu',
                             status: HTTPSTATUS.BAD_REQUEST
                         })
                     }
                     console.log('Đăng nhập thành công')
+                    req.user = user
                     return true
                 }
             }
