@@ -17,7 +17,7 @@ databaseService.connect()
 app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use(cors())
-
+console.log('OK')
 // Router
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)
