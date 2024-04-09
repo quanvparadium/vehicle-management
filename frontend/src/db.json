@@ -1,0 +1,31 @@
+{
+  "login": [
+    {
+      "id": "1",
+      "username": "Gia Nguyen",
+      "password": "1234"
+    },
+    {
+      "id": "2",
+      "username": "Nam",
+      "password": "2345"
+    },
+    {
+      "id": "86f5",
+      "username": "Luan",
+      "password": "1412"
+    }
+  ],
+
+  "driver": [
+
+  ],
+
+  "vehicle": [
+
+  ],
+
+  "trip": [
+    
+  ]
+}

@@ -1,0 +1,33 @@
+.Link {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    font-size: 20;
+}
+
+.Navigation {
+    height: 60px;
+    background-color: #3596b5;
+    position: fixed;
+    /*position*/
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    /*position*/
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.block {
+    padding-left: 0px;
+    margin: auto 15px;
+    
+}
+
+.item {
+    color: white;
+    list-style: none;
+    margin: 0 8px;
+    display: inline-block;
+}
