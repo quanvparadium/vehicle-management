@@ -5,13 +5,13 @@
     border: 5px solid black;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
     margin: auto;
     margin-top: 50px;
 }
 
-input[type=text] {
+.inputText {
     width: 90%;
     padding: 20px;
     margin: auto;
@@ -21,21 +21,19 @@ input[type=text] {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+.inputSubmit {
     margin-top: 50px;
     width: 90%;
     padding: 20px;
     font-size: 20px;
 }
 
-input[type=submit]:hover {
+.inputSubmit:hover {
     background-color: #204b57;
 }
 
-label {
+.lableSt {
     margin: 24px;
     margin-bottom: 10px;
     font-weight: bold;
 }
-
-

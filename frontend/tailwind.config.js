@@ -6,6 +6,7 @@ module.exports = {
             colors: {
                 custom: {
                     logo: "#3563e9", // blue
+                    hoverLogo: "#2053e8", //hover blue
                     border: "#c3d4e9", // navbar border
                 },
                 bgHome: "#f6f7f9", // light-gray

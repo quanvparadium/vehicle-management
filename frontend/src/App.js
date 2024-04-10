@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes } from "./routes";
+import { publicRoutes } from "./routes/Route";
 import DefaultLayout from "./Layout/DefaultLayout";
 
 function App() {

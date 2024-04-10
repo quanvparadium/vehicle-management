@@ -1,0 +1,5 @@
+.active {
+    /* bg-gray-900 text-white */
+    background-color: #212121 !important;
+    color: white !important;
+}
