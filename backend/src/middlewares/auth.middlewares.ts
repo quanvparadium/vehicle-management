@@ -4,6 +4,7 @@ import { USERS_MESSAGES } from '~/constants/messages'
 import databaseService from '~/services/database.service'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTPSTATUS from '~/constants/httpStatus'
+import { verifyToken } from '~/utils/jwt'
 
 export const loginValidator = validate(
     checkSchema({
@@ -50,3 +51,36 @@ export const loginValidator = validate(
 //
 //     })
 // )
+
+export const accessTokenValidator = validate(
+    checkSchema(
+        {
+            Authorization: {
+                notEmpty: {
+                    errorMessage: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
+                },
+                custom: {
+                    options: async (value, { req }) => {
+                        // const access_token = value.replace('Bearer ', '')
+                        const access_token = (value || '').split(' ')[1]
+                        // console.log(value)
+                        if (!access_token) {
+                            throw new ErrorWithStatus({
+                                message: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED,
+                                status: HTTPSTATUS.UNAUTHORIZED
+                            })
+                        }
+                        const decoded_authorization = await verifyToken({
+                            token: access_token,
+                            secretOrPublicKey: process.env.JWT_SECRET_ACCESS_TOKEN as string
+                        })
+                        req.decoded_authorization = decoded_authorization
+                        return true
+                    }
+                }
+            }
+        },
+        ['headers']
+    )
+)
+
