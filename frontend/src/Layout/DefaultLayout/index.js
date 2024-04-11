@@ -7,7 +7,7 @@ function DefaultLayout({ children }) {
             <Navigation />
             <div id="container">
                 <div className="mx-auto max-w-[1440px] px-2 sm:px-6 lg:px-8 bg-white">
-                    <div className="relative flexitems-center justify-between ">
+                    <div className="relative flex items-center justify-between ">
                         <div id="content">{children}</div>
                     </div>
                 </div>
