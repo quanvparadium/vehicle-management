@@ -94,7 +94,6 @@ function Trip() {
             ...prev,
             ...property,
         }));
-        console.log(trip);
     };
 
     return (
