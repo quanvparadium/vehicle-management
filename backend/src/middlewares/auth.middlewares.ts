@@ -63,7 +63,7 @@ export const accessTokenValidator = validate(
                     options: async (value, { req }) => {
                         // const access_token = value.replace('Bearer ', '')
                         const access_token = (value || '').split(' ')[1]
-                        // console.log(value)
+                        
                         if (!access_token) {
                             throw new ErrorWithStatus({
                                 message: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED,

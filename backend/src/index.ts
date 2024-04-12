@@ -7,6 +7,7 @@ import databaseService from './services/database.service'
 import { defaultErrorHandler } from '~/middlewares/errors.middlewares'
 import dotenv from 'dotenv'
 import driverRouter from './routes/driver.routes'
+import tripRouter from './routes/trip.routes'
 dotenv.config()
 
 const app = express()
@@ -22,6 +23,7 @@ console.log('OK')
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)
 app.use('/drivers', driverRouter)
+app.use('/trip', tripRouter)
 app.use(defaultErrorHandler)
 
 databaseService.close()

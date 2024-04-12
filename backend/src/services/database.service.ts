@@ -1,7 +1,8 @@
 import { MongoClient, ServerApiVersion, Db, Collection } from 'mongodb'
 import User from '~/models/schemas/User.schema'
 import { Driver } from '~/models/schemas/Driver.schema'
-import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import { Trip } from '~/models/schemas/Trip.schema'
+import RefreshToken from '~/models/schemas/RefreshToken.schema' 
 /**
  * Please import SCHEMA in here
  */
@@ -54,6 +55,10 @@ class DatabaseService {
     get drivers(): Collection<Driver> {
         // return this.db.collection(process.env.DB_DRIVERS_COLLECTION as string)
         return this.db.collection('drivers')
+    }
+    
+    get trips(): Collection<Trip> {
+        return this.db.collection('trips')
     }
 
     get refreshTokens(): Collection<RefreshToken> {
