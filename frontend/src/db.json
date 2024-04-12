@@ -3,7 +3,7 @@
     {
       "id": "1",
       "username": "Gia Nguyen",
-      "password": "1234"
+      "password": "1234notfound"
     },
     {
       "id": "2",
@@ -11,21 +11,35 @@
       "password": "2345"
     },
     {
-      "id": "86f5",
+      "id": "3",
       "username": "Luan",
       "password": "1412"
     }
   ],
-
   "driver": [
-
+    {
+      "id": "1asjkbc",
+      "fullname": "Pham Gia Nguyeeneee",
+      "email": "nguyen.phamgia@hcmut.edu.vn",
+      "date_of_birth": "2004-01-02",
+      "identification": "060204",
+      "address": "HCM",
+      "phone_number": "03",
+      "expire_license": "2025-12-02",
+      "experience": "69"
+    },
+    {
+      "id": "jabbff",
+      "fullname": "Quan",
+      "email": "quan@gmail.com",
+      "date_of_birth": "02-03-2020",
+      "identification": "060204",
+      "address": "HCM",
+      "phone_number": "0394",
+      "expire_license": "2025-12",
+      "experience": "0"
+    }
   ],
-
-  "vehicle": [
-
-  ],
-
-  "trip": [
-    
-  ]
+  "vehicle": [],
+  "trip": []
 }

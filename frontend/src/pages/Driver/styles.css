@@ -1,0 +1,108 @@
+.container {
+    margin-top: 100px;
+}
+
+.add, .read {
+    margin: auto;
+    width: 90%;
+    border: 2px solid black;
+    margin-bottom: 70px;
+}
+
+.add {
+    min-height: 300px;
+    background-color: #caf0f8;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    
+}
+
+.read {
+    height: auto;
+    background-color: #074173;
+    color: white;
+    max-height: 570px;
+    overflow: auto;
+}
+
+.addBox {
+    margin: auto;
+}
+
+.addInputText {
+    width: 250px;
+    height: 50px;
+}
+
+.addButton {
+    width: 530px;
+    height: 76px;
+    margin: auto;
+    background-color: #bde0fe;
+    font-weight: bold;
+}
+
+.addButton:hover {
+    background-color: #006d77;
+    color: wheat;
+}
+
+.addSpan {
+    background-image: url("../../assets/images/plus.png");
+    /* background-image: url("../../assets/images/ballpoint_pen.png"); */
+    background-repeat: no-repeat;
+    background-size: contain; /* điều chỉnh kích thước hình ảnh */
+    padding-left: 20px; /* thêm khoảng cách giữa hình ảnh và văn bản */   
+    font-size: large; 
+}
+
+.addBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.list {
+    width: 100%;
+}
+
+.list th, td {
+    border: 1px solid white;
+}
+
+.deleteButton {
+    position: fixed;
+    top: 473px;
+    right: 5px;
+}
+
+@media (min-width: 768px) {
+    .addBox {
+        flex: 0 0 23%; /* Chia phần addBox thành 4 cột */
+    }
+}
+
+@media (min-width: 992px) {
+    .addBox {
+        flex: 0 0 15%; /* Chia phần addBox thành 6 cột */
+    }
+}
+
+.headerTable {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: #7BC9FF;
+    color: black;
+}
+
+.updateInput {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.updateInput:focus {
+    background-color: rgb(126, 209, 207)
+}
