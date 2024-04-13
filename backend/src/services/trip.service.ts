@@ -51,7 +51,7 @@ class TripService {
             }
             else {
                 return {
-                    message: 'Không tìm thấy trip để xóa'
+                    message: 'Không tìm thấy trip'
                 }
             }
         } catch(error) {
@@ -62,7 +62,7 @@ class TripService {
     async getAllTrip(){
         try {
             const trips = await databaseService.trips.find({}).toArray();
-            if (!trips) {
+            if (!trips || trips.length == 0) {
                 return {
                     message: 'Không có chuyến xe nào'
                 }
