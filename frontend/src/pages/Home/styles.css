@@ -1,0 +1,89 @@
+.home_container {
+    width: 100%;
+    height: 677px;
+    /* background-color: red; */
+    margin-top: 60px;
+
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.home_container1 {
+    width: 90%;
+    height: 20%;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.home_container2 {
+    width: 90%;
+    /* background-color: azure; */
+    height: 80%;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.container1_box {
+    width: 23%;
+    height: 100%;
+    background-color: #E3CAA5;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.box_header {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 22px;
+}
+
+.container2_doughnutChart {
+    width: 25%;
+    min-width: 100px;
+    /* background-color: brown; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container2_barChart {
+    flex-basis: 65%;
+    /* background-color: blueviolet; */
+    height: 100%;
+    /* color: #265073bc; */
+}
+
+@media screen and (max-width: 768px) {
+    .container2_doughnutChart {
+        flex-basis: 50%;
+    }
+
+    .container2_barChart {
+        flex-basis: 100%;
+    }
+}
+
+.incomeUp {
+    background-color: rgba(0, 128, 0, 0.423); /* Đặt màu nền là xanh cho khi income tăng */
+    /* background-color: rgb(108, 22, 22); Đặt màu nền là xanh cho khi income tăng */
+    /* Thêm các thuộc tính CSS khác bạn muốn áp dụng */
+}
+
+.incomeDown {
+    background-color: rgb(246, 153, 153); /* Đặt màu nền là đỏ cho khi income giảm */
+    font-weight: 600;
+    font-size: large;
+    /* Thêm các thuộc tính CSS khác bạn muốn áp dụng */
+}

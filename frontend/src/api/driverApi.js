@@ -24,13 +24,6 @@ const driverApi = {
     remove(id) {
         const url = `/driver/${id}`;
         return axiosClient.delete(url);
-    },
-
-    async getNewID() {
-        const url = `/driver`;
-        const temp = await axiosClient.get(url);
-        if (temp.length === 0) return 0;
-        return temp.length;
     }
 }
 

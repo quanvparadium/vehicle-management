@@ -3,7 +3,6 @@ import './styles.css'
 import driverApi from '../../api/driverApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenToSquare, faUserPlus  } from '@fortawesome/free-solid-svg-icons'
-import { renderIntoDocument } from 'react-dom/test-utils';
 
 
 function Driver() {
