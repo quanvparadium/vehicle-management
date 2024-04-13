@@ -1,31 +1,20 @@
 .container {
     margin-top: 100px;
-}
-
-.add, .read {
-    margin: auto;
-    width: 90%;
-    border: 2px solid black;
-    margin-bottom: 70px;
+    background-color: #f6eeeeec;
 }
 
 .add {
     min-height: 300px;
-    background-color: #caf0f8;
+    background-color: rgb(231,183,95);
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    border: 3px solid black;
     /* align-items: center; */
     
 }
 
-.read {
-    height: auto;
-    background-color: #074173;
-    color: white;
-    max-height: 570px;
-    overflow: auto;
-}
+
 
 .addBox {
     margin: auto;
@@ -40,42 +29,63 @@
     width: 530px;
     height: 76px;
     margin: auto;
-    background-color: #bde0fe;
+    background-color: white;
     font-weight: bold;
 }
 
 .addButton:hover {
-    background-color: #006d77;
-    color: wheat;
+    background-color: black;
+    color: white;
 }
 
 .addSpan {
-    background-image: url("../../assets/images/plus.png");
-    /* background-image: url("../../assets/images/ballpoint_pen.png"); */
-    background-repeat: no-repeat;
-    background-size: contain; /* điều chỉnh kích thước hình ảnh */
-    padding-left: 20px; /* thêm khoảng cách giữa hình ảnh và văn bản */   
-    font-size: large; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .addBox {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.list {
+.add, .read {
+    margin: auto;
+    width: 90%;
+    margin-bottom: 70px;
+}
+
+.read{
+    height: auto;
+    background-color: rgb(251,238,202);
+    color: black;
+    max-height: 570px;
+    overflow: auto;
+}
+
+.list{
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;    
 }
 
-.list th, td {
-    border: 1px solid white;
-}
+.list th{
+    position: sticky; 
+    top: 0px;
+    
+    background-color: #B80000;
+    color: white;
+    
+    text-align: center;
+    outline: 0.7px solid black;
+    border: 1.5px solid black;
 
-.deleteButton {
-    position: fixed;
-    top: 473px;
-    right: 5px;
+} 
+
+.list td {
+    border: 1.5px solid black;
 }
 
 @media (min-width: 768px) {
@@ -90,13 +100,6 @@
     }
 }
 
-.headerTable {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    background-color: #7BC9FF;
-    color: black;
-}
 
 .updateInput {
     width: 100%;
@@ -104,5 +107,19 @@
 }
 
 .updateInput:focus {
-    background-color: rgb(126, 209, 207)
+    background-color: rgb(102, 116, 109);
+    color: white;
+}
+
+.message {
+    position: absolute;
+    top: 100%;
+    left: 0; /* Đặt lỗi bắt đầu từ phía trái */
+    color: red; /* Đặt màu chữ là màu đỏ */
+    font-size: small; /* Đặt kích thước chữ nhỏ hơn */
+    font-style: italic;
+}
+
+.errorInput {
+    background-color: rgb(250, 180, 169);
 }

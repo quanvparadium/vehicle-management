@@ -6,14 +6,14 @@
 .formSubmit {
     width: 30%;
     height: 500px;
-    background-color: #197bbd;
+    background-color: rgb(236, 37, 37);
     border: 5px solid black;
     display: flex;
     align-items: space-around;
     justify-content: space-between;
     flex-direction: column;
     margin: auto;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 .box {
     width: 100%;
@@ -42,7 +42,7 @@
 .formButton {
     color: black;
     font-weight: bold;
-    background-color: #90e0ef;
+    background-color: burlywood;
     width: 90%;
     padding: 20px;
     font-size: 20px;
@@ -55,6 +55,7 @@
 }
 
 .error {
-    background-color: #ffe5ec;
-    color: red;
+    background-color: rgb(150, 178, 242);
+    color: black;
+    font-weight: bold;
 }
