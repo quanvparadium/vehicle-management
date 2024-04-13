@@ -1,5 +1,3 @@
-const tripApi = {
-    
-}
+const tripApi = {};
 
 export default tripApi;
