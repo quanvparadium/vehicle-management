@@ -16,9 +16,9 @@ const infomation = [
 ];
 
 const options = [
-    { label: "AVAILABLE" },
-    { label: "IN PROCESS" },
-    { label: "DONE" },
+    { value: "AVAILABLE", label: "AVAILABLE" },
+    { value: "IN PROCESS", label: "IN PROCESS" },
+    { value: "DONE", label: "DONE" },
 ];
 
 export { infomation, options };

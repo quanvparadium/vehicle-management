@@ -16,8 +16,9 @@ function Trip() {
     const [curdate1, setCurdate1] = useState(new Date()); //date of "Departure date"
     const [curdate2, setCurdate2] = useState(new Date()); //date of "End date"
     const [listtrips, setListtrips] = useState([]);
+    const [_id, setID] = useState(); // id of trip
+    // json body
     const [trip, setTrip] = useState({
-        _id: "",
         vehicle_id: "",
         driver_id: "",
         date_of_departure: new Date(),
@@ -37,7 +38,7 @@ function Trip() {
         let property;
         switch (name) {
             case infomation[0].name[0]:
-                property = { _id: value };
+                setID(value);
                 break;
             case infomation[1].name[0]:
                 property = { vehicle_id: value };
@@ -87,9 +88,9 @@ function Trip() {
             return (
                 <DatePicker
                     dateFormat="dd-MM-yyyy"
-                    selected={name == "Departure date" ? curdate1 : curdate2}
+                    selected={name === "Departure date" ? curdate1 : curdate2}
                     onChange={(date) => {
-                        name == "Departure date"
+                        name === "Departure date"
                             ? setCurdate1(date)
                             : setCurdate2(date);
 
@@ -101,7 +102,7 @@ function Trip() {
                     wrapperClassName="w-full"
                 />
             );
-        } else if (name == "Status") {
+        } else if (name === "Status") {
             const style = {
                 control: (provided) => ({
                     ...provided,
@@ -125,10 +126,10 @@ function Trip() {
                     className="h-[30px] text-gray-500"
                     defaultValue={"Select"}
                     isSearchable={true}
-                    name="color"
+                    name="status"
                     options={options}
                     styles={style}
-                    onChange={(event) => updateState(name, event.label)}
+                    onChange={(event) => updateState(name, event.value)}
                 />
             );
         } else
@@ -147,23 +148,31 @@ function Trip() {
         switch (status) {
             case options[0].label:
                 return "bg-status-avai";
-                break;
             case options[1].label:
                 return "bg-status-inpro";
             default:
                 return "bg-status-done";
-                break;
         }
     };
+    // add a trip into data
+    function AddTrip() {
+        async function addE() {
+            try {
+                const res = await TripAPi.add(trip);
+                console.log(res);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        addE();
+    }
 
     useEffect(() => {
         async function test() {
             const temp = await TripAPi.getAll();
             setListtrips(temp.data.trips);
         }
-
         test();
-        console.log(listtrips);
     }, []);
 
     return (
@@ -195,7 +204,10 @@ function Trip() {
                     ))}
                 </div>
                 <div className="flex flex-row justify-center gap-[20px] py-[20px]">
-                    <button className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px] hover:">
+                    <button
+                        className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px] hover:"
+                        onClick={AddTrip}
+                    >
                         Submit
                     </button>
                     <button className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px]">
@@ -209,177 +221,184 @@ function Trip() {
             </p>
 
             <div className="setupWidth w-full grid grid-cols-2 gap-[2%]">
-                {listtrips.map((curtrip) => (
-                    <div
-                        key={curtrip._id}
-                        className="input_right flex flex-col bg-graybg rounded-[10px] gap-[10px]"
-                    >
-                        <div className="flex justify-center py-[15px]">
-                            <div
-                                className={`h-[39px] w-[206px] text-center content-center rounded-[10px] text-[16px] font-bold ${statusBgColor(
-                                    curtrip.status
-                                )}`}
-                            >
-                                {curtrip.status}
+                {listtrips &&
+                    listtrips.map((curtrip) => (
+                        <div
+                            key={curtrip._id}
+                            className="input_right flex flex-col bg-graybg rounded-[10px] gap-[10px]"
+                        >
+                            <div className="flex justify-center py-[15px]">
+                                <div
+                                    className={`h-[39px] w-[206px] text-center content-center rounded-[10px] text-[16px] font-bold ${statusBgColor(
+                                        curtrip.status
+                                    )}`}
+                                >
+                                    {curtrip.status}
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex flex-row px-[10px] gap-[10px] ">
-                            <span className="text-cur font-medium ">
-                                Trip code:
-                            </span>
-                            <input
-                                type="text"
-                                readOnly
-                                className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                value={curtrip._id}
-                            />
-                            <button
-                                className="items-center active:bg-gray-400 rounded-[10px]"
-                                onClick={() =>
-                                    navigator.clipboard.writeText(curtrip._id)
-                                }
-                            >
-                                <CopyIcon />
-                            </button>
-                        </div>
-
-                        <div className="flex flex-row px-[10px] gap-[10px]">
-                            <span className="text-cur font-medium ">
-                                Vehicals code:
-                            </span>
-                            <input
-                                type="text"
-                                readOnly
-                                className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                value={curtrip.vehicle_id}
-                            />
-                            <button
-                                className="items-center active:bg-gray-400 rounded-[10px]"
-                                onClick={() =>
-                                    navigator.clipboard.writeText(
-                                        curtrip.vehicle_id
-                                    )
-                                }
-                            >
-                                <CopyIcon />
-                            </button>
-                        </div>
-
-                        <div className="flex flex-row px-[10px] gap-[10px]">
-                            <span className="text-cur font-medium">
-                                Driver code:
-                            </span>
-                            <input
-                                type="text"
-                                readOnly
-                                className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                value={curtrip.driver_id}
-                            />
-                            <button
-                                className="items-center active:bg-gray-400 rounded-[10px]"
-                                onClick={() =>
-                                    navigator.clipboard.writeText(
-                                        curtrip.driver_id
-                                    )
-                                }
-                            >
-                                <CopyIcon />
-                            </button>
-                        </div>
-
-                        <div className="flex flex-row px-[10px] gap-[10px]">
-                            <div className="flex flex-col flex-1 min-w-0">
+                            <div className="flex flex-row px-[10px] gap-[10px] ">
                                 <span className="text-cur font-medium ">
-                                    Departure date
+                                    Trip code:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.date_of_departure}
+                                    value={curtrip._id}
                                 />
+                                <button
+                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(
+                                            curtrip._id
+                                        )
+                                    }
+                                >
+                                    <CopyIcon />
+                                </button>
                             </div>
-                            <div className="flex flex-col flex-1 min-w-0">
+
+                            <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium ">
-                                    End date
+                                    Vehicals code:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.date_of_arrival}
+                                    value={curtrip.vehicle_id}
                                 />
+                                <button
+                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(
+                                            curtrip.vehicle_id
+                                        )
+                                    }
+                                >
+                                    <CopyIcon />
+                                </button>
                             </div>
-                        </div>
 
-                        <div className="flex flex-row px-[10px] gap-[10px]">
-                            <div className="flex flex-col flex-1 min-w-0">
-                                <span className="text-cur font-medium ">
-                                    From
+                            <div className="flex flex-row px-[10px] gap-[10px]">
+                                <span className="text-cur font-medium">
+                                    Driver code:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.starting_point}
+                                    value={curtrip.driver_id}
                                 />
+                                <button
+                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(
+                                            curtrip.driver_id
+                                        )
+                                    }
+                                >
+                                    <CopyIcon />
+                                </button>
                             </div>
-                            <div className="flex flex-col flex-1 min-w-0">
-                                <span className="text-cur font-medium ">
-                                    To
+
+                            <div className="flex flex-row px-[10px] gap-[10px]">
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-cur font-medium ">
+                                        Departure date
+                                    </span>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
+                                        value={curtrip.date_of_departure}
+                                    />
+                                </div>
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-cur font-medium ">
+                                        End date
+                                    </span>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
+                                        value={curtrip.date_of_arrival}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-row px-[10px] gap-[10px]">
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-cur font-medium ">
+                                        From
+                                    </span>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
+                                        value={curtrip.starting_point}
+                                    />
+                                </div>
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-cur font-medium ">
+                                        To
+                                    </span>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
+                                        value={curtrip.destination}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-row px-[10px] gap-[10px]">
+                                <span className="text-cur font-medium">
+                                    Routine:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.destination}
+                                    value={curtrip.pathway}
                                 />
                             </div>
-                        </div>
 
-                        <div className="flex flex-row px-[10px] gap-[10px]">
-                            <span className="text-cur font-medium">
-                                Routine:
-                            </span>
-                            <input
-                                type="text"
-                                readOnly
-                                className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                value={curtrip.pathway}
-                            />
-                        </div>
+                            <div className="flex flex-row  justify-evenly pt-[15px] ">
+                                <div className="flex flex-row gap-[5px]">
+                                    <DistanceIcon className="h-[30px]" />
+                                    <p className="text-[16px] font-medium content-center">
+                                        {curtrip.distance} km
+                                    </p>
+                                </div>
 
-                        <div className="flex flex-row  justify-evenly pt-[15px] ">
-                            <div className="flex flex-row gap-[5px]">
-                                <DistanceIcon className="h-[30px]" />
-                                <p className="text-[16px] font-medium content-center">
-                                    {curtrip.distance} km
-                                </p>
+                                <div className="flex flex-row gap-[5px]">
+                                    <TimeIcon className="h-[30px]" />
+                                    <p className="text-[16px] font-medium content-center">
+                                        {curtrip.expected_time} hours
+                                    </p>
+                                </div>
+
+                                <div className="flex flex-row gap-[5px]">
+                                    <PriceIcon className="h-[30px]" />
+                                    <p className="text-[16px] font-medium content-center">
+                                        {curtrip.price} K
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="flex flex-row gap-[5px]">
-                                <TimeIcon className="h-[30px]" />
-                                <p className="text-[16px] font-medium content-center">
-                                    {curtrip.expected_time} hours
-                                </p>
-                            </div>
-
-                            <div className="flex flex-row gap-[5px]">
-                                <PriceIcon className="h-[30px]" />
-                                <p className="text-[16px] font-medium content-center">
-                                    {curtrip.price} K
-                                </p>
+                            <div className="flex flex-col pb-[2%] px-[10px]">
+                                <span className="text-cur font-medium ">
+                                    Note
+                                </span>
+                                <div className="scrollBar flex-1 text-gray-500 rounded-[10px] px-[10px] break-words bg-white ilkoverflow-y-scroll h-[100px]">
+                                    <p className="inline-block">
+                                        {curtrip.note}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-
-                        <div className="flex flex-col pb-[2%] px-[10px]">
-                            <span className="text-cur font-medium ">Note</span>
-                            <div className="scrollBar flex-1 text-gray-500 rounded-[10px] px-[10px] break-words bg-white ilkoverflow-y-scroll h-[100px]">
-                                <p className="inline-block">{curtrip.note}</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                    ))}
             </div>
             <div className="mb-[1000px]"></div>
         </div>

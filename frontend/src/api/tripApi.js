@@ -12,8 +12,12 @@ const TripApi = {
         });
     },
 
-    addNewTrip(json) {
-        return axiosClient.get("/trip/AddTrip", json);
+    add(json) {
+        return axiosClient.post("/trip/AddTrip", json, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
     },
 
     delete(id) {
