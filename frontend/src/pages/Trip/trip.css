@@ -4,6 +4,11 @@
 
 @media (min-width: 1400px) {
     .setupWidth {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+@media (max-width: 1400px) and (min-width: 1200px) {
+    .setupWidth {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
@@ -11,4 +16,12 @@
     .setupWidth {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
+}
+
+.select .css-e7wuma-control {
+    height: 30px;
+}
+
+.input_right input {
+    text-align: center;
 }
