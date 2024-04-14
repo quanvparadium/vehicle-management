@@ -21,4 +21,19 @@ const options = [
     { value: "DONE", label: "DONE" },
 ];
 
-export { infomation, options };
+const tripTemplate = {
+    vehicle_id: "",
+    driver_id: "",
+    date_of_departure: new Date(),
+    date_of_arrival: new Date(),
+    starting_point: "",
+    destination: "",
+    pathway: "",
+    distance: null,
+    expected_time: null,
+    price: 0,
+    status: "",
+    note: "",
+};
+
+export { infomation, options, tripTemplate };

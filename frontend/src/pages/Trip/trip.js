@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import TripAPi from "../../api/tripApi";
 import "./trip.css";
-import { infomation, options } from "./data";
+import { infomation, options, tripTemplate } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
 import { ReactComponent as TimeIcon } from "../../assets/TimeIcon.svg";
 import { ReactComponent as PriceIcon } from "../../assets/PriceIcon.svg";
@@ -18,20 +18,7 @@ function Trip() {
     const [listtrips, setListtrips] = useState([]);
     const [_id, setID] = useState(); // id of trip
     // json body
-    const [trip, setTrip] = useState({
-        vehicle_id: "",
-        driver_id: "",
-        date_of_departure: new Date(),
-        date_of_arrival: new Date(),
-        starting_point: "",
-        destination: "",
-        pathway: "",
-        distance: null,
-        expected_time: null,
-        price: 0,
-        status: "",
-        note: "",
-    });
+    const [trip, setTrip] = useState({ ...tripTemplate });
 
     //update state in trip
     const updateState = (name, value) => {
@@ -191,9 +178,21 @@ function Trip() {
                             {info.name.map((na) => (
                                 <div key={na} className="my-[10px] flex-1">
                                     <div>
-                                        <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
-                                            {na}
-                                        </p>
+                                        {info.index === 1 ? (
+                                            <div className="flex flex-row">
+                                                <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
+                                                    {na}
+                                                </p>
+                                                <p className="text-[14px] text-gray450 ">
+                                                    (use for search only)
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
+                                                {na}
+                                            </p>
+                                        )}
+
                                         <div className="h-[35px] bg-white flex-1 rounded-[10px] px-[15px]">
                                             {chooseElement(info, na)}
                                         </div>
@@ -206,7 +205,9 @@ function Trip() {
                 <div className="flex flex-row justify-center gap-[20px] py-[20px]">
                     <button
                         className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px] hover:"
-                        onClick={AddTrip}
+                        onClick={() => {
+                            AddTrip();
+                        }}
                     >
                         Submit
                     </button>
@@ -387,14 +388,12 @@ function Trip() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col pb-[2%] px-[10px]">
+                            <div className="flex flex-col pb-[10px] px-[10px]">
                                 <span className="text-cur font-medium ">
                                     Note
                                 </span>
-                                <div className="scrollBar flex-1 text-gray-500 rounded-[10px] px-[10px] break-words bg-white ilkoverflow-y-scroll h-[100px]">
-                                    <p className="inline-block">
-                                        {curtrip.note}
-                                    </p>
+                                <div className="scrollBar flex-1 min-w-0 text-gray-500 rounded-[10px] px-[10px] break-words bg-white overflow-y-scroll   max-h-[100px]">
+                                    <p>{curtrip.note || "NONE"}</p>
                                 </div>
                             </div>
                         </div>
