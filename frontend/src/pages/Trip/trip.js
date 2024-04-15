@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 
+import Selectt from "./Selectt";
 import TripAPi from "../../api/tripApi";
 import "./trip.css";
 import { infomation, options, tripTemplate } from "./data";
@@ -11,56 +12,57 @@ import { ReactComponent as TimeIcon } from "../../assets/TimeIcon.svg";
 import { ReactComponent as PriceIcon } from "../../assets/PriceIcon.svg";
 import { ReactComponent as CopyIcon } from "../../assets/CopyIcon.svg";
 import { ReactComponent as DateIcon } from "../../assets/DateIcon.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/DeleteIcon.svg";
 
 function Trip() {
     const [curdate1, setCurdate1] = useState(new Date()); //date of "Departure date"
     const [curdate2, setCurdate2] = useState(new Date()); //date of "End date"
-    const [listtrips, setListtrips] = useState([]);
+    const [listtrips, setListtrips] = useState([]); // take list of trips from db
     const [_id, setID] = useState(); // id of trip
-    // json body
-    const [trip, setTrip] = useState({ ...tripTemplate });
-
+    const [trip, setTrip] = useState({ ...tripTemplate }); // json body
+    //error
+    const [errorMes, setErrorMes] = useState([]);
     //update state in trip
     const updateState = (name, value) => {
         let property;
         switch (name) {
-            case infomation[0].name[0]:
+            case infomation[0].name[0].name:
                 setID(value);
                 break;
-            case infomation[1].name[0]:
+            case infomation[1].name[0].name:
                 property = { vehicle_id: value };
                 break;
-            case infomation[1].name[1]:
+            case infomation[1].name[1].name:
                 property = { driver_id: value };
                 break;
-            case infomation[2].name[0]:
+            case infomation[2].name[0].name:
                 property = { date_of_departure: value };
                 break;
-            case infomation[2].name[1]:
+            case infomation[2].name[1].name:
                 property = { date_of_arrival: value };
                 break;
-            case infomation[3].name[0]:
+            case infomation[3].name[0].name:
                 property = { starting_point: value };
                 break;
-            case infomation[3].name[1]:
+            case infomation[3].name[1].name:
                 property = { destination: value };
                 break;
-            case infomation[4].name[0]:
+            case infomation[4].name[0].name:
                 property = { pathway: value };
                 break;
-            case infomation[5].name[0]:
+            case infomation[5].name[0].name:
                 property = { distance: value };
                 break;
-            case infomation[5].name[1]:
+            case infomation[5].name[1].name:
                 property = { expected_time: value };
                 break;
-            case infomation[6].name[0]:
+            case infomation[6].name[0].name:
                 property = { price: value };
                 break;
-            case infomation[6].name[1]:
+            case infomation[6].name[1].name:
                 property = { status: value };
                 break;
-            case infomation[7].name[0]:
+            case infomation[7].name[0].name:
                 property = { note: value };
                 break;
         }
@@ -130,36 +132,60 @@ function Trip() {
                 />
             );
     };
-    //choose the color of status
-    const statusBgColor = (status) => {
-        switch (status) {
-            case options[0].label:
-                return "bg-status-avai";
-            case options[1].label:
-                return "bg-status-inpro";
-            default:
-                return "bg-status-done";
-        }
-    };
+
     // add a trip into data
-    function AddTrip() {
+    async function AddTrip() {
         async function addE() {
             try {
                 const res = await TripAPi.add(trip);
+                dbtrips();
                 console.log(res);
             } catch (error) {
-                console.log(error);
+                let err = error.response.data.errors;
+                setErrorMes(Object.keys(err));
+                console.log(errorMes);
+                return false;
             }
+            return true;
         }
-        addE();
+        return await addE();
+    }
+    // when click submit button the added notification will appear
+    function appearAndFade() {
+        var element = document.getElementById("element");
+        element.style.display = "block";
+        element.style.opacity = 1;
+        setTimeout(function () {
+            element.style.opacity = 0;
+        }, 1000);
+    }
+    //use to delet a trip
+    async function deleteTrip(id) {
+        try {
+            await TripAPi.delete(id);
+            dbtrips();
+            alert("Delete completed!!");
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    // take listtrips for db
+    async function dbtrips() {
+        const temp = await TripAPi.getAll();
+        setListtrips(temp.data.trips);
+    }
+    // use to format date from date data to dd-mm-yyyy
+    function formatDate(date) {
+        date = new Date(date);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based, so we add 1
+        const year = date.getFullYear();
+
+        return `${day}-${month}-${year}`;
     }
 
     useEffect(() => {
-        async function test() {
-            const temp = await TripAPi.getAll();
-            setListtrips(temp.data.trips);
-        }
-        test();
+        dbtrips();
     }, []);
 
     return (
@@ -176,12 +202,12 @@ function Trip() {
                             className="flex flex-row gap-[2%]"
                         >
                             {info.name.map((na) => (
-                                <div key={na} className="my-[10px] flex-1">
+                                <div key={na.name} className="my-[10px] flex-1">
                                     <div>
                                         {info.index === 1 ? (
                                             <div className="flex flex-row">
                                                 <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
-                                                    {na}
+                                                    {na.name}
                                                 </p>
                                                 <p className="text-[14px] text-gray450 ">
                                                     (use for search only)
@@ -189,12 +215,18 @@ function Trip() {
                                             </div>
                                         ) : (
                                             <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
-                                                {na}
+                                                {na.name}
                                             </p>
                                         )}
 
-                                        <div className="h-[35px] bg-white flex-1 rounded-[10px] px-[15px]">
-                                            {chooseElement(info, na)}
+                                        <div
+                                            className={`h-[35px] bg-white flex-1 rounded-[10px] px-[15px] ${
+                                                errorMes.includes(na.attribute)
+                                                    ? "border-red-700 border-[1px]"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {chooseElement(info, na.name)}
                                         </div>
                                     </div>
                                 </div>
@@ -202,16 +234,19 @@ function Trip() {
                         </div>
                     ))}
                 </div>
-                <div className="flex flex-row justify-center gap-[20px] py-[20px]">
+                <div className="relative flex flex-row justify-center gap-[20px] py-[20px]">
+                    <div id="element">Added</div>
                     <button
-                        className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px] hover:"
-                        onClick={() => {
-                            AddTrip();
+                        className="bg-custom-logo hover:bg-custom-hover w-[130px] h-[40px] font-bold text-white rounded-[10px] hover:"
+                        onClick={async () => {
+                            if (await AddTrip()) {
+                                appearAndFade();
+                            }
                         }}
                     >
                         Submit
                     </button>
-                    <button className="bg-custom-logo w-[130px] h-[40px] font-bold text-white rounded-[10px]">
+                    <button className="bg-custom-logo hover:bg-custom-hover w-[130px] h-[40px] font-bold text-white rounded-[10px]">
                         Search
                     </button>
                 </div>
@@ -228,14 +263,21 @@ function Trip() {
                             key={curtrip._id}
                             className="input_right flex flex-col bg-graybg rounded-[10px] gap-[10px]"
                         >
-                            <div className="flex justify-center py-[15px]">
-                                <div
-                                    className={`h-[39px] w-[206px] text-center content-center rounded-[10px] text-[16px] font-bold ${statusBgColor(
-                                        curtrip.status
-                                    )}`}
+                            <div className="relative flex justify-center py-[15px]">
+                                <Selectt
+                                    className="justify-center"
+                                    status={curtrip.status}
+                                    opt={options}
+                                    _id={curtrip._id}
+                                />
+
+                                <button
+                                    id="transform5050"
+                                    className="absolute p-3 transf right-0 items-center active:bg-gray-400 rounded-[50%] hover:bg-gray-300"
+                                    onClick={() => deleteTrip(curtrip._id)}
                                 >
-                                    {curtrip.status}
-                                </div>
+                                    <DeleteIcon className="h-[20px] opacity-70" />
+                                </button>
                             </div>
                             <div className="flex flex-row px-[10px] gap-[10px] ">
                                 <span className="text-cur font-medium ">
@@ -248,7 +290,7 @@ function Trip() {
                                     value={curtrip._id}
                                 />
                                 <button
-                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
                                     onClick={() =>
                                         navigator.clipboard.writeText(
                                             curtrip._id
@@ -270,7 +312,7 @@ function Trip() {
                                     value={curtrip.vehicle_id}
                                 />
                                 <button
-                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
                                     onClick={() =>
                                         navigator.clipboard.writeText(
                                             curtrip.vehicle_id
@@ -292,7 +334,7 @@ function Trip() {
                                     value={curtrip.driver_id}
                                 />
                                 <button
-                                    className="items-center active:bg-gray-400 rounded-[10px]"
+                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
                                     onClick={() =>
                                         navigator.clipboard.writeText(
                                             curtrip.driver_id
@@ -312,7 +354,9 @@ function Trip() {
                                         type="text"
                                         readOnly
                                         className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                        value={curtrip.date_of_departure}
+                                        value={formatDate(
+                                            curtrip.date_of_departure
+                                        )}
                                     />
                                 </div>
                                 <div className="flex flex-col flex-1 min-w-0">
@@ -323,7 +367,9 @@ function Trip() {
                                         type="text"
                                         readOnly
                                         className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                        value={curtrip.date_of_arrival}
+                                        value={formatDate(
+                                            curtrip.date_of_arrival
+                                        )}
                                     />
                                 </div>
                             </div>

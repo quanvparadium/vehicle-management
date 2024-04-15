@@ -25,3 +25,40 @@
 .input_right input {
     text-align: center;
 }
+
+#element {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease-in-out; /* Adjust the transition duration */
+    animation-name: demo-animation;
+}
+
+@keyframes demo-animation {
+    25% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.75;
+    }
+    99.99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.transform5050 {
+    transform: translate(50%, 50%);
+}

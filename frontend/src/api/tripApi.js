@@ -1,7 +1,7 @@
 import axiosClient from "./axiosClient";
 
 const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTMwMjQ3NzMsImV4cCI6MTcxMzExMTE3M30.RQYOHbObSkNyVaqrRJ5xROfox7e1LWKaANEJHe60I88";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTMxNjk0ODcsImV4cCI6MTcxMzI1NTg4N30.p0of02GKhEyKM0BNb7iHWSjqjpC_VMZLQSIk9fuqwGQ";
 
 const TripApi = {
     getAll() {
@@ -21,14 +21,24 @@ const TripApi = {
     },
 
     delete(id) {
-        const json = {
-            _id: id,
-        };
-        return axiosClient.delete("/trip/DeleteTrip", json, {
+        return axiosClient.delete("/trip/DeleteTrip", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+            data: { _id: id },
         });
+    },
+
+    update(id, sta) {
+        return axiosClient.put(
+            "/trip/UpdateTrip",
+            { ExistTrip: { _id: id }, Update: { status: sta } },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
     },
 };
 
