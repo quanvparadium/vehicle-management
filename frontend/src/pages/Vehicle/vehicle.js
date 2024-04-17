@@ -44,7 +44,8 @@ function Vehicle() {
         async function fetchVehicle() {
             try {
                 const response = await getAllVehicle();
-                setVehicleList(response);
+                console.log("Response", response.data)
+                setVehicleList(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -61,7 +62,7 @@ function Vehicle() {
             // Gửi request để thêm mới phương tiện
             await addVehicle(formData);
             const res = await getAllVehicle();
-            setVehicleList(res);
+            setVehicleList(res.data);
             setAdding(true);
             // Đặt lại form và thông báo lỗi
             setFormData(initialFormData);
@@ -234,8 +235,8 @@ function Vehicle() {
                                 </td>
                             </tr>
                         ))} */}
-                        {   vehicleList.map(vehicle => (
-                            <tr key={vehicle.id}>
+                        {   vehicleList.map((vehicle, key) => (
+                            <tr key={key}>
                                 <td>{vehicle.id}</td>
                                 <td>{vehicle.type}</td>
                                 <td>{vehicle.automaker}</td>
