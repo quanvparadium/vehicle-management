@@ -1,18 +1,22 @@
+
+
 .header {
-    margin-top: 100px;
     font-weight: bold;
 }
 
 .formSubmit {
+    float: right;
+    margin: 5% 5%;
+
     width: 30%;
     height: 500px;
-    background-color: rgb(236, 37, 37);
+    background-color: rgb(143, 143, 59);
     border: 5px solid black;
+
     display: flex;
     align-items: space-around;
     justify-content: space-between;
     flex-direction: column;
-    margin: auto;
     /* margin-top: 50px; */
 }
 .box {
@@ -40,6 +44,7 @@
 }
 
 .formButton {
+    position: relative;
     color: black;
     font-weight: bold;
     background-color: burlywood;
@@ -58,4 +63,15 @@
     background-color: rgb(150, 178, 242);
     color: black;
     font-weight: bold;
+}
+
+.login_container {
+    
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/background.png'); /* Đường dẫn đến hình ảnh */
+    background-size: cover; /* Đảm bảo hình ảnh sẽ bao phủ toàn bộ phần tử */
+    background-position: center; /* Căn giữa hình ảnh trong phần tử */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+    /* Các thuộc tính khác cho việc tùy chỉnh kích thước và vị trí của hình ảnh */
 }

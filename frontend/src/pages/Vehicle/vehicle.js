@@ -1,6 +1,6 @@
 function Vehicle() {
     return ( 
-        <h1 style={{marginTop: '100px'}}>Vehicle</h1>
+        <h1>Vehicle</h1>
     );
 }
 

@@ -2,18 +2,20 @@
     text-decoration: none;
     font-weight: bold;
     color: black;
-    font-size: 20;
+    font-size: 20px;
 }
 
 .Navigation {
-    height: 60px;
-    background-color: rgb(255,224,27);
+    height: 7vh;
+    width: 100vw;
+
+    background-color: orange;
     position: fixed;
-    /*position*/
     top: 0px;
     left: 0px;
     right: 0px;
-    /*position*/
+    z-index: 1;
+
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

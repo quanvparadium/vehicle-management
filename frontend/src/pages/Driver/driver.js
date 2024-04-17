@@ -129,8 +129,8 @@ function Driver() {
     }
 
     return ( 
-        <div className='container'>
-            <h1 className='header'>DRIVER</h1>
+        <div className='driver_container'>
+            {/* <h1 className='header'>DRIVER</h1> */}
 
             <div className='add'>
                 <div className='addBox'>

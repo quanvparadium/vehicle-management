@@ -1,5 +1,40 @@
-const tripApi = {
-    
-}
+// import axios from 'axios';
+//     const getAllVehicle = async () => {
+//         try {
+//             const response = await axios.get('http://localhost:3000/vehicle');
+//             return response.data;
+//         } catch (error)
+//         {
+//             console.error('Error getting vehicles:', error);
+//             throw error;
+//         }
+        
+//     };
+//     const addVehicle = async (vehicleData) => {
+//         try {
+//             const response = await axios.post('http://localhost:3000/vehicle',vehicleData);
+//             return response.data;
+//         } catch (error) {
+//             console.error('Error adding vehicle:', error)
+//         }
+//     };
+//     const updateVehicle = async (vehicleID,updateData) => {
+//         try {
+//             const response = await axios.put('http://localhost:3000/vehicle',updateData);
+//             return response.data;
+//         } catch (error) {
+//             console.error(`Error updating vehicle ${vehicleID}:`, error)
+//             throw error;
+//         }
+//     };
+//     const deleteVehicle = async (vehicleID) => {
+//         try {
+//             const response = await axios.delete('http://localhost:3000/vehicle/${vehicleID}');
+//             return response.data;
+//         } catch (error) {
+//             console.error(`Error deleting vehicle ${vehicleID}:`, error);
+//             throw error;
+//         }
+//     };
 
-export default tripApi;
+// export {getAllVehicle, addVehicle, updateVehicle, deleteVehicle}; 

@@ -4,6 +4,7 @@ import './styles.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function Login() {
     const [userList, setUserList] = useState([]);
     const [formData, setFormData] = useState({
@@ -54,9 +55,7 @@ function Login() {
     }
 
     return ( 
-        <div >
-            <h1 className='header'>LOGIN</h1>
-
+        <div className='login_container'>
             <form type='submit' className='formSubmit' onSubmit={handleSubmit}>
                 <div className='box'>
                     <label className='formLabel'>Username</label>
@@ -67,7 +66,9 @@ function Login() {
                     <label className='formLabel'>Password</label>
                     <input type='password' className='formInput' name='password' placeholder='Your password' onChange={handleInputChange}></input>
                 </div>
-                {error && <div className='error'>Incorrect username or password!</div>}
+
+                {error && <span className='error'>Incorrect username or password!</span>}
+
                 <button className='formButton'>Login</button>
             </form>
         </div>

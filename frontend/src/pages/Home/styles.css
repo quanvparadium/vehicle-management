@@ -1,16 +1,17 @@
 .home_container {
     width: 100%;
-    height: 677px;
-    /* background-color: red; */
-    margin-top: 60px;
+    
+    min-height: 93vh;
+    background-color: #198DB2;
 
     display: flex;
-    /* justify-content: center; */
+    justify-content: space-around;
     flex-direction: column;
     align-items: center;
 }
 
 .home_container1 {
+    
     width: 90%;
     height: 20%;
 
@@ -25,7 +26,6 @@
     width: 90%;
     /* background-color: azure; */
     height: 80%;
-    margin-bottom: 10px;
 
     display: flex;
     justify-content: space-between;
@@ -34,7 +34,7 @@
 
 .container1_box {
     width: 23%;
-    height: 100%;
+    height: 20vh;
     background-color: #E3CAA5;
     text-align: left;
     margin-left: 10px;
@@ -65,7 +65,7 @@
     /* color: #265073bc; */
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
     .container2_doughnutChart {
         flex-basis: 50%;
     }
@@ -73,7 +73,7 @@
     .container2_barChart {
         flex-basis: 100%;
     }
-}
+} */
 
 .incomeUp {
     background-color: rgba(0, 128, 0, 0.423); /* Đặt màu nền là xanh cho khi income tăng */
