@@ -11,6 +11,7 @@ export interface VehicleReqBody {
     frame_number: string
     chassis_number: string
     state: string
+    on_trip: boolean
     fuel_state: number
     runned_km: number
     date_recent_maintenance: Date

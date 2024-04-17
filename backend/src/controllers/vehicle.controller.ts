@@ -18,3 +18,10 @@ export const DeleteVehicleController = async (req: Request, res: Response) => {
         message: result.message
     })
 }
+export const updateVehicleController = async (req: Request, res: Response) => {
+   const result = await vehiclesService.update(req.body.existingVehicle, req.body.update);
+    return res.json({
+        message: result.message,
+        updatedVehicle: result.updatedVehicle
+    }); 
+}

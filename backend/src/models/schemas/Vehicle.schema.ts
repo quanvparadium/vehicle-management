@@ -11,6 +11,7 @@ interface VehicleType {
     frame_number: string
     chassis_number: string
     state: string
+    on_trip: boolean
     fuel_state: number
     runned_km: number
     date_recent_maintenance: Date
@@ -29,6 +30,7 @@ class Vehicle {
     frame_number: string
     chassis_number: string
     state: string
+    on_trip: boolean
     fuel_state: number
     runned_km: number
     date_recent_maintenance: Date
@@ -46,6 +48,7 @@ class Vehicle {
         this.frame_number = vehicle.frame_number
         this.chassis_number = vehicle.chassis_number
         this.state = vehicle.state
+        this.on_trip = vehicle.on_trip
         this.fuel_state = vehicle.fuel_state
         this.runned_km = vehicle.runned_km
         this.date_recent_maintenance = vehicle.date_recent_maintenance

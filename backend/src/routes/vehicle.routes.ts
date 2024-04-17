@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { accessTokenValidator } from "~/middlewares/auth.middlewares";
-import { getALLVehicleController, CreateVehicleController, DeleteVehicleController } from "~/controllers/vehicle.controller";
-import { VehicleValidator, CreateVehicleValidator } from "~/middlewares/veicle.middlewares";
+import { getALLVehicleController, CreateVehicleController, DeleteVehicleController, updateVehicleController} from "~/controllers/vehicle.controller";
+import {  CreateVehicleValidator,UpdateVehicleValidator,DeleteVehicleValidator } from "~/middlewares/vehicle.middlewares";
 
 const vehicleRouter = Router()
 /*decripsion: 'Get all vehicles from database'
@@ -26,6 +26,7 @@ body: { VehicleReqBody }
     frame_number: string
     chassis_number: string
     state: string
+    on_trip: boolean
     fuel_state: number
     runned_km: number
     date_recent_maintenance: Date
@@ -34,9 +35,13 @@ body: { VehicleReqBody }
 }
 
 */
-vehicleRouter.post('/', accessTokenValidator,VehicleValidator, getALLVehicleController)
+
 vehicleRouter.post('/create_vehicle',accessTokenValidator,CreateVehicleValidator, CreateVehicleController)
 
-vehicleRouter.delete('/del_vhc', accessTokenValidator, DeleteVehicleController)
+vehicleRouter.delete('/del_vhc', accessTokenValidator,DeleteVehicleValidator, DeleteVehicleController)
+    vehicleRouter.put('/update_vhc', accessTokenValidator, UpdateVehicleValidator, updateVehicleController);
+
+
+
 
 export default vehicleRouter
