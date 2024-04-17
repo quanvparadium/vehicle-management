@@ -22,7 +22,36 @@
   ],
 
   "vehicle": [
-
+    {
+      "id": 1,
+      "type": "Car",
+      "automaker": "Toyota",
+      "model": "Camry",
+      "licensePlates": "ABC 123",
+      "chassisNumber": "123456789",
+      "frameNumber": "987654321",
+      "state": "Active",
+      "fuelState": "Full",
+      "runnerKms": "10000",
+      "recentMaintenance": "2023-01-01",
+      "position": "Garage",
+      "notes": "No issues"
+  },
+  {
+      "id": 2,
+      "type": "Motorcycle",
+      "automaker": "Honda",
+      "model": "CBR600RR",
+      "licensePlates": "XYZ 456",
+      "chassisNumber": "987654321",
+      "frameNumber": "123456789",
+      "state": "Inactive",
+      "fuelState": "Empty",
+      "runnerKms": "5000",
+      "recentMaintenance": "2023-03-15",
+      "position": "Parking lot",
+      "notes": "Needs repair"
+  }
   ],
 
   "trip": [
