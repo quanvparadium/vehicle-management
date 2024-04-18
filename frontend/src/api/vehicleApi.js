@@ -1,9 +1,19 @@
-import axios from 'axios';
 import axiosClient from './axiosClient';
 
 export const getAllVehicle = async () => {
     try {
         const response = await axiosClient.get(`/vehicle`);
+        return response;
+    } catch (error)
+    {
+        console.error('Error getting vehicles:', error);
+        throw error;
+    }
+    
+};
+export const getVehicle = async (id) => {
+    try {
+        const response = await axiosClient.get(`/vehicle/` + id);
         return response;
     } catch (error)
     {
@@ -21,20 +31,20 @@ export const addVehicle = async (vehicleData) => {
         console.error('Error adding vehicle:', error)
     }
 };
-export const updateVehicle = async (vehicleID,updateData) => {
+export const updateVehicle = async (updateData) => {
     try {
-        const response = await axios.put('http://localhost:3000/vehicle',updateData);
+        const response = await axiosClient.put(`/vehicle/` + updateData.id ,updateData);
         return response;
     } catch (error) {
-        console.error(`Error updating vehicle ${vehicleID}:`, error)
+        console.error(`Error updating vehicle :`, error)
         throw error;
     }
 };
 
 export const deleteVehicle = async (vehicleID) => {
     try {
-        const response = await axios.delete('http://localhost:3000/vehicle/${vehicleID}');
-        return response;
+        console.log('Vehicle delete', vehicleID);
+        return await axiosClient.delete('/vehicle/' + vehicleID);
     } catch (error) {
         console.error(`Error deleting vehicle ${vehicleID}:`, error);
         throw error;

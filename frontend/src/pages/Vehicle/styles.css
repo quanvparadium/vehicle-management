@@ -14,17 +14,26 @@ body
     flex-direction: column;
     margin: auto;  
 }
+.form {
+    width: 90%;
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-right: 12px;
+}
 .vehicle label
 {
     text-align: left; /* Căn trái nhãn */
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
+    font-size: larger;
 }
 .vehicle input 
 {
     width: 100%; 
     height: 50px;
-    padding: 8px; 
+    padding-left: 10px; 
+    padding-right: 10px;
     border: 1px solid #ccc; 
     border-radius: 4px;
     margin-top: 5px;
@@ -35,6 +44,8 @@ body
     gap: 20px; /* Khoảng cách giữa các ô input */
     flex: 1; /* Phần tử con mở rộng để lấp đầy không gian còn lại */
     justify-content: space-between;
+    width: 100%;
+    padding-bottom: 20px;
 }
 
 .vehicletype, .automaker, .model, .licenseplates, .chassisnumber, .framenumber
@@ -47,7 +58,8 @@ body
 }
 .add-button {
     width: 100%;
-    padding-top: 30px;
+    padding-top: 0px;
+    padding-left: 10px;
     font-family: Lato, sans-serif;
     font-size: 20px;
     font-weight: bold;
@@ -60,9 +72,9 @@ body
 
 .add-button button {
     padding: 15px 40px;
-    border: none;
-    background-color: #0524ef; /* Màu nền */
-    color: white; /* Màu chữ */
+    border: 1px solid black;
+    background-color: #87CEFA; /* Màu nền */
+    color: black; /* Màu chữ */
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease; /* Hiệu ứng hover */
@@ -70,7 +82,7 @@ body
 }
 
 .add-button button:hover {
-    background-color: #45a049; /* Màu nền khi di chuột qua */
+    background-color: #B0E0E6; /* Màu nền khi di chuột qua */
 }
 .tableinfor {
     width: 100%;
@@ -86,7 +98,7 @@ body
   }
   
   .tableinfor th {
-    background-color: #4CAF50;
+    background-color: #5883AD;
     color: white;
   }
   
@@ -128,4 +140,21 @@ body
     width: 400px; /* Thiết lập chiều rộng tối thiểu */
      /* Giới hạn chiều rộng tối đa */
     /* Sử dụng 100% chiều rộng của phần tử cha */
+}
+.update {
+    width: inherit;
+    height: 20px;
+    padding: 3px;
+    margin: 0px;
+}
+.edit button[type="submit"] {
+    background-color: #e5e5e5; /* Màu nền */
+    color: black; /* Màu chữ */
+    padding: 2px;
+    margin-left: 18px;
+    border: 1px solid black; /* Loại bỏ viền */
+    cursor: pointer; /* Con trỏ hiển thị pointer khi hover */
+    border-radius: 4px; /* Bo tròn góc */
+    font-size: 16px; /* Kích thước font */
+    transition: background-color 0.3s ease; /* Hiệu ứng màu nền */
 }

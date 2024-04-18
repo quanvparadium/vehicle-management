@@ -1,6 +1,6 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
-import {addVehicle, getAllVehicle, updateVehicle, deleteVehicle} from '../../api/vehicleApi';
+import {addVehicle, getAllVehicle, updateVehicle, deleteVehicle, getVehicle} from '../../api/vehicleApi';
 function Vehicle() {
     const initialFormData = {
         type: '',
@@ -38,7 +38,7 @@ function Vehicle() {
     const [deleting, setDeleting] = useState(false);
     const [vehicleList, setVehicleList] = useState([]);
     const [error, setError] = useState(initialError);
-
+    const [editID, setEditId] = useState(-1);
     // Lấy danh sách phương tiện từ API khi component được load và khi thêm mới phương tiện
     useEffect(() => {
         async function fetchVehicle() {
@@ -56,8 +56,6 @@ function Vehicle() {
     // Hàm xử lý thêm mới phương tiện
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Kiểm tra dữ liệu có hợp lệ không
-        console.log(formData);
         try {
             // Gửi request để thêm mới phương tiện
             await addVehicle(formData);
@@ -70,17 +68,38 @@ function Vehicle() {
             console.error('Error adding vehicle:', error);
         }
     };
-
+    //
+    const handleEdit = async (id) => {
+        try {
+            const res = await getVehicle(id);
+            setUpdate(res.data);
+            setEditId(id);
+        } catch (error) {
+            console.error('Error edit vehicle:', error);
+        }
+    };
+    //
+    const handleUpdateChange = (e, fieldName) => {
+        const { value } = e.target;
+        setUpdate((prevData) => ({
+            ...prevData,
+            [fieldName]: value
+        }));
+    };
     // Hàm xử lý cập nhật thông tin phương tiện
-    const handleUpdate = async (id) => {
+    const handleUpdate = async (e) => {
         try {
             // Gửi request để cập nhật phương tiện
+
             await updateVehicle(update);
+            const res = await getAllVehicle();
+            setVehicleList(res.data);
+            
+            setEditId(-1);
             // Cập nhật lại danh sách phương tiện
             setAdding(true);
             // Đặt lại form và thông báo lỗi
-            setUpdate(initialFormData);
-            setError(initialError);
+           // setUpdate(initialFormData);
         } catch (error) {
             console.error('Error updating vehicle:', error);
         }
@@ -90,8 +109,6 @@ function Vehicle() {
         try {
             // Gửi request để xóa phương tiện
             await deleteVehicle(id);
-            const res = await getAllVehicle();
-            setVehicleList(res);
             setDeleting(true);
         } catch (error) {
             console.error('Error deleting vehicle:', error);
@@ -114,7 +131,7 @@ function Vehicle() {
         <h1 style={{ marginTop: "100px", fontWeight: "bold" }}>Vehicle information</h1>
             <div className="page">
                 <div className="vehicle">
-                <form onSubmit={handleSubmit}>
+                <form className="form" onSubmit={handleSubmit}>
                         <div className="a">
                             <div className="vehicletype">
                                 <label>Vehicle type</label>
@@ -214,7 +231,27 @@ function Vehicle() {
                     </tr>
                 </thead>
                 <tbody>
-                        {/* {vehicleList.map((vehicle, index) => (
+                         {vehicleList.map((vehicle, index) => (
+                            vehicle.id === editID ?
+                            <tr key={index} className="edit">
+                                <td>{vehicle.id}</td>
+                                <td><input type='text' required className="update" value = {update.type} onChange={(e) => handleUpdateChange(e,'type')}/></td>
+                                <td><input type='text' required className="update" value = {update.automaker} onChange={(e) => handleUpdateChange(e, 'automaker')}/></td>
+                                <td><input type='text' required className="update" value = {update.model} onChange={(e) => handleUpdateChange(e,'model')}/></td>
+                                <td><input type='text' required className="update" value = {update.licensePlates} onChange={(e) => handleUpdateChange(e,'licensePlates')}/></td>
+                                <td><input type='text' required className="update" value = {update.chassisNumber} onChange={(e) => handleUpdateChange(e, 'chassisNumber')}/></td>
+                                <td><input type='text'required className="update" value = {update.frameNumber} onChange={(e) => handleUpdateChange(e, 'frameNumber')}/></td>
+                                <td>{vehicle.state}</td>
+                                <td>{vehicle.fuelState}</td>
+                                <td>{vehicle.runnerKms}</td>
+                                <td>{vehicle.recentMaintenance}</td>
+                                <td>{vehicle.position}</td>
+                                <td>{vehicle.notes}</td>
+                                <td style = {{justifyContent: "space-around"}}> 
+                                    <button type="submit" className="update" onClick={() => handleUpdate()}>Update</button>
+                                </td>
+                            </tr>
+                            :
                             <tr key={index}>
                                 <td>{vehicle.id}</td>
                                 <td>{vehicle.type}</td>
@@ -230,28 +267,7 @@ function Vehicle() {
                                 <td>{vehicle.position}</td>
                                 <td>{vehicle.notes}</td>
                                 <td style={{ display: 'flex', justifyContent: "space-around", border: '1px solid black' }}>
-                                    <button onClick={() => handleUpdate(vehicle.id)}>Edit</button>
-                                    <button onClick={() => handleDelete(vehicle.id)}>Delete</button>
-                                </td>
-                            </tr>
-                        ))} */}
-                        {   vehicleList.map((vehicle, key) => (
-                            <tr key={key}>
-                                <td>{vehicle.id}</td>
-                                <td>{vehicle.type}</td>
-                                <td>{vehicle.automaker}</td>
-                                <td>{vehicle.model}</td>
-                                <td>{vehicle.licensePlates}</td>
-                                <td>{vehicle.chassisNumber}</td>
-                                <td>{vehicle.frameNumber}</td>
-                                <td>{vehicle.state}</td>
-                                <td>{vehicle.fuelState}</td>
-                                <td>{vehicle.runnerKms}</td>
-                                <td>{vehicle.recentMaintenance}</td>
-                                <td>{vehicle.position}</td>
-                                <td>{vehicle.notes}</td>
-                                <td style={{ display: 'flex', justifyContent: "space-around", border: '1px solid black' }}>
-                                    <button onClick={() => handleUpdate(vehicle.id)}>Edit</button>
+                                    <button onClick={() => handleEdit(vehicle.id)}>Edit</button>
                                     <button onClick={() => handleDelete(vehicle.id)}>Delete</button>
                                 </td>
                             </tr>
