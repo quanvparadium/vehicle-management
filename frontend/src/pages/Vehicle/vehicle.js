@@ -223,7 +223,7 @@ function Vehicle() {
                         <th>Frame number</th>
                         <th>State</th>
                         <th>Fuel state</th>
-                        <th>Runner_km</th>
+                        <th>Runner kilometers(km)</th>
                         <th>Recent maintenance date </th>
                         <th>Positon</th>
                         <th>Notes</th>
