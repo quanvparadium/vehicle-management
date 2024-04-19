@@ -26,7 +26,7 @@ function Navigation() {
                     </li>
 
                     <li className="item">
-                        <Link to="/"> <img src={images.home} alt="Home" width="26" height="24" /> </Link>
+                        <Link to="/"> <img src={images.home} alt="Home" className='image_home'/> </Link>
                     </li>
                 </ul>
           </div>

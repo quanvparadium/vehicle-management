@@ -1,40 +1,54 @@
-// import axios from 'axios';
-//     const getAllVehicle = async () => {
-//         try {
-//             const response = await axios.get('http://localhost:3000/vehicle');
-//             return response.data;
-//         } catch (error)
-//         {
-//             console.error('Error getting vehicles:', error);
-//             throw error;
-//         }
-        
-//     };
-//     const addVehicle = async (vehicleData) => {
-//         try {
-//             const response = await axios.post('http://localhost:3000/vehicle',vehicleData);
-//             return response.data;
-//         } catch (error) {
-//             console.error('Error adding vehicle:', error)
-//         }
-//     };
-//     const updateVehicle = async (vehicleID,updateData) => {
-//         try {
-//             const response = await axios.put('http://localhost:3000/vehicle',updateData);
-//             return response.data;
-//         } catch (error) {
-//             console.error(`Error updating vehicle ${vehicleID}:`, error)
-//             throw error;
-//         }
-//     };
-//     const deleteVehicle = async (vehicleID) => {
-//         try {
-//             const response = await axios.delete('http://localhost:3000/vehicle/${vehicleID}');
-//             return response.data;
-//         } catch (error) {
-//             console.error(`Error deleting vehicle ${vehicleID}:`, error);
-//             throw error;
-//         }
-//     };
+import axiosClient from './axiosClient';
+
+export const getAllVehicle = async () => {
+    try {
+        const response = await axiosClient.get(`/vehicle`);
+        return response;
+    } catch (error)
+    {
+        console.error('Error getting vehicles:', error);
+        throw error;
+    }
+    
+};
+export const getVehicle = async (id) => {
+    try {
+        const response = await axiosClient.get(`/vehicle/` + id);
+        return response;
+    } catch (error)
+    {
+        console.error('Error getting vehicles:', error);
+        throw error;
+    }
+    
+};
+export const addVehicle = async (vehicleData) => {
+    try {
+        console.log('Vehicle add', vehicleData)
+        const response = await axiosClient.post(`/vehicle`, vehicleData);
+        return response;
+    } catch (error) {
+        console.error('Error adding vehicle:', error)
+    }
+};
+export const updateVehicle = async (updateData) => {
+    try {
+        const response = await axiosClient.put(`/vehicle/` + updateData.id ,updateData);
+        return response;
+    } catch (error) {
+        console.error(`Error updating vehicle :`, error)
+        throw error;
+    }
+};
+
+export const deleteVehicle = async (vehicleID) => {
+    try {
+        console.log('Vehicle delete', vehicleID);
+        return await axiosClient.delete('/vehicle/' + vehicleID);
+    } catch (error) {
+        console.error(`Error deleting vehicle ${vehicleID}:`, error);
+        throw error;
+    }
+};
 
 // export {getAllVehicle, addVehicle, updateVehicle, deleteVehicle}; 

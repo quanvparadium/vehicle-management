@@ -33,3 +33,19 @@
     margin: 0 8px;
     display: inline-block;
 }
+
+.image_home {
+    width: 26px;
+    height: 24px;
+}
+
+@media (max-width: 488px) {
+    .Link {
+        font-size: small;
+    }
+
+    .image_home {
+        width: 16px;
+        height: 14px;
+    }
+}

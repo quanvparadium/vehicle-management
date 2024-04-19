@@ -27,7 +27,7 @@ function Home() {
         return MONTHS.slice(0, index + 1); 
     }
 
-    const [income, setIncome] = useState(true);
+    const [income, setIncome] = useState(false);
 
     const [doughnut, setDoughnut] = useState();
     useEffect(() => {
@@ -37,26 +37,25 @@ function Home() {
 
     useEffect(() => {
         const labels = months('July');
-        console.log(labels);
         const data = {
             labels: labels,
             datasets: [{
                 label: 'Total revenue',
                 data: [65, 59, 80, 81, 56, 55, 40],
                 fill: true,
-                borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1,
-                backgroundColor: '#265073bc',
+                backgroundColor: '#768CCE',
                 borderColor: 'black',
             }]
         };
         
-        new Chart(
+        const chart = new Chart(
             document.getElementById('revenue'),
             {
                 type: 'line',
                 data: data,
                 options: {
+                    responsive: true,
                     scales: {
                         x: {
                             lineWidth: 10,
@@ -65,7 +64,7 @@ function Home() {
                             },
                             ticks: {
                                 font: {
-                                    size: "14", // Kích thước chữ của trục y
+                                    size: "10", // Kích thước chữ của trục y
                                     weight: "bold",
                                 }
                             }
@@ -77,7 +76,7 @@ function Home() {
                             },
                             ticks: {
                                 font: {
-                                    size: "14", // Kích thước chữ của trục y
+                                    size: "10", // Kích thước chữ của trục y
                                     weight: "bold",
                                 }
                             },
@@ -86,7 +85,19 @@ function Home() {
                 }
             }
         );
-    },[])
+
+        // Thêm sự kiện lắng nghe thay đổi kích thước cửa sổ
+        window.addEventListener('resize', () => {
+            chart.resize();
+        });
+
+        // Dọn dẹp khi unmount
+        return () => {
+            window.removeEventListener('resize', () => {
+                chart.resize();
+            });
+        };
+    })
 
     useEffect(() => {
         const data = {
@@ -99,9 +110,9 @@ function Home() {
                 // label: 'My First Dataset',
                 data: [300, 50, 100],
                 backgroundColor: [
-                    '#E14D2A',
-                    '#004225',
-                    '#1B1A55'
+                    '#B33A89',
+                    '#806154',
+                    '#FFC35E'
                 ],
                 hoverOffset: 4
             }]
@@ -114,58 +125,60 @@ function Home() {
                 data: data
             }
         );
-    },[])
+    })
     
     return ( 
         <div className="home_container">
             <div className="home_container1">
                 <div className="container1_box">
                     <div className="box_header">Vehicle</div>
-                    <ul>
-                        <li style={{fontWeight: '555'}}>Available <span style={{float: 'right', marginRight: '25px'}}>3000</span> </li>
-                        <li style={{fontWeight: '555'}}>Running <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
-                        <li style={{fontWeight: '555'}}>On mainenance <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
+                    <ul className="box_list">
+                        <li className='box_item'>Available <span className="box_item1">3000</span> </li>
+                        <li className='box_item'>Running <span className="box_item1">3000</span></li>
+                        <li className='box_item'>On maintenance <span className="box_item1">3000</span></li>
                     </ul>
                 </div>
 
                 <div className="container1_box">
                     <div className="box_header">Driver</div>
-                    <ul>
-                        <li style={{fontWeight: '555'}}>Active <span style={{float: 'right', marginRight: '25px'}}>3000</span> </li>
-                        <li style={{fontWeight: '555'}}>Inactive <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
+                    <ul className="box_list">
+                        <li className='box_item'>Active <span className="box_item1">3000</span> </li>
+                        <li className='box_item'>Inactive <span className="box_item1">3000</span></li>
                     </ul>
                 </div>
 
                 <div className="container1_box">
                     <div className="box_header">Trip</div>
-                    <ul>
-                        <li style={{fontWeight: '555'}}>Pending <span style={{float: 'right', marginRight: '25px'}}>3000</span> </li>
-                        <li style={{fontWeight: '555'}}>In progress <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
-                        <li style={{fontWeight: '555'}}>Completed <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
-                        <li style={{fontWeight: '555'}}>Cancelled <span style={{float: 'right', marginRight: '25px'}}>3000</span></li>
+                    <ul className="box_list">
+                        <li className='box_item'>Pending <span className="box_item1">3000</span> </li>
+                        <li className='box_item'>In progress <span className="box_item1">3000</span></li>
+                        <li className='box_item'>Completed <span className="box_item1">3000</span></li>
+                        <li className='box_item'>Cancelled <span className="box_item1">3000</span></li>
                     </ul>
                 </div>
 
-                <div className={`container1_box ${ income ? "incomeUp" : "incomeDown" }`}>
-                    <div className="box_header">Income <span style={{float: 'right', marginRight: '25px'}}>3000</span></div>
-                    {income ? ( 
-                    <div style={{display: "inline-block", textAlign: "center"}}>
-                        <FontAwesomeIcon icon={faArrowTrendUp} style={{width: '40%', height: '30%', color: 'rgb(19, 69, 19)'}}/>
-                    </div>
+                <div className={ `container1_income ${ income ? "incomeUp" : "incomeDown" }` }>
+                    <div className="box_header">Income <span className="box_item1">3000</span></div>            
+                    {income ? (
+                        // <div style={{display: "inline-block", textAlign: "center"}}>
+                        <FontAwesomeIcon icon={faArrowTrendUp} style={{width: '70%', height: '50%', color: 'rgb(19, 69, 19)', margin: 'auto'}}/>
+                        // </div>
                     ) : (
-                    <div style={{display: "inline-block", textAlign: "center"}}>
-                        <FontAwesomeIcon icon={faArrowTrendDown} style={{width: '40%', height: '30%', color: 'rgb(108, 22, 22)'}}/>
-                    </div>)}
+                        //<div style={{display: "inline-block", textAlign: "center"}}>
+                        <FontAwesomeIcon icon={faArrowTrendDown} style={{width: '70%', height: '50%', color: 'black', margin: 'auto'}}/>
+                        //</div>
+                    )}
                 </div>
             </div>
 
             <div className="home_container2">
                 <div className="container2_doughnutChart">
                     <canvas id="cost"></canvas>
-                    <div style={{width: '100%', fontWeight: 'bold', marginTop: '10px'}}>Expense summary</div>
+                    <div className="cost_label">Expense summary</div>
                 </div>
 
-                <div className="container2_barChart">
+                {/* <canvas id="revenue"></canvas> */}
+                <div className="container2_lineChart">
                     <canvas id="revenue"></canvas>
                 </div>
             </div>

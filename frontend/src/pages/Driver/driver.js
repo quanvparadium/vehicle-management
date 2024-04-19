@@ -134,54 +134,54 @@ function Driver() {
 
             <div className='add'>
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Fullname <span style={{color: 'red'}}>*</span> </label>
+                    <label className='addBox_label'>Fullname <span style={{color: 'red'}}>*</span> </label>
                     <input type='text' className={`addInputText ${ error.fullname ? "errorInput" : "" }`} 
                         name="fullname" onChange={handleAddChange} value={formData.fullname} onBlur={handleBlur}></input>
                     {error.fullname && <span className='message'>This field is required.</span> }
                 </div>
 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Phone number <span style={{color: 'red'}}>*</span> </label>
+                    <label className='addBox_label'>Phone number <span style={{color: 'red'}}>*</span> </label>
                     <input type='text' className={`addInputText ${ error.phone_number ? "errorInput" : "" }`} 
                         name="phone_number" onChange={handleAddChange} value={formData.phone_number} onBlur={handleBlur}></input>
                     {error.phone_number && <span className='message'>This field is required.</span> }
                 </div>
                 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Date of birth <span style={{color: 'red'}}>*</span> </label>
+                    <label className='addBox_label'>Date of birth <span style={{color: 'red'}}>*</span> </label>
                     <input type='date' className={`addInputText ${ error.date_of_birth ? "errorInput" : "" }`}  
                         name="date_of_birth" onChange={handleAddChange} value={formData.date_of_birth} onBlur={handleBlur}></input>
                     {error.date_of_birth && <span className='message'>This field is required.</span> }
                 </div>
                 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Identification <span style={{color: 'red'}}>*</span> </label>
+                    <label className='addBox_label'>Identification <span style={{color: 'red'}}>*</span> </label>
                     <input type='text' className={`addInputText ${ error.identification ? "errorInput" : "" }`}
                         name="identification" onChange={handleAddChange} value={formData.identification} onBlur={handleBlur}></input>
                     {error.identification && <span className='message'>This field is required.</span> }
                 </div>
                 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Address <span style={{color: 'red'}}>*</span> </label>
+                    <label className='addBox_label'>Address <span style={{color: 'red'}}>*</span> </label>
                     <input type='text' className={`addInputText ${ error.address ? "errorInput" : "" }`} 
                         name="address" onChange={handleAddChange} value={formData.address} onBlur={handleBlur}></input>
                     {error.address && <span className='message'>This field is required.</span> }
                 </div>
 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Email</label>
+                    <label className='addBox_label'>Email</label>
                     <input type='text' className='addInputText' name="email" onChange={handleAddChange} value={formData.email}></input>
                     <span className='message'></span>
                 </div>
                 
                 <div className='addBox'> 
-                    <label style={{fontWeight: 'bold'}}>Expire License</label>
+                    <label className='addBox_label'>Expire License</label>
                     <input type='date' className='addInputText' name="expire_license" onChange={handleAddChange} value={formData.expire_license}></input>
                     <span className='message'></span>
                 </div>
                 
                 <div className='addBox'>
-                    <label style={{fontWeight: 'bold'}}>Experience</label>
+                    <label className='addBox_label'>Experience</label>
                     <input type='text' className='addInputText' name='experience' onChange={handleAddChange} value={formData.experience}></input>
                     <span className='message'></span>
                 </div>
@@ -199,16 +199,15 @@ function Driver() {
                 <table className='list'>
                     <thead>
                         <tr className='headerTable'>
-                            <th>Id</th>
+                            <th>Identification</th>
                             <th>Fullname</th>
                             <th>Phone number</th>
                             <th>Date of birth</th>
-                            <th>Identification</th>
                             <th>Address</th>
                             <th>Email</th>
                             <th>Expire License</th>
                             <th>Experience</th>
-                            <th>Action</th>
+                            <th colSpan={2}>Action</th>
                         </tr>
                     </thead>
 
@@ -217,32 +216,28 @@ function Driver() {
                             (driver, index) => (
                                 driver.id === editID ? 
                                 <tr key={index}>
-                                    <td>{driver.id}</td>
+                                    <td> <input type='text' className="updateInput" value={update.identification} onChange={(e) => handleUpdateChange(e, 'identification')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.fullname} onChange={(e) => handleUpdateChange(e,'fullname')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.phone_number} onChange={(e) => handleUpdateChange(e, 'phone_number')}/> </td>
                                     <td> <input type='date' className="updateInput" value={update.date_of_birth} onChange={(e) => handleUpdateChange(e, 'date_of_birth')}/> </td>
-                                    <td> <input type='text' className="updateInput" value={update.identification} onChange={(e) => handleUpdateChange(e, 'identification')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.address} onChange={(e) => handleUpdateChange(e, 'address')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.email} onChange={(e) => handleUpdateChange(e, 'email')}/> </td>
                                     <td> <input type='date' className="updateInput" value={update.expire_license} onChange={(e) => handleUpdateChange(e, 'expire_license')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.experience} onChange={(e) => handleUpdateChange(e, 'experience')}/> </td>
-                                    <td> <button onClick={() => handleUpdate(driver.id)}>Update</button> </td>
+                                    <td colSpan={2}> <button onClick={() => handleUpdate(driver.id)}>Update</button> </td>
                                 </tr>
                                 :
                                 <tr key={index}>
-                                    <td>{driver.id}</td>
+                                    <td>{driver.identification}</td>
                                     <td>{driver.fullname}</td>
                                     <td>{driver.phone_number}</td>
                                     <td>{driver.date_of_birth}</td>
-                                    <td>{driver.identification}</td>
                                     <td>{driver.address}</td>
                                     <td>{driver.email}</td>
                                     <td>{driver.expire_license}</td>
                                     <td>{driver.experience}</td>
-                                    <td style={{display:'flex', justifyContent:"space-around", border:'1px solid black'}}> 
-                                        <button onClick={() => handleEdit(driver.id)}> <FontAwesomeIcon icon={faPenToSquare} /> </button>
-                                        <button onClick={() => handleDelete(driver.id)}> <FontAwesomeIcon icon={faTrash} /> </button>
-                                    </td>
+                                    <td><button onClick={() => handleEdit(driver.id)}> <FontAwesomeIcon icon={faPenToSquare}/> </button></td>
+                                    <td><button onClick={() => handleDelete(driver.id)}> <FontAwesomeIcon icon={faTrash}/> </button></td>
                                 </tr>
                             )
                         )}
