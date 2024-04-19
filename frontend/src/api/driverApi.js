@@ -2,27 +2,28 @@ import axiosClient from "./axiosClient";
 
 const driverApi = {
     getAll(x) {
-        const url = `/driver`;
-        return axiosClient.get(url, {params: x});
+        const url = `/drivers`;
+        return axiosClient.get(url);
     },
 
     get(id) {
-        const url = `/driver/${id}`;
+        const url = `/drivers/${id}`;
         return axiosClient.get(url);
     },
 
     add(data) {
-        const url = `/driver`;
+        const url = `/drivers`;
         return axiosClient.post(url, data);
     },
 
     update(data) {
-        const url = `/driver/${data.id}`;
+        const url = `/drivers/${data._id}`;
+        console.log('data patch', data)
         return axiosClient.patch(url, data);
     },
 
     remove(id) {
-        const url = `/driver/${id}`;
+        const url = `/drivers/${id}`;
         return axiosClient.delete(url);
     }
 }

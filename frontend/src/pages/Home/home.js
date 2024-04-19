@@ -32,7 +32,6 @@ function Home() {
     const [doughnut, setDoughnut] = useState();
     useEffect(() => {
         const temp = tripApi.getAll();
-
     },[])
 
     useEffect(() => {

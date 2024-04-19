@@ -99,7 +99,10 @@ function Driver() {
 
     // 
     async function handleEdit(id) {
+        console.log(id)
+
         const temp = await driverApi.get(id);
+        console.log(temp)
         setUpdate(temp);
         setEditID(id);
     }
@@ -214,7 +217,7 @@ function Driver() {
                     <tbody>
                         {driverList.map(
                             (driver, index) => (
-                                driver.id === editID ? 
+                                driver._id === editID ? 
                                 <tr key={index}>
                                     <td> <input type='text' className="updateInput" value={update.identification} onChange={(e) => handleUpdateChange(e, 'identification')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.fullname} onChange={(e) => handleUpdateChange(e,'fullname')}/> </td>
@@ -224,7 +227,7 @@ function Driver() {
                                     <td> <input type='text' className="updateInput" value={update.email} onChange={(e) => handleUpdateChange(e, 'email')}/> </td>
                                     <td> <input type='date' className="updateInput" value={update.expire_license} onChange={(e) => handleUpdateChange(e, 'expire_license')}/> </td>
                                     <td> <input type='text' className="updateInput" value={update.experience} onChange={(e) => handleUpdateChange(e, 'experience')}/> </td>
-                                    <td colSpan={2}> <button onClick={() => handleUpdate(driver.id)}>Update</button> </td>
+                                    <td colSpan={2}> <button onClick={() => handleUpdate(driver._id)}>Update</button> </td>
                                 </tr>
                                 :
                                 <tr key={index}>
@@ -236,8 +239,8 @@ function Driver() {
                                     <td>{driver.email}</td>
                                     <td>{driver.expire_license}</td>
                                     <td>{driver.experience}</td>
-                                    <td><button onClick={() => handleEdit(driver.id)}> <FontAwesomeIcon icon={faPenToSquare}/> </button></td>
-                                    <td><button onClick={() => handleDelete(driver.id)}> <FontAwesomeIcon icon={faTrash}/> </button></td>
+                                    <td><button onClick={() => handleEdit(driver._id)}> <FontAwesomeIcon icon={faPenToSquare}/> </button></td>
+                                    <td><button onClick={() => handleDelete(driver._id)}> <FontAwesomeIcon icon={faTrash}/> </button></td>
                                 </tr>
                             )
                         )}

@@ -1,5 +1,6 @@
 
 import loginApi from '../../api/loginApi';
+import axiosClient from '../../axios';
 import './styles.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -40,18 +41,29 @@ function Login() {
         }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        for (let i = 0; i < userList.length; i++) {
-            if(formData.username !== userList[i].username) continue;
-            else if(formData.password !== userList[i].password) continue;
-            else {
-                navigate("/");
-                return;
-            }
-        };
-        setError(true);
+        // console.log(formData);
+        // for (let i = 0; i < userList.length; i++) {
+        //     if(formData.username !== userList[i].username) continue;
+        //     else if(formData.password !== userList[i].password) continue;
+        //     else {
+        //         navigate("/");
+        //         return;
+        //     }
+        // };
+        // axiosClient
+        const payload = {
+            username: formData.username,
+            password: formData.password
+        }
+        await axiosClient.post('/auth/login', payload).then((result) => {
+            navigate('/')
+        }).catch(error => {
+            // console.log('result', error)
+            setError(true);
+        })
+        
     }
 
     return ( 

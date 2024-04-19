@@ -42,7 +42,7 @@
   ],
   "vehicle": [
     {
-      "id": 1,
+      "id": "1",
       "type": "Car",
       "automaker": "Toyota",
       "model": "Camry",
@@ -57,7 +57,7 @@
       "notes": "No issues"
     },
     {
-      "id": 2,
+      "id": "2",
       "type": "Motorcycle",
       "automaker": "Honda",
       "model": "CBR600RR",
