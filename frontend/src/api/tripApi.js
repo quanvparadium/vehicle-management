@@ -1,7 +1,7 @@
 import axiosClient from "./axiosClient";
 
 const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTMxNjk0ODcsImV4cCI6MTcxMzI1NTg4N30.p0of02GKhEyKM0BNb7iHWSjqjpC_VMZLQSIk9fuqwGQ";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTM1Mzk2NjMsImV4cCI6MTcxMzYyNjA2M30.97K-hSTeDW8bAEs4TDYRutdMbCnjTgn0KI0orVmP40s";
 
 const TripApi = {
     getAll() {
