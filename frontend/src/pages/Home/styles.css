@@ -10,8 +10,7 @@
 }
 
 .home_container1 {
-    
-    width: 90vw;
+    width: 90%;
     height: 20%;
 
     margin-top: 3vh;
@@ -23,7 +22,7 @@
 }
 
 .home_container2 {
-    width: 90vw;
+    width: 90%;
     /* background-color: azure; */
     height: 80%;
 
@@ -34,7 +33,7 @@
 .container1_box {
     width: 23%;
     height: 20vh;
-    background-color: #FFC6D0;
+    background-color: #ffc6d0;
     text-align: left;
     margin-left: 5px;
     padding-bottom: 10px;
@@ -48,7 +47,6 @@
 
     display: flex;
     flex-direction: column;
-
 }
 
 .box_header {
@@ -100,20 +98,18 @@
     align-items: center;
 }
 
-
-
 .incomeUp {
     /* background-color: rgba(0, 128, 0, 0.423);  */
-    background-color: #D3DF6C;
+    background-color: #d3df6c;
 }
 
 .incomeDown {
-    background-color: #F30E0E;
+    background-color: #f30e0e;
 }
 
-
 @media (max-width: 768px) {
-    .container1_box, .container1_income {
+    .container1_box,
+    .container1_income {
         width: 44%;
         margin-bottom: 10px;
     }

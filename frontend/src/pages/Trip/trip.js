@@ -172,7 +172,7 @@ function Trip() {
     // take listtrips for db
     async function dbtrips() {
         const temp = await TripAPi.getAll();
-        setListtrips(temp.data.trips);
+        setListtrips(temp.trips);
     }
     // use to format date from date data to dd-mm-yyyy
     function formatDate(date) {

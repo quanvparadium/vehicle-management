@@ -5,8 +5,6 @@ import TripApi from "../../api/tripApi";
 import { options } from "./data";
 
 const Selectt = (prop) => {
-    console.log(prop);
-
     let index = -1;
     for (let i = 0; i < 3; i++) {
         if (prop.status == options[i].value) {
