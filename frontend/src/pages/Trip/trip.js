@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import Select from "react-select";
+// import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Selectt from "./Selectt";
@@ -10,7 +10,6 @@ import { infomation, options, tripTemplate } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
 import { ReactComponent as TimeIcon } from "../../assets/TimeIcon.svg";
 import { ReactComponent as PriceIcon } from "../../assets/PriceIcon.svg";
-import { ReactComponent as CopyIcon } from "../../assets/CopyIcon.svg";
 import { ReactComponent as DateIcon } from "../../assets/DateIcon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/DeleteIcon.svg";
 
@@ -89,36 +88,6 @@ function Trip() {
                     icon={<DateIcon />}
                     className="w-full h-full focus:outline-none text-gray-500 gap-[10px] text-center"
                     wrapperClassName="w-full"
-                />
-            );
-        } else if (name === "Status") {
-            const style = {
-                control: (provided) => ({
-                    ...provided,
-                    border: 0,
-                    boxShadow: "none",
-                    height: "30px",
-                    minHeight: "30px",
-                }),
-                valueContainer: (base) => ({
-                    ...base,
-                    height: "30px",
-                    padding: "0",
-                }),
-                singleValue: (base) => ({
-                    ...base,
-                    color: "gray-500",
-                }),
-            };
-            return (
-                <Select
-                    className="h-[30px] text-gray-500"
-                    defaultValue={"Select"}
-                    isSearchable={true}
-                    name="status"
-                    options={options}
-                    styles={style}
-                    onChange={(event) => updateState(name, event.value)}
                 />
             );
         } else
@@ -279,27 +248,6 @@ function Trip() {
                                     <DeleteIcon className="h-[20px] opacity-70" />
                                 </button>
                             </div>
-                            <div className="flex flex-row px-[10px] gap-[10px] ">
-                                <span className="text-cur font-medium ">
-                                    Trip code:
-                                </span>
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip._id}
-                                />
-                                <button
-                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
-                                    onClick={() =>
-                                        navigator.clipboard.writeText(
-                                            curtrip._id
-                                        )
-                                    }
-                                >
-                                    <CopyIcon />
-                                </button>
-                            </div>
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium ">
@@ -311,16 +259,6 @@ function Trip() {
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
                                     value={curtrip.vehicle_id}
                                 />
-                                <button
-                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
-                                    onClick={() =>
-                                        navigator.clipboard.writeText(
-                                            curtrip.vehicle_id
-                                        )
-                                    }
-                                >
-                                    <CopyIcon />
-                                </button>
                             </div>
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
@@ -333,16 +271,6 @@ function Trip() {
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
                                     value={curtrip.driver_id}
                                 />
-                                <button
-                                    className="items-center active:bg-gray-400 rounded-[10px] hover:bg-gray-300"
-                                    onClick={() =>
-                                        navigator.clipboard.writeText(
-                                            curtrip.driver_id
-                                        )
-                                    }
-                                >
-                                    <CopyIcon />
-                                </button>
                             </div>
 
                             <div className="flex flex-row px-[10px] gap-[10px]">

@@ -25,7 +25,7 @@ function App() {
                         />
                     );
                 })}
-                {logined &&
+                {/* {logined &&
                     privateRoutes.map((route, index) => {
                         let Layout = DefaultLayout;
 
@@ -41,7 +41,24 @@ function App() {
                                 }
                             />
                         );
-                    })}
+                    })} */}
+
+                {privateRoutes.map((route, index) => {
+                    let Layout = DefaultLayout;
+
+                    const Page = route.component;
+                    return (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                <Layout>
+                                    <Page />
+                                </Layout>
+                            }
+                        />
+                    );
+                })}
 
                 <Route path="*" element={<NotFound />} />
             </Routes>

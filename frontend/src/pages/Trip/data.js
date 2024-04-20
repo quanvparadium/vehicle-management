@@ -1,5 +1,4 @@
 const infomation = [
-    { index: 1, name: [{ name: "Trip code", attribute: "_id" }] },
     {
         index: 2,
         name: [
@@ -31,10 +30,7 @@ const infomation = [
     },
     {
         index: 7,
-        name: [
-            { name: "Price", attribute: "price" },
-            { name: "Status", attribute: "status" },
-        ],
+        name: [{ name: "Price", attribute: "price" }],
     },
     { index: 8, name: [{ name: "Note", attribute: "note" }] },
 ];

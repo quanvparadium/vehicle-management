@@ -1,11 +1,11 @@
 import axiosClient from "./axiosClient";
 
 const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTM1Mzk2NjMsImV4cCI6MTcxMzYyNjA2M30.97K-hSTeDW8bAEs4TDYRutdMbCnjTgn0KI0orVmP40s";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTM2MzA1NjIsImV4cCI6MTcxMzcxNjk2Mn0.-Xs8DRc6AxqtKuuB0iUmrFwc5E3Sv97IYii4FPrxR6c";
 
 const TripApi = {
     getAll() {
-        return axiosClient.get("/trip/ListTrip", {
+        return axiosClient.get("/trip/", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -13,7 +13,7 @@ const TripApi = {
     },
 
     add(json) {
-        return axiosClient.post("/trip/AddTrip", json, {
+        return axiosClient.post("/trip/", json, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -21,7 +21,7 @@ const TripApi = {
     },
 
     delete(id) {
-        return axiosClient.delete("/trip/DeleteTrip", {
+        return axiosClient.delete("/trip/", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -31,7 +31,7 @@ const TripApi = {
 
     update(id, sta) {
         return axiosClient.put(
-            "/trip/UpdateTrip",
+            "/trip/",
             { ExistTrip: { _id: id }, Update: { status: sta } },
             {
                 headers: {

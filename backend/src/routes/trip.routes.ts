@@ -6,8 +6,8 @@ import { TripUpdateValidator } from '~/middlewares/trips.middlewares'
 import { getAllTripController, createTripController, updateTripController, deleteTripController } from '~/controllers/trip.controllers'
 
 const tripRouter = Router();
-tripRouter.post('/AddTrip',accessTokenValidator, TripValidator, createTripController)
-tripRouter.get('/ListTrip', accessTokenValidator, getAllTripController)
-tripRouter.put('/UpdateTrip', accessTokenValidator,TripUpdateValidator, updateTripController)
-tripRouter.delete('/DeleteTrip', accessTokenValidator,TripDeleteValidator, deleteTripController)
+tripRouter.post('/',accessTokenValidator, TripValidator, createTripController)
+tripRouter.get('/', accessTokenValidator, getAllTripController)
+tripRouter.put('/', accessTokenValidator,TripUpdateValidator, updateTripController)
+tripRouter.delete('/', accessTokenValidator,TripDeleteValidator, deleteTripController)
 export default tripRouter
