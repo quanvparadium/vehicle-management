@@ -44,8 +44,8 @@ function Vehicle() {
         async function fetchVehicle() {
             try {
                 const response = await getAllVehicle();
-                console.log("Response", response.data)
-                setVehicleList(response.data);
+                console.log("Response", response)
+                setVehicleList(response);
             } catch (error) {
                 console.error(error);
             }
@@ -60,7 +60,7 @@ function Vehicle() {
             // Gửi request để thêm mới phương tiện
             await addVehicle(formData);
             const res = await getAllVehicle();
-            setVehicleList(res.data);
+            setVehicleList(res);
             setAdding(true);
             // Đặt lại form và thông báo lỗi
             setFormData(initialFormData);
@@ -72,7 +72,7 @@ function Vehicle() {
     const handleEdit = async (id) => {
         try {
             const res = await getVehicle(id);
-            setUpdate(res.data);
+            setUpdate(res);
             setEditId(id);
         } catch (error) {
             console.error('Error edit vehicle:', error);
@@ -93,7 +93,7 @@ function Vehicle() {
 
             await updateVehicle(update);
             const res = await getAllVehicle();
-            setVehicleList(res.data);
+            setVehicleList(res);
             
             setEditId(-1);
             // Cập nhật lại danh sách phương tiện
@@ -127,8 +127,8 @@ function Vehicle() {
     };
   
   return (
-    <div>
-        <h1 style={{ marginTop: "100px", fontWeight: "bold" }}>Vehicle information</h1>
+    <div className="vehicle_container">
+        <h1 style={{ marginTop: "6px", fontWeight: "bold" }}>Vehicle information</h1>
             <div className="page">
                 <div className="vehicle">
                 <form className="form" onSubmit={handleSubmit}>

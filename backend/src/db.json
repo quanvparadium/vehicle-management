@@ -1,0 +1,121 @@
+{
+  "login": [
+    {
+      "id": "1",
+      "username": "Gia Nguyen",
+      "password": "1234notfound"
+    },
+    {
+      "id": "2",
+      "username": "Nam",
+      "password": "2345"
+    },
+    {
+      "id": "3",
+      "username": "Luan",
+      "password": "1412"
+    }
+  ],
+  "driver": [
+    {
+      "id": "ea84",
+      "fullname": "aaa",
+      "phone_number": "222",
+      "date_of_birth": "2024-04-03",
+      "identification": "44444habfdn",
+      "address": "5",
+      "email": "",
+      "expire_license": "",
+      "experience": ""
+    },
+    {
+      "id": "f912",
+      "fullname": "Nguyên",
+      "phone_number": "039",
+      "date_of_birth": "2024-04-03",
+      "identification": "a",
+      "address": "a",
+      "email": "",
+      "expire_license": "",
+      "experience": ""
+    }
+  ],
+  "vehicle": [
+    {
+      "id": "1",
+      "type": "Car",
+      "automaker": "Toyota",
+      "model": "Camry",
+      "licensePlates": "ABC 123",
+      "chassisNumber": "123456789",
+      "frameNumber": "987654321",
+      "state": "Active",
+      "fuelState": "Full",
+      "runnerKms": "10000",
+      "recentMaintenance": "2023-01-01",
+      "position": "Garage",
+      "notes": "No issues"
+    },
+    {
+      "id": "2",
+      "type": "Motorcycle",
+      "automaker": "Honda",
+      "model": "CBR600RR",
+      "licensePlates": "XYZ 456",
+      "chassisNumber": "987654321",
+      "frameNumber": "123456789",
+      "state": "Inactive",
+      "fuelState": "Empty",
+      "runnerKms": "5000",
+      "recentMaintenance": "2023-03-15",
+      "position": "Parking lot",
+      "notes": "Needs repair"
+    },
+    {
+      "id": "ee7b",
+      "type": "fcjhbj,kfcs",
+      "licensePlates": "chbajvn",
+      "automaker": "fhgvhjdj.lvba",
+      "model": "vdasac",
+      "chassisNumber": "sc",
+      "frameNumber": "vsa",
+      "state": "",
+      "fuelState": "",
+      "runnerKms": "",
+      "recentMaintenance": "",
+      "position": "",
+      "notes": ""
+    },
+    {
+      "id": "4b13",
+      "type": "aaaaa",
+      "licensePlates": "aaaaa",
+      "automaker": "aaaa",
+      "model": "aaaa",
+      "chassisNumber": "aaaa",
+      "frameNumber": "aaaa",
+      "state": "",
+      "fuelState": "",
+      "runnerKms": "",
+      "recentMaintenance": "",
+      "position": "",
+      "notes": ""
+    },
+    {
+      "id": "c831",
+      "type": "truck",
+      "licensePlates": "had22",
+      "automaker": "ssss",
+      "model": "dont know",
+      "chassisNumber": "ff33",
+      "frameNumber": "01234",
+      "state": "",
+      "fuelState": "",
+      "runnerKms": "",
+      "recentMaintenance": "",
+      "position": "",
+      "notes": ""
+    }
+  ],
+  "trip": []
+}

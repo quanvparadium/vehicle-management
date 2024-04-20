@@ -1,7 +1,11 @@
-body
+/* body
 {
     background-color: #B1CAE9;
+} */
+.vehicle_container {
+    background-color: #E4EEF3;
 }
+
 .vehicle
 {
     width: 1200px;

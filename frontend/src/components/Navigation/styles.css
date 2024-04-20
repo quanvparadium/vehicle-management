@@ -2,18 +2,20 @@
     text-decoration: none;
     font-weight: bold;
     color: black;
-    font-size: 20;
+    font-size: 20px;
 }
 
 .Navigation {
-    height: 60px;
-    background-color: #3596b5;
+    height: 7vh;
+    width: 100vw;
+
+    background-color: orange;
     position: fixed;
-    /*position*/
     top: 0px;
     left: 0px;
     right: 0px;
-    /*position*/
+    z-index: 1;
+
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -30,4 +32,20 @@
     list-style: none;
     margin: 0 8px;
     display: inline-block;
+}
+
+.image_home {
+    width: 26px;
+    height: 24px;
+}
+
+@media (max-width: 488px) {
+    .Link {
+        font-size: small;
+    }
+
+    .image_home {
+        width: 16px;
+        height: 14px;
+    }
 }

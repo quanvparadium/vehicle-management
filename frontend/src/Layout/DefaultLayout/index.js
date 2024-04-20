@@ -4,11 +4,13 @@ import Navigation from '../../components/Navigation'
 import './styles.css'
 
 function DefaultLayout({children}) {
+
+
     return ( 
-        <div >
+        <div className='web'>
             <Navigation />
-            <div id="container" >
-                <div id="content">
+            <div className='container'>
+                <div className="content">
                     {children}
                 </div>
             </div>

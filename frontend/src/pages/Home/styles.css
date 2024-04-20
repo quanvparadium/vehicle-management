@@ -1,0 +1,145 @@
+.home_container {
+    width: 100%;
+    background-color: #e4eef3;
+    min-height: 93vh;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home_container1 {
+    
+    width: 90vw;
+    height: 20%;
+
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.home_container2 {
+    width: 90vw;
+    /* background-color: azure; */
+    height: 80%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.container1_box {
+    width: 23%;
+    height: 20vh;
+    background-color: #FFC6D0;
+    text-align: left;
+    margin-left: 5px;
+    padding-bottom: 10px;
+}
+
+.container1_income {
+    width: 23%;
+    height: 20vh;
+    margin-left: 5px;
+    padding-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.box_header {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 22px;
+}
+
+.box_list {
+    padding-left: 0;
+}
+
+.box_item {
+    list-style: none;
+    font-weight: 555;
+    /* display: flex;  */
+    /* align-items: center; */
+}
+
+.box_item::before {
+    content: "•"; /* chèn dấu chấm trước mỗi mục */
+    margin-right: 5px; /* khoảng cách giữa dấu chấm và văn bản */
+    margin-left: 5px;
+}
+
+.box_item1 {
+    float: right;
+    margin-right: 5px;
+}
+
+.container2_doughnutChart {
+    width: 25%;
+    /* min-width: 100px; */
+    /* background-color: brown; */
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container2_lineChart {
+    width: 65%;
+    /* background-color: blueviolet; */
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.incomeUp {
+    /* background-color: rgba(0, 128, 0, 0.423);  */
+    background-color: #D3DF6C;
+}
+
+.incomeDown {
+    background-color: #F30E0E;
+}
+
+
+@media (max-width: 768px) {
+    .container1_box, .container1_income {
+        width: 44%;
+        margin-bottom: 10px;
+    }
+
+    .home_container2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container2_doughnutChart {
+        width: 65%;
+        margin-bottom: 10vh;
+    }
+
+    .container2_lineChart {
+        width: 100%;
+        margin-bottom: 10vh;
+    }
+
+    .cost_label {
+        font-size: small;
+    }
+}
+
+@media (max-width: 400px) {
+    .box_item {
+        font-size: small;
+    }
+}

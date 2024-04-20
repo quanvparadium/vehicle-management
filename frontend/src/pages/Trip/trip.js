@@ -1,6 +1,6 @@
 function Trip() {
     return ( 
-        <h1 style={{marginTop: '100px'}}>Trip</h1>
+        <h1>Trip</h1>
     );
 }
 

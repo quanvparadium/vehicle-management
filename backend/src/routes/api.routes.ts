@@ -8,4 +8,8 @@ apiRouter.get('/', (req, res) => {
     })
 })
 
+apiRouter.get('/trip', (req, res) => {
+    return res.json([]);
+})
+
 export default apiRouter
