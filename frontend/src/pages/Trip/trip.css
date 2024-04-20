@@ -12,7 +12,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
-@media (max-width: 1000px) {
+@media (max-width: 700px) {
     .setupWidth {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }

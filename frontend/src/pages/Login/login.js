@@ -4,7 +4,7 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setChange }) {
     const [userList, setUserList] = useState([]);
     const [formData, setFormData] = useState({
         username: "",
@@ -51,12 +51,14 @@ function Login() {
             username: formData.username,
             password: formData.password,
         };
-        await axiosClient.post("/auth/login", payload)
+        await axiosClient
+            .post("/auth/login", payload)
             .then((result) => {
                 navigate("/home");
+                setChange();
             })
             .catch((error) => {
-                console.log('result', error)
+                console.log("result", error);
                 setError(true);
             });
     };
