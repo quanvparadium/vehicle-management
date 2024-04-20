@@ -51,13 +51,12 @@ function Login() {
             username: formData.username,
             password: formData.password,
         };
-        await axiosClient
-            .post("/auth/login", payload)
+        await axiosClient.post("/auth/login", payload)
             .then((result) => {
-                navigate("/");
+                navigate("/home");
             })
             .catch((error) => {
-                // console.log('result', error)
+                console.log('result', error)
                 setError(true);
             });
     };

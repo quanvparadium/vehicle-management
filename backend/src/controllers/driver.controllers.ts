@@ -45,7 +45,13 @@ export const updateDriverController = async (
       {
         $set: {
           identification: data.identification,
-          fullname: data.fullname
+          fullname: data.fullname,
+          phone_number: data.phone_number,
+          date_of_birth: data.date_of_birth,
+          address: data.address,
+          email: data.email,
+          expire_license: data.expire_license,
+          experience: data.experience,
         }
       }
     )

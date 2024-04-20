@@ -97,7 +97,7 @@
     position: sticky; 
     top: 0px;
     
-    background-color: #B80000;
+    background-color: #007F73;
     color: white;
     
     text-align: center;
@@ -121,7 +121,7 @@
 }
 
 .errorInput {
-    background-color: rgb(250, 180, 169);
+    background-color: rgb(253, 82, 59);
 }
 
 .addBox_label {

@@ -153,16 +153,13 @@ function Home() {
                     <div className="box_header">Trip</div>
                     <ul className="box_list">
                         <li className="box_item">
-                            Pending <span className="box_item1">3000</span>{" "}
+                            Available <span className="box_item1">3000</span>{" "}
                         </li>
                         <li className="box_item">
-                            In progress <span className="box_item1">3000</span>
+                            In process <span className="box_item1">3000</span>
                         </li>
                         <li className="box_item">
-                            Completed <span className="box_item1">3000</span>
-                        </li>
-                        <li className="box_item">
-                            Cancelled <span className="box_item1">3000</span>
+                            Done <span className="box_item1">3000</span>
                         </li>
                     </ul>
                 </div>
@@ -173,7 +170,7 @@ function Home() {
                     }`}
                 >
                     <div className="box_header">
-                        Income <span className="box_item1">3000</span>
+                        Income <span className="box_header_item">3000</span>
                     </div>
                     {income ? (
                         // <div style={{display: "inline-block", textAlign: "center"}}>

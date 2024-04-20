@@ -7,7 +7,7 @@ import "./Navbar.css";
 
 const navigation = [
     { index: 0, name: "Home", href: "/home" },
-    { index: 1, name: "Vehical", href: "/vehicle" },
+    { index: 1, name: "Vehicle", href: "/vehicle" },
     { index: 2, name: "Driver", href: "/driver" },
     { index: 3, name: "Trips", href: "/trip" },
 ];
@@ -21,7 +21,7 @@ export default function Navbar() {
         <>
             <Disclosure
                 as="nav"
-                className="bg-white border-b-2 border-solid border-custom-border py-2 text-lg"
+                className="bg-yellow-200 border-b-2 border-solid border-custom-border py-2 text-lg"
             >
                 {({ open }) => (
                     <>
@@ -50,7 +50,7 @@ export default function Navbar() {
                                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                     <div className="flex flex-shrink-0 items-center">
                                         <p className="text-3xl text-custom-logo font-custom font-bold">
-                                            Carman
+                                            BKVERSE
                                         </p>
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block">
@@ -72,7 +72,7 @@ export default function Navbar() {
                                         to={"/"}
                                         className="text-black hover:bg-gray-200 rounded-md px-3 py-2 font-medium"
                                     >
-                                        Login
+                                        Log out
                                     </Link>
                                 </div>
                             </div>

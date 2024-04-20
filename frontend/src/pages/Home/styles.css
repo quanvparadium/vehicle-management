@@ -1,7 +1,8 @@
 .home_container {
     width: 100%;
-    background-color: #e4eef3;
-    min-height: 93vh;
+    /* background-color: #e4eef3; */
+    min-height: 85vh;
+    margin-top: 10px;
 
     display: flex;
     justify-content: space-around;
@@ -56,6 +57,11 @@
     margin-left: 22px;
 }
 
+.box_header_item {
+    float: right;
+    margin-right: 22px;
+}
+
 .box_list {
     padding-left: 0;
 }
@@ -75,7 +81,7 @@
 
 .box_item1 {
     float: right;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .container2_doughnutChart {
@@ -85,7 +91,7 @@
     height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
