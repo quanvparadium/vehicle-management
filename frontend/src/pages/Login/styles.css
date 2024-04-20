@@ -1,39 +1,114 @@
-#box {
-    width: 30%;
+.formSubmit {
+    margin-right: 50px;
+
+    width: 27%;
     height: 500px;
-    background-color: #197bbd;
+    background-color: rgb(143, 143, 59);
     border: 5px solid black;
+
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: space-around;
+    justify-content: space-between;
     flex-direction: column;
-    margin: auto;
-    margin-top: 50px;
+    /* margin-top: 50px; */
+}
+.box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.inputText {
-    width: 90%;
-    padding: 20px;
-    margin: auto;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.inputSubmit {
-    margin-top: 50px;
-    width: 90%;
-    padding: 20px;
-    font-size: 20px;
-}
-
-.inputSubmit:hover {
-    background-color: #204b57;
-}
-
-.lableSt {
+.formLabel {
     margin: 24px;
     margin-bottom: 10px;
     font-weight: bold;
+}
+
+.formInput,
+.error {
+    width: 90%;
+    padding: 20px;
+    display: inline-block;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: large;
+}
+
+.formButton {
+    position: relative;
+    color: black;
+    font-weight: bold;
+    background-color: burlywood;
+    width: 90%;
+    padding: 20px;
+    font-size: 20px;
+    margin: auto;
+}
+
+.formButton:hover {
+    background-color: #204b57;
+    color: white;
+}
+
+.error {
+    background-color: rgb(150, 178, 242);
+    color: black;
+    font-weight: bold;
+}
+
+.login_container {
+    height: 100%;
+    background-image: url("../../assets/images/background.png"); /* Đường dẫn đến hình ảnh */
+    background-size: cover; /* Đảm bảo hình ảnh sẽ bao phủ toàn bộ phần tử */
+    /*background-position: center; /* Căn giữa hình ảnh trong phần tử */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+    background-attachment: fixed;
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    min-height: 93vh;
+}
+
+@media (max-width: 1200px) {
+    .login_container {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .formSubmit {
+        background-color: rgba(143, 143, 59, 0.8);
+        width: 50%;
+        margin-top: 20px;
+        margin-right: 0px;
+    }
+
+    .box,
+    .error,
+    .formButton {
+        font-size: small;
+    }
+
+    .formButton {
+        background-color: rgba(222, 184, 135, 0.8);
+    }
+
+    .formButton:hover {
+        background-color: #204b57;
+    }
+
+    .error {
+        background-color: rgba(150, 178, 242, 0.512);
+    }
+}
+
+@media (max-width: 480px) {
+    .formSubmit {
+        width: 70%;
+        margin-top: 0px;
+    }
 }

@@ -4,7 +4,7 @@ import { Router } from 'express'
  */
 import { accessTokenValidator } from '~/middlewares/auth.middlewares'
 import { DriverValidator } from '~/middlewares/drivers.middlewares'
-import { getAllDriverController, createDriverController } from '~/controllers/driver.controllers'
+import { getAllDriverController, createDriverController, getDriverController, updateDriverController } from '~/controllers/driver.controllers'
 
 // Khai báo router cho driver
 const driverRouter = Router()
@@ -17,7 +17,9 @@ const driverRouter = Router()
  * Method: GET
  * Header: { Authorization: Bearer <access_token> }
  */
-driverRouter.get('/', accessTokenValidator, getAllDriverController)
+driverRouter.get('/', getAllDriverController)
+driverRouter.get('/:id', getDriverController)
+
 
 /**
  * Description: Get all drivers from database
@@ -33,6 +35,8 @@ driverRouter.get('/', accessTokenValidator, getAllDriverController)
  *     ...
  * }
  */
-driverRouter.post('/', accessTokenValidator, DriverValidator, createDriverController)
+driverRouter.post('/', DriverValidator, createDriverController)
+
+driverRouter.patch('/:id', updateDriverController)
 
 export default driverRouter

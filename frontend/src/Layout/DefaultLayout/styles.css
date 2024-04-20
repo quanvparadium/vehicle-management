@@ -1,0 +1,17 @@
+html {
+    background-color: #f6eeeeec;
+}
+
+/* #container {
+    margin-top: 60px;
+    background-color: red;
+    height: 920px;
+} */
+
+.content {
+    /* background-color: #198DB2; */
+    
+    margin-top: 7vh;
+    height: 93vh;
+    width: 100%;
+}

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: BACKEND_URL,
 });
 
 // Add a request interceptor
@@ -17,11 +18,11 @@ axios.interceptors.request.use(
 );
 
 // Add a response interceptor
-axios.interceptors.response.use(
+axiosClient.interceptors.response.use(
     function (response) {
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
-        return response;
+        return response.data; //bỏ header, config
     },
     function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
