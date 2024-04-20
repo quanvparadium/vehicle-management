@@ -5,15 +5,14 @@ import DriverPage from "../pages/Driver/driver";
 import TripPage from "../pages/Trip/trip";
 
 //không cần đăng nhập vẫn xem được
-const publicRoutes = [
-    { path: "/", component: HomePage },
-    { path: "/login", component: LoginPage },
+const publicRoutes = [{ path: "/", component: LoginPage }];
+
+//phải đăng nhập
+const privateRoutes = [
+    { path: "/home", component: HomePage },
     { path: "/vehicle", component: VehiclePage },
     { path: "/driver", component: DriverPage },
     { path: "/trip", component: TripPage },
 ];
-
-//phải đăng nhập
-const privateRoutes = [];
 
 export { publicRoutes, privateRoutes };
