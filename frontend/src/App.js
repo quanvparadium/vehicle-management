@@ -2,16 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes, privateRoutes } from "./routes/Route";
 import DefaultLayout from "./Layout/DefaultLayout";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 import NotFound from "./pages/NotFounded/NotFound";
 
 function App() {
-    const [logined, setLogined] = useState(false);
-
-    const setChange = () => {
-        setLogined(!logined);
-    };
-
+    const [login, setLogin] = useState(
+        Cookies.get("login") === "true" ? true : false
+    );
     return (
         <div className="App">
             <Routes>
@@ -21,11 +19,11 @@ function App() {
                         <Route
                             key={index}
                             path={route.path}
-                            element={<Page setChange={setChange} />}
+                            element={<Page setLogin={setLogin} />}
                         />
                     );
                 })}
-                {/* {logined &&
+                {login &&
                     privateRoutes.map((route, index) => {
                         let Layout = DefaultLayout;
 
@@ -35,15 +33,15 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
+                                    <Layout setLogin={setLogin}>
                                         <Page />
                                     </Layout>
                                 }
                             />
                         );
-                    })} */}
+                    })}
 
-                {privateRoutes.map((route, index) => {
+                {/* {privateRoutes.map((route, index) => {
                     let Layout = DefaultLayout;
 
                     const Page = route.component;
@@ -58,7 +56,7 @@ function App() {
                             }
                         />
                     );
-                })}
+                })} */}
 
                 <Route path="*" element={<NotFound />} />
             </Routes>

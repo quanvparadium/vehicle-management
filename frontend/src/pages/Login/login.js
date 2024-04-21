@@ -1,9 +1,11 @@
+import Cookies from "js-cookie";
+
 import axiosClient from "../../axios";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({ setChange }) {
+function Login({ setLogin }) {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -27,9 +29,13 @@ function Login({ setChange }) {
         };
         await axiosClient
             .post("/auth/login", payload)
-            .then((result) => {
+            .then(async (result) => {
+                await Promise.all([
+                    Cookies.set("token", result.result.access_token),
+                    Cookies.set("login", true),
+                ]);
+                setLogin(true);
                 navigate("/home");
-                setChange();
             })
             .catch((error) => {
                 console.log("result", error);

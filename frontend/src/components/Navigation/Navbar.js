@@ -1,7 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import "./Navbar.css";
 
@@ -16,7 +16,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ setLogin }) {
     return (
         <>
             <Disclosure
@@ -59,7 +59,7 @@ export default function Navbar() {
                                                 <NavLink
                                                     key={item.name}
                                                     to={item.href}
-                                                    className="text-black hover:bg-gray-200 rounded-md px-3 py-2 font-medium"
+                                                    className="text-black hover:bg-yellow-300 rounded-md px-3 py-2 font-medium"
                                                 >
                                                     {item.name}
                                                 </NavLink>
@@ -70,7 +70,14 @@ export default function Navbar() {
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                     <Link
                                         to={"/"}
-                                        className="text-black hover:bg-gray-200 rounded-md px-3 py-2 font-medium"
+                                        onClick={async () => {
+                                            await Promise.all(
+                                                Cookies.set("login", false),
+                                                Cookies.set("token", null)
+                                            );
+                                            setLogin(false);
+                                        }}
+                                        className="text-black hover:bg-yellow-300 rounded-md px-3 py-2 font-medium"
                                     >
                                         Log out
                                     </Link>

@@ -62,3 +62,14 @@
 .transform5050 {
     transform: translate(50%, 50%);
 }
+//date-range-picker
+.rs-input-group {
+    border: none !important;
+    border-width: 0;
+}
+.rs-input-group:not(.rs-input-group-disabled):hover,
+.rs-input-group:not(.rs-input-group-disabled).rs-input-group-focus,
+.rs-input-group:focus-within {
+    border: none;
+    border-color: white;
+}

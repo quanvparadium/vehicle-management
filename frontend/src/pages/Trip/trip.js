@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
-// import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "rsuite/DateRangePicker/styles/index.css";
+import DateRangePicker from "rsuite/DateRangePicker";
+import swal from "sweetalert";
 
 import Selectt from "./Selectt";
 import TripAPi from "../../api/tripApi";
@@ -10,14 +10,10 @@ import { infomation, options, tripTemplate } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
 import { ReactComponent as TimeIcon } from "../../assets/TimeIcon.svg";
 import { ReactComponent as PriceIcon } from "../../assets/PriceIcon.svg";
-import { ReactComponent as DateIcon } from "../../assets/DateIcon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/DeleteIcon.svg";
 
 function Trip() {
-    const [curdate1, setCurdate1] = useState(new Date()); //date of "Departure date"
-    const [curdate2, setCurdate2] = useState(new Date()); //date of "End date"
     const [listtrips, setListtrips] = useState([]); // take list of trips from db
-    const [_id, setID] = useState(); // id of trip
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
     //error
     const [errorMes, setErrorMes] = useState([]);
@@ -25,45 +21,39 @@ function Trip() {
     const updateState = (name, value) => {
         let property;
         switch (name) {
-            case infomation[0].name[0].name:
-                setID(value);
+            case "Date":
+                property = {
+                    date_of_departure: value[0],
+                    date_of_arrival: value[1],
+                };
                 break;
-            case infomation[1].name[0].name:
+            case "vehicle_id":
                 property = { vehicle_id: value };
                 break;
-            case infomation[1].name[1].name:
+            case "driver_id":
                 property = { driver_id: value };
                 break;
-            case infomation[2].name[0].name:
-                property = { date_of_departure: value };
-                break;
-            case infomation[2].name[1].name:
-                property = { date_of_arrival: value };
-                break;
-            case infomation[3].name[0].name:
+            case "starting_point":
                 property = { starting_point: value };
                 break;
-            case infomation[3].name[1].name:
+            case "destination":
                 property = { destination: value };
                 break;
-            case infomation[4].name[0].name:
+            case "pathway":
                 property = { pathway: value };
                 break;
-            case infomation[5].name[0].name:
+            case "distance":
                 property = { distance: value };
                 break;
-            case infomation[5].name[1].name:
+            case "expected_time":
                 property = { expected_time: value };
                 break;
-            case infomation[6].name[0].name:
+            case "price":
                 property = { price: value };
                 break;
-            case infomation[6].name[1].name:
-                property = { status: value };
-                break;
-            case infomation[7].name[0].name:
-                property = { note: value };
-                break;
+            // case infomation[6].name[0].name:
+            //     property = { note: value };
+            //     break;
         }
         setTrip((prev) => ({
             ...prev,
@@ -71,32 +61,30 @@ function Trip() {
         }));
     };
     //choose the correct box in search bar
-    const chooseElement = (info, name) => {
-        if (info.index === 3) {
+    const chooseElement = (info, attribute) => {
+        if (info.index === 2) {
             return (
-                <DatePicker
-                    dateFormat="dd-MM-yyyy"
-                    selected={name === "Departure date" ? curdate1 : curdate2}
-                    onChange={(date) => {
-                        name === "Departure date"
-                            ? setCurdate1(date)
-                            : setCurdate2(date);
-
-                        updateState(name, date);
-                    }}
-                    showIcon
-                    icon={<DateIcon />}
-                    className="w-full h-full focus:outline-none text-gray-500 gap-[10px] text-center"
-                    wrapperClassName="w-full"
-                />
+                <>
+                    <DateRangePicker
+                        className="w-full h-full focus:outline-none text-gray-500 text-center"
+                        format="hh:mm aa - dd MMM yyyy"
+                        showMeridian // 12h mode
+                        showOneCalendar
+                        placeholder=" "
+                        onChange={(date) => {
+                            if (!date) updateState("Date", [null, null]);
+                            else updateState("Date", [date[0], date[1]]);
+                        }}
+                    />
+                </>
             );
         } else
             return (
                 <input
                     type="text"
-                    className="w-full h-full focus:outline-none text-gray-500"
+                    className="w-full h-full focus:outline-none text-gray-500 mx-[15px]"
                     onChange={(e) => {
-                        updateState(name, e.target.value);
+                        updateState(attribute, e.target.value);
                     }}
                 />
             );
@@ -113,6 +101,7 @@ function Trip() {
                 let err = error.response.data.errors;
                 setErrorMes(Object.keys(err));
                 console.log(errorMes);
+                console.log(err);
                 return false;
             }
             return true;
@@ -121,6 +110,7 @@ function Trip() {
     }
     // when click submit button the added notification will appear
     function appearAndFade() {
+        setErrorMes([]);
         var element = document.getElementById("element");
         element.style.display = "block";
         element.style.opacity = 1;
@@ -133,7 +123,7 @@ function Trip() {
         try {
             await TripAPi.delete(id);
             dbtrips();
-            alert("Delete completed!!");
+            swal("Deleted", "The trip has been removed!", "success");
         } catch (err) {
             console.log(err);
         }
@@ -146,11 +136,13 @@ function Trip() {
     // use to format date from date data to dd-mm-yyyy
     function formatDate(date) {
         date = new Date(date);
+        const hour = date.getHours().toString().padStart(2, "0");
+        const min = date.getMinutes().toString().padStart(2, "0");
         const day = date.getDate().toString().padStart(2, "0");
-        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based, so we add 1
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
         const year = date.getFullYear();
 
-        return `${day}-${month}-${year}`;
+        return `${hour}:${min} ${day}-${month}-${year}`;
     }
 
     useEffect(() => {
@@ -173,13 +165,14 @@ function Trip() {
                             {info.name.map((na) => (
                                 <div key={na.name} className="my-[10px] flex-1">
                                     <div>
-                                        {info.index === 1 ? (
+                                        {na.attribute === "driver_id" ? (
                                             <div className="flex flex-row">
                                                 <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
                                                     {na.name}
                                                 </p>
                                                 <p className="text-[14px] text-gray450 ">
-                                                    (use for search only)
+                                                    (Please enter the distance
+                                                    first)
                                                 </p>
                                             </div>
                                         ) : (
@@ -189,13 +182,13 @@ function Trip() {
                                         )}
 
                                         <div
-                                            className={`h-[35px] bg-white flex-1 rounded-[10px] px-[15px] ${
+                                            className={`h-[35px] bg-white flex-1 rounded-[10px] overflow-hidden ${
                                                 errorMes.includes(na.attribute)
                                                     ? "border-red-700 border-[1px]"
-                                                    : ""
+                                                    : "noborder"
                                             }`}
                                         >
-                                            {chooseElement(info, na.name)}
+                                            {chooseElement(info, na.attribute)}
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +220,7 @@ function Trip() {
 
             <div className="setupWidth w-full grid grid-cols-2 gap-[2%]">
                 {listtrips &&
-                    listtrips.map((curtrip) => (
+                    listtrips.toReversed().map((curtrip) => (
                         <div
                             key={curtrip._id}
                             className="input_right flex flex-col bg-graybg rounded-[10px] gap-[10px]"
@@ -355,7 +348,7 @@ function Trip() {
                                 </div>
 
                                 <div className="flex flex-row gap-[5px]">
-                                    <PriceIcon className="h-[30px]" />
+                                    <PriceIcon className="h-[30px] w-[30px]" />
                                     <p className="text-[16px] font-medium content-center">
                                         {curtrip.price} K
                                     </p>
@@ -373,7 +366,6 @@ function Trip() {
                         </div>
                     ))}
             </div>
-            <div className="mb-[1000px]"></div>
         </div>
     );
 }
