@@ -1,7 +1,11 @@
 import { Request, Response } from 'express'
 import vehiclesService from '~/services/vehicles.services'
 
-
+export const getVehicleController = async (req: Request, res: Response) => {
+    const {id} =req.params
+    const result = await vehiclesService.get(id)
+    return res.json(result)
+}
 export const getALLVehicleController = async (req: Request, res: Response) => {
     const result = await  vehiclesService.getAll()
     return res.json(result)

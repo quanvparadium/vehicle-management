@@ -20,7 +20,21 @@ class vehiclesService {
         }
     }
 
-
+    async get(id: string) {
+        try {
+            const result = await databaseService.vehicles.findOne({ _id: new ObjectId(id) });
+            if (!result) {
+                return {
+                    message: 'Không tìm thấy phương tiên'
+                }
+            }
+            return {
+                result
+            }
+        } catch (error) {
+            console.error('Lỗi: ', error);
+        }
+    }
     async create(payload: VehicleReqBody) {
         const result = await databaseService.vehicles.insertOne(
             new Vehicle({

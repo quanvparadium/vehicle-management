@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { accessTokenValidator } from "~/middlewares/auth.middlewares";
-import { getALLVehicleController, CreateVehicleController, DeleteVehicleController, updateVehicleController} from "~/controllers/vehicle.controller";
-import {  CreateVehicleValidator,UpdateVehicleValidator,DeleteVehicleValidator } from "~/middlewares/vehicle.middlewares";
+import { getALLVehicleController, CreateVehicleController, DeleteVehicleController, updateVehicleController, getVehicleController} from "~/controllers/vehicle.controller";
+import {  CreateVehicleValidator,UpdateVehicleValidator } from "~/middlewares/vehicle.middlewares";
 
 const vehicleRouter = Router()
 /*decripsion: 'Get all vehicles from database'
@@ -38,9 +38,9 @@ body: { VehicleReqBody }
 
 vehicleRouter.post('/create_vehicle',accessTokenValidator,CreateVehicleValidator, CreateVehicleController)
 
-vehicleRouter.delete('/del_vhc', accessTokenValidator,DeleteVehicleValidator, DeleteVehicleController)
-    vehicleRouter.put('/update_vhc', accessTokenValidator, UpdateVehicleValidator, updateVehicleController);
-
+vehicleRouter.delete('/del_vhc', accessTokenValidator, DeleteVehicleController)
+vehicleRouter.put('/update_vhc', accessTokenValidator, UpdateVehicleValidator, updateVehicleController);
+vehicleRouter.get('/:id', accessTokenValidator, getVehicleController)
 
 
 
