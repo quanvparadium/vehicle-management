@@ -12,6 +12,13 @@ export const getAllTripController = async (req: Request, res: Response) => {
         trips: result.trips
     })
 }
+export const getTripController = async (req: Request, res: Response) => {
+    const result = await tripService.getTrip(req.body)
+    return res.json({
+        message: result.message,
+        trip: result.trip
+    })
+}
 
 export const createTripController = async (
     req: Request<ParamsDictionary, any, TripReqBody>,

@@ -74,6 +74,24 @@ class TripService {
             console.error('Lỗi, chưa get được: ', error);
         }
     }
+
+    async getTrip(ExistTrip: TripReqBody){
+        try {
+            if (ExistTrip._id)
+                ExistTrip._id = new ObjectId(ExistTrip._id)
+            const trip = await databaseService.trips.find(ExistTrip).toArray()
+            if (!trip) {
+                return {
+                    message: 'Không tìm thấy chuyến xe'
+                }
+            }
+            return {
+                trip
+            }
+        } catch (error) {
+            console.error('Lỗi, chưa get được: ', error);
+        }
+    }
 }
 
 const tripService = new TripService()

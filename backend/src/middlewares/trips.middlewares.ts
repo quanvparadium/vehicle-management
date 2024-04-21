@@ -84,16 +84,6 @@ export const TripValidator = validate(
     })
 );
 
-export const TripDeleteValidator = validate(
-    checkSchema({
-        _id: {
-            in: ['body'],
-            isString: true,
-            errorMessage: "_id phải là chuỗi"
-        }
-    })
-)
-
 export const TripUpdateValidator = validate(
     checkSchema({
         _id: {
