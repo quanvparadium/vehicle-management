@@ -1,20 +1,17 @@
 import { ObjectId } from 'mongodb';
 export interface VehicleReqBody {
-    _id?: ObjectId
+    _id: ObjectId
     Vehicle_id: ObjectId
-    Vehicle_name: string
-    Driver_id: ObjectId
-    Driver_name: string
+    automaker: string
     type: string
     model: string
-    number_plate: string
-    frame_number: string
-    chassis_number: string
+    licensePlates : string
+    frameNumber: string
+    chassisNumber: string
     state: string
     on_trip: boolean
-    fuel_state: number
-    runned_km: number
-    date_recent_maintenance: Date
-    date_next_maintenance: Date
-    current_location: string
+    fuelState: number
+    mileage: number
+    recentMaintenanceDay: Date
+    currentLocation: string
 }

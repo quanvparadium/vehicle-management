@@ -4,12 +4,7 @@ import { validate } from "~/utils/validation";
 
 export const UpdateVehicleValidator = validate(
     checkSchema({
-        Vehicle_name: {
-            in: ['body'],
-            optional : true,
-            isString: true
-        },
-        Driver_name: {
+        automaker: {
             in: ['body'],
             optional : true,
             isString: true
@@ -24,17 +19,17 @@ export const UpdateVehicleValidator = validate(
             optional : true,
             isString: true
         },
-        number_plate: {
+        licensePlates: {
             in: ['body'],
             optional : true,
             isString: true
         },
-        frame_number: {
+        frameNumber: {
             in: ['body'],
             optional : true,
           isString: true  
         },
-        chassis_number: {
+        chassisNumber: {
             in: ['body'],
             optional : true,
             isString: true
@@ -49,27 +44,23 @@ export const UpdateVehicleValidator = validate(
             optional : true,
             isBoolean: true
         },
-        fuel_state: {
+        fuelState: {
             in: ['body'],
             optional : true,
             isNumeric: true
         },
-        runned_km: {
+        odometer: {
             in: ['body'],
             optional : true,
             isNumeric: true
         },  
-        date_recent_maintenance: {
+        recentMaintenanceDay: {
             in: ['body'],
             optional : true,
             isDate: true
         },
-        date_next_maintenance: {
-            in: ['body'],
-            optional : true,
-            isDate: true
-        },
-        current_location: {
+        
+        currentLocation: {
             in: ['body'],
             optional : true,
             isString: true
@@ -80,12 +71,7 @@ export const UpdateVehicleValidator = validate(
 )
 export const CreateVehicleValidator = validate(
     checkSchema({
-        Vehicle_name: {
-            in: ['body'],
-            optional : true,
-            isString: true
-        },
-        Driver_name: {
+        automaker: {
             in: ['body'],
             optional : true,
             isString: true
@@ -100,17 +86,17 @@ export const CreateVehicleValidator = validate(
             optional : true,
             isString: true
         },
-        number_plate: {
+        licensePlates: {
             in: ['body'],
             optional : true,
             isString: true
         },
-        frame_number: {
+        frameNumber: {
             in: ['body'],
             optional : true,
           isString: true  
         },
-        chassis_number: {
+        chassisNumber: {
             in: ['body'],
             optional : true,
             isString: true
@@ -125,27 +111,23 @@ export const CreateVehicleValidator = validate(
             optional : true,
             isBoolean: true
         },
-        fuel_state: {
+        fuelState: {
             in: ['body'],
             optional : true,
             isNumeric: true
         },
-        runned_km: {
+        odometer: {
             in: ['body'],
             optional : true,
             isNumeric: true
         },  
-        date_recent_maintenance: {
+        recentMaintenanceDay: {
             in: ['body'],
             optional : true,
             isDate: true
         },
-        date_next_maintenance: {
-            in: ['body'],
-            optional : true,
-            isDate: true
-        },
-        current_location: {
+        
+        currentLocation: {
             in: ['body'],
             optional : true,
             isString: true
