@@ -170,10 +170,10 @@ function Trip() {
                                                 <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
                                                     {na.name}
                                                 </p>
-                                                <p className="text-[14px] text-gray450 ">
+                                                {/* <p className="text-[14px] text-gray450 ">
                                                     (Please enter the distance
                                                     first)
-                                                </p>
+                                                </p> */}
                                             </div>
                                         ) : (
                                             <p className="h-[24px] text-[16px] mb-[5px] px-[15px]">
