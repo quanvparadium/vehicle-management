@@ -1,12 +1,6 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
-import {
-    addVehicle,
-    getAllVehicle,
-    updateVehicle,
-    deleteVehicle,
-    getVehicle,
-} from "../../api/vehicleApi";
+import VehicleApi from "../../api/vehicleApi";
 function Vehicle() {
     const initialFormData = {
         type: "",
@@ -17,7 +11,7 @@ function Vehicle() {
         frameNumber: "",
         state: "",
         fuelState: "",
-        runnerKms: "",
+        odometer: "",
         recentMaintenance: "",
         position: "",
         notes: "",
@@ -31,7 +25,7 @@ function Vehicle() {
         frameNumber: false,
         state: false,
         fuelState: false,
-        runnerKms: false,
+        odometer: false,
         recentMaintenance: false,
         position: false,
         notes: false,
@@ -49,8 +43,7 @@ function Vehicle() {
     useEffect(() => {
         async function fetchVehicle() {
             try {
-                const response = await getAllVehicle();
-                console.log("Response", response);
+                const response = await VehicleApi.getAllVehicle();
                 setVehicleList(response);
             } catch (error) {
                 console.error(error);
@@ -64,9 +57,7 @@ function Vehicle() {
         e.preventDefault();
         try {
             // Gửi request để thêm mới phương tiện
-            await addVehicle(formData);
-            const res = await getAllVehicle();
-            setVehicleList(res);
+            await VehicleApi.addVehicle(formData);
             setAdding(true);
             // Đặt lại form và thông báo lỗi
             setFormData(initialFormData);
@@ -77,7 +68,7 @@ function Vehicle() {
     //
     const handleEdit = async (id) => {
         try {
-            const res = await getVehicle(id);
+            const res = await VehicleApi.getVehicle(id);
             setUpdate(res);
             setEditId(id);
         } catch (error) {
@@ -97,10 +88,7 @@ function Vehicle() {
         try {
             // Gửi request để cập nhật phương tiện
 
-            await updateVehicle(update);
-            const res = await getAllVehicle();
-            setVehicleList(res);
-
+            await VehicleApi.updateVehicle(update);
             setEditId(-1);
             // Cập nhật lại danh sách phương tiện
             setAdding(true);
@@ -114,7 +102,7 @@ function Vehicle() {
     const handleDelete = async (id) => {
         try {
             // Gửi request để xóa phương tiện
-            await deleteVehicle(id);
+            await VehicleApi.deleteVehicle(id);
             setDeleting(true);
         } catch (error) {
             console.error("Error deleting vehicle:", error);
@@ -260,7 +248,7 @@ function Vehicle() {
                                 <th>Frame number</th>
                                 <th>State</th>
                                 <th>Fuel state</th>
-                                <th>Runner kilometers(km)</th>
+                                <th>Odometer (km)</th>
                                 <th>Recent maintenance date </th>
                                 <th>Positon</th>
                                 <th>Notes</th>
@@ -387,7 +375,7 @@ function Vehicle() {
                                         <td>{vehicle.frameNumber}</td>
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
-                                        <td>{vehicle.runnerKms}</td>
+                                        <td>{vehicle.odometer}</td>
                                         <td>{vehicle.recentMaintenance}</td>
                                         <td>{vehicle.position}</td>
                                         <td>{vehicle.notes}</td>
