@@ -47,12 +47,12 @@ export const UpdateVehicleValidator = validate(
         fuelState: {
             in: ['body'],
             optional : true,
-            isNumeric: true
+            isString: true
         },
         odometer: {
             in: ['body'],
             optional : true,
-            isNumeric: true
+            isString: true
         },  
         recentMaintenanceDay: {
             in: ['body'],
@@ -106,27 +106,6 @@ export const CreateVehicleValidator = validate(
             optional : true,
             isString: true
         },
-        on_trip: {
-            in: ['body'],
-            optional : true,
-            isBoolean: true
-        },
-        fuelState: {
-            in: ['body'],
-            optional : true,
-            isNumeric: true
-        },
-        odometer: {
-            in: ['body'],
-            optional : true,
-            isNumeric: true
-        },  
-        recentMaintenanceDay: {
-            in: ['body'],
-            optional : true,
-            isDate: true
-        },
-        
         currentLocation: {
             in: ['body'],
             optional : true,

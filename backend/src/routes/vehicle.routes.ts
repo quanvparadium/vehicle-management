@@ -8,7 +8,7 @@ const vehicleRouter = Router()
 path: /vehicles/
 method: GET
 header: { Authorization: Bearer <access_token> }*/
-vehicleRouter.get('/', accessTokenValidator, getALLVehicleController) 
+vehicleRouter.get('/', getALLVehicleController) 
 
 /*decripsion: 'Get all vehicles from database'
 path: /vehicles/
@@ -36,11 +36,11 @@ body: { VehicleReqBody }
 
 */
 
-vehicleRouter.post('/create_vehicle',accessTokenValidator,CreateVehicleValidator, CreateVehicleController)
+vehicleRouter.post('/',CreateVehicleValidator, CreateVehicleController)
 
-vehicleRouter.delete('/del_vhc', accessTokenValidator, DeleteVehicleController)
-vehicleRouter.put('/update_vhc', accessTokenValidator, UpdateVehicleValidator, updateVehicleController);
-vehicleRouter.get('/:id', accessTokenValidator, getVehicleController)
+vehicleRouter.delete('/:id', DeleteVehicleController)
+vehicleRouter.put('/:id', UpdateVehicleValidator, updateVehicleController);
+vehicleRouter.get('/:id', getVehicleController)
 
 
 

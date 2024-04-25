@@ -45,17 +45,15 @@ class vehiclesService {
             message: 'Tạo thành công'
         }
     }
-    async delete(payload: VehicleReqBody) {
+    async delete(id: string) {
         try {
-            payload._id = new ObjectId(payload._id);
-
-            const vehicle = await databaseService.vehicles.findOne(payload);
+            const vehicle = await databaseService.vehicles.findOne({ _id: new ObjectId(id) });
             if (!vehicle) {
                 return { message: 'Phương tiện không tồn tại' }; 
             }
     
             const result = await databaseService.vehicles.deleteOne({ _id: vehicle._id }); 
-            if (result.deletedCount == 0) {
+            if (result.deletedCount === 0) {
                 return { message: 'Không có phương tiện nào được xóa' };
             }
     
@@ -66,11 +64,11 @@ class vehiclesService {
         }
     }
     
-    async update(existingVehicle: Vehicle , update: VehicleReqBody) {
+    async update(id:string , update: VehicleReqBody) {
         try {
-            existingVehicle._id = new ObjectId(existingVehicle._id);
-            const result = await databaseService.vehicles.findOneAndUpdate(existingVehicle, { $set: update });
-            const updatedVehicle = await databaseService.vehicles.findOne(existingVehicle);
+            const existID = { _id: new ObjectId(id) }
+            const result = await databaseService.vehicles.findOneAndUpdate( existID,{ $set: update });
+            const updatedVehicle = await databaseService.vehicles.findOne(existID);
     
             if (result) {
                 return {
