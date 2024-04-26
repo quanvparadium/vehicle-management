@@ -73,6 +73,8 @@ function Vehicle() {
             console.log(res);
             setUpdate(res);
             setEditId(id);
+            
+
         } catch (error) {
             console.error("Error edit vehicle:", error);
         }
@@ -86,11 +88,11 @@ function Vehicle() {
         }));
     };
     // Hàm xử lý cập nhật thông tin phương tiện
-    const handleUpdate = async (e) => {
+    const handleUpdate = async (id) => {
         try {
             // Gửi request để cập nhật phương tiện
 
-            await VehicleApi.updateVehicle(update);
+            await VehicleApi.updateVehicle(id,update);
             setEditId(-1);
             // Cập nhật lại danh sách phương tiện
             setAdding(true);
@@ -268,7 +270,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.type}
+                                                value={update.type || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -282,7 +284,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.automaker}
+                                                value={update.automaker || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -296,7 +298,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.model}
+                                                value={update.model || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -310,7 +312,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.licensePlates}
+                                                value={update.licensePlates || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -324,7 +326,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.chassisNumber}
+                                                value={update.chassisNumber || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -338,7 +340,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.frameNumber}
+                                                value={update.frameNumber || ""}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -361,7 +363,7 @@ function Vehicle() {
                                             <button
                                                 type="submit"
                                                 className="update"
-                                                onClick={() => handleUpdate()}
+                                                onClick={() => handleUpdate(vehicle._id)}
                                             >
                                                 Update
                                             </button>

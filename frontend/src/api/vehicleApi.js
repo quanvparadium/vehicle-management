@@ -3,19 +3,17 @@ const VehicleApi = {
     getAllVehicle() {
         return  axiosClient.get(`/vehicles`);
     },
-    getVehicle(id) {
+    getVehicle(vehicleID) {
    
-        return axiosClient.get(`/vehicles/${id}`);
+        return axiosClient.get(`/vehicles/${vehicleID}`);
     },
     addVehicle(vehicleData) {
 
         return axiosClient.post(`/vehicles`, vehicleData);
     },
-    updateVehicle(updateData) {
-        return axiosClient.put(
-            `/vehicles/` + updateData.id,
-            updateData
-        )
+    updateVehicle(id,updateData) {
+        return axiosClient.put(`/vehicles/${id}`,updateData);
+        
     },
 
     deleteVehicle(vehicleID) {

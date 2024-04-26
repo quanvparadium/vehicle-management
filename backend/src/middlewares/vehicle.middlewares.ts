@@ -49,12 +49,6 @@ export const UpdateVehicleValidator = validate(
             optional : true,
             isString: true
         },  
-        recentMaintenanceDay: {
-            in: ['body'],
-            optional : true,
-            isDate: true
-        },
-        
         currentLocation: {
             in: ['body'],
             optional : true,

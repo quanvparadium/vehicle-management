@@ -64,10 +64,20 @@ class vehiclesService {
         }
     }
     
-    async update(id:string , update: VehicleReqBody) {
+   
+
+    async update(id: string, update: VehicleReqBody) {
         try {
-            const existID = { _id: new ObjectId(id) }
-            const result = await databaseService.vehicles.findOneAndUpdate( existID,{ $set: update });    
+            if (!ObjectId.isValid(id)) {
+                console.log(id)
+                return {
+                    message: 'ID không hợp lệ'
+                };
+            }
+    
+            const existID = { _id: new ObjectId(id) };
+            const result = await databaseService.vehicles.findOneAndUpdate(existID, { $set: update });
+    
             if (result) {
                 return {
                     message: 'Cập nhật thành công',
@@ -83,9 +93,7 @@ class vehiclesService {
             throw error;
         }
     }
-    
-    
-    
+   
     
     
 }

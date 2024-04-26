@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 interface VehicleType {
     _id: ObjectId
-    Vehicle_id: ObjectId
+    Vehicle_id: string
     type: string ,
     licensePlates: string,
     automaker: string,
@@ -17,7 +17,7 @@ interface VehicleType {
 }
 export class Vehicle {
     _id: ObjectId
-    Vehicle_id: ObjectId
+    Vehicle_id: string
     type: string 
     licensePlates: string
     automaker: string

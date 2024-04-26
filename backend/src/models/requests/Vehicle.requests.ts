@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 export interface VehicleReqBody {
-    _id: ObjectId
-    Vehicle_id: ObjectId
+    _id: ObjectId,
+    Vehicle_id: string,
     type: string ,
     licensePlates: string,
     automaker: string,
