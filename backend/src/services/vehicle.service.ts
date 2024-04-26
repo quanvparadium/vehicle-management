@@ -67,13 +67,11 @@ class vehiclesService {
     async update(id:string , update: VehicleReqBody) {
         try {
             const existID = { _id: new ObjectId(id) }
-            const result = await databaseService.vehicles.findOneAndUpdate( existID,{ $set: update });
-            const updatedVehicle = await databaseService.vehicles.findOne(existID);
-    
+            const result = await databaseService.vehicles.findOneAndUpdate( existID,{ $set: update });    
             if (result) {
                 return {
-                    message: 'Cập nhật thành công, thông tin phương tiện mới:',
-                    updatedVehicle
+                    message: 'Cập nhật thành công',
+                    result
                 };
             } else {
                 return {
