@@ -40,8 +40,9 @@ export const updateVehicleController = async (req: Request, res: Response) => {
     const update = req.body
 
    const result = await vehiclesService.update(id,update);
-   console.log(result)
+   
     return res.json({
         message: result.message,
+        
     }); 
 }

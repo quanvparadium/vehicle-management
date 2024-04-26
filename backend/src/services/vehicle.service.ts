@@ -76,18 +76,39 @@ class vehiclesService {
             }
     
             const existID = { _id: new ObjectId(id) };
-            const result = await databaseService.vehicles.findOneAndUpdate(existID, { $set: update });
-    
-            if (result) {
+            const updatedFields: Partial<VehicleReqBody> = {};
+
+            // Xác định các trường cần được cập nhật
+            if (update.type) {
+                updatedFields.type = update.type;
+            }
+            if (update.model) {
+                updatedFields.model = update.model;
+            }
+            // Thêm các trường cần cập nhật khác tại đây tương ứng với các trường trong VehicleReqBody
+
+            const result = await databaseService.vehicles.updateOne(existID, { $set: updatedFields });
+
+            if (result.modifiedCount > 0) {
                 return {
-                    message: 'Cập nhật thành công',
-                    result
+                    message: 'Cập nhật thành công'
                 };
             } else {
                 return {
-                    message: 'Không tìm thấy phương tiện để cập nhật'
+                    message: 'Không có gì được cập nhật'
                 };
             }
+    
+            // if (result) {
+            //     return {
+            //         message: 'Cập nhật thành công',
+                 
+            //     };
+            // } else {
+            //     return {
+            //         message: 'Không tìm thấy phương tiện để cập nhật'
+            //     };
+            // }
         } catch (error) {
             console.error('Lỗi khi cập nhật phương tiện:', error);
             throw error;
