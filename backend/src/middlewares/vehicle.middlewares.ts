@@ -39,11 +39,6 @@ export const UpdateVehicleValidator = validate(
             optional : true,
             isString: true
         },
-        on_trip: {
-            in: ['body'],
-            optional : true,
-            isBoolean: true
-        },
         fuelState: {
             in: ['body'],
             optional : true,

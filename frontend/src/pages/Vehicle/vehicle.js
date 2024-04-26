@@ -12,8 +12,8 @@ function Vehicle() {
         state: "",
         fuelState: "",
         odometer: "",
-        recentMaintenance: "",
-        position: "",
+        recentMaintenanceDay: "",
+        currentLocation: "",
         notes: "",
     };
     const initialError = {
@@ -26,8 +26,8 @@ function Vehicle() {
         state: false,
         fuelState: false,
         odometer: false,
-        recentMaintenance: false,
-        position: false,
+        recentMaintenanceDay: false,
+        currentLocation: false,
         notes: false,
     };
 
@@ -45,6 +45,7 @@ function Vehicle() {
             try {
                 const response = await VehicleApi.getAllVehicle();
                 setVehicleList(response);
+                
             } catch (error) {
                 console.error(error);
             }
@@ -69,6 +70,7 @@ function Vehicle() {
     const handleEdit = async (id) => {
         try {
             const res = await VehicleApi.getVehicle(id);
+            console.log(res);
             setUpdate(res);
             setEditId(id);
         } catch (error) {
@@ -97,12 +99,13 @@ function Vehicle() {
         } catch (error) {
             console.error("Error updating vehicle:", error);
         }
+        console.log(update);
     };
     // Hàm xử lý xóa phương tiện
-    const handleDelete = async (id) => {
+    const handleDelete = async (_id) => {
         try {
             // Gửi request để xóa phương tiện
-            await VehicleApi.deleteVehicle(id);
+            await VehicleApi.deleteVehicle(_id);
             setDeleting(true);
         } catch (error) {
             console.error("Error deleting vehicle:", error);
@@ -250,16 +253,16 @@ function Vehicle() {
                                 <th>Fuel state</th>
                                 <th>Odometer (km)</th>
                                 <th>Recent maintenance date </th>
-                                <th>Positon</th>
+                                <th>currentLocation</th>
                                 <th>Notes</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {vehicleList.map((vehicle, index) =>
-                                vehicle.id === editID ? (
+                                vehicle._id === editID ? (
                                     <tr key={index} className="edit">
-                                        <td>{vehicle.id}</td>
+                                        <td>{vehicle._id}</td>
                                         <td>
                                             <input
                                                 type="text"
@@ -347,8 +350,8 @@ function Vehicle() {
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
                                         <td>{vehicle.runnerKms}</td>
-                                        <td>{vehicle.recentMaintenance}</td>
-                                        <td>{vehicle.position}</td>
+                                        <td>{vehicle.recentMaintenanceDay}</td>
+                                        <td>{vehicle.currentLocation}</td>
                                         <td>{vehicle.notes}</td>
                                         <td
                                             style={{
@@ -366,7 +369,7 @@ function Vehicle() {
                                     </tr>
                                 ) : (
                                     <tr key={index}>
-                                        <td>{vehicle.id}</td>
+                                        <td>{vehicle._id}</td>
                                         <td>{vehicle.type}</td>
                                         <td>{vehicle.automaker}</td>
                                         <td>{vehicle.model}</td>
@@ -376,8 +379,8 @@ function Vehicle() {
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
                                         <td>{vehicle.odometer}</td>
-                                        <td>{vehicle.recentMaintenance}</td>
-                                        <td>{vehicle.position}</td>
+                                        <td>{vehicle.recentMaintenanceDay}</td>
+                                        <td>{vehicle.currentLocation}</td>
                                         <td>{vehicle.notes}</td>
                                         <td
                                             style={{
@@ -388,14 +391,14 @@ function Vehicle() {
                                         >
                                             <button
                                                 onClick={() =>
-                                                    handleEdit(vehicle.id)
+                                                    handleEdit(vehicle._id)
                                                 }
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 onClick={() =>
-                                                    handleDelete(vehicle.id)
+                                                    handleDelete(vehicle._id)
                                                 }
                                             >
                                                 Delete

@@ -5,7 +5,7 @@ const VehicleApi = {
     },
     getVehicle(id) {
    
-        return axiosClient.get(`/vehicles/` + id);
+        return axiosClient.get(`/vehicles/${id}`);
     },
     addVehicle(vehicleData) {
 
@@ -19,7 +19,7 @@ const VehicleApi = {
     },
 
     deleteVehicle(vehicleID) {
-        return axiosClient.delete("/vehicles/" + vehicleID);
+        return axiosClient.delete(`/vehicles/${vehicleID}`);
     },
 };
 export default VehicleApi;
