@@ -39,10 +39,11 @@ export const updateVehicleController = async (req: Request, res: Response) => {
     const { id } = req.params
     const update = req.body
 
-   const result = await vehiclesService.update(id,update);
-   
+   const result = await databaseService.vehicles.findOneAndUpdate({_id: new ObjectId(id)},{ $set: update })
+   const result2 = await databaseService.vehicles.findOne({_id: new ObjectId(id)})
+    console.log(result2)
     return res.json({
-        message: result.message,
-        
+        message: "updated successfully",
+        updatedVehicle: result2
     }); 
 }

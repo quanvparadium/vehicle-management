@@ -52,6 +52,7 @@ function Vehicle() {
         }
         fetchVehicle();
     }, [adding, deleting]);
+    // add: update, "khi data modified thi rerender lai"
 
     // Hàm xử lý thêm mới phương tiện
     const handleSubmit = async (e) => {
@@ -67,12 +68,12 @@ function Vehicle() {
         }
     };
     //
-    const handleEdit = async (id) => {
+    const handleEdit = async (_id) => {
         try {
-            const res = await VehicleApi.getVehicle(id);
+            const res = await VehicleApi.getVehicle(_id);
             console.log(res);
             setUpdate(res);
-            setEditId(id);
+            setEditId(_id);
             
 
         } catch (error) {
@@ -88,16 +89,16 @@ function Vehicle() {
         }));
     };
     // Hàm xử lý cập nhật thông tin phương tiện
-    const handleUpdate = async (id) => {
+    const handleUpdate = async (_id) => {
         try {
             // Gửi request để cập nhật phương tiện
 
-            await VehicleApi.updateVehicle(id,update);
+            await VehicleApi.updateVehicle(_id,update);
             setEditId(-1);
             // Cập nhật lại danh sách phương tiện
             setAdding(true);
             // Đặt lại form và thông báo lỗi
-            // setUpdate(initialFormData);
+            setUpdate(initialFormData);
         } catch (error) {
             console.error("Error updating vehicle:", error);
         }

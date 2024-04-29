@@ -91,7 +91,7 @@ class vehiclesService {
 
             if (result.modifiedCount > 0) {
                 return {
-                    message: 'Cập nhật thành công'
+                    message: 'Cập nhật thành công'      
                 };
             } else {
                 return {
