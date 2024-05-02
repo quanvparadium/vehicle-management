@@ -145,20 +145,3 @@
      /* Giới hạn chiều rộng tối đa */
     /* Sử dụng 100% chiều rộng của phần tử cha */
 }
-.update {
-    width: inherit;
-    height: 20px;
-    padding: 3px;
-    margin: 0px;
-}
-.edit button[type="submit"] {
-    background-color: #e5e5e5; /* Màu nền */
-    color: black; /* Màu chữ */
-    padding: 2px;
-    margin-left: 18px;
-    border: 1px solid black; /* Loại bỏ viền */
-    cursor: pointer; /* Con trỏ hiển thị pointer khi hover */
-    border-radius: 4px; /* Bo tròn góc */
-    font-size: 16px; /* Kích thước font */
-    transition: background-color 0.3s ease; /* Hiệu ứng màu nền */
-}

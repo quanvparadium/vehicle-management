@@ -1,6 +1,13 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import VehicleApi from "../../api/vehicleApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faTrash,
+    faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+
 function Vehicle() {
     const initialFormData = {
         type: "",
@@ -45,7 +52,7 @@ function Vehicle() {
             try {
                 const response = await VehicleApi.getAllVehicle();
                 setVehicleList(response);
-                
+                setAdding(false);
             } catch (error) {
                 console.error(error);
             }
@@ -68,46 +75,33 @@ function Vehicle() {
         }
     };
     //
-    const handleEdit = async (_id) => {
-        try {
-            const res = await VehicleApi.getVehicle(_id);
-            console.log(res);
-            setUpdate(res);
-            setEditId(_id);
-            
+    async function handleEdit(id) {
 
-        } catch (error) {
-            console.error("Error edit vehicle:", error);
-        }
+            const res = await VehicleApi.getVehicle(id);
+            console.log("res",res);
+            setUpdate(res)
+            setEditId(id);
+            
     };
     //
-    const handleUpdateChange = (e, fieldName) => {
+    function handleUpdateChange(e, fieldName) {
         const { value } = e.target;
         setUpdate((prevData) => ({
             ...prevData,
             [fieldName]: value,
         }));
     };
-    // Hàm xử lý cập nhật thông tin phương tiện
-    const handleUpdate = async (_id) => {
+    async function handleUpdate(id) {
         try {
-            // Gửi request để cập nhật phương tiện
-
-            await VehicleApi.updateVehicle(_id,update);
+            await VehicleApi.updateVehicle(id,update);
             setEditId(-1);
-            // Cập nhật lại danh sách phương tiện
             setAdding(true);
-            // Đặt lại form và thông báo lỗi
-            setUpdate(initialFormData);
         } catch (error) {
             console.error("Error updating vehicle:", error);
         }
-        console.log(update);
     };
-    // Hàm xử lý xóa phương tiện
     const handleDelete = async (_id) => {
         try {
-            // Gửi request để xóa phương tiện
             await VehicleApi.deleteVehicle(_id);
             setDeleting(true);
         } catch (error) {
@@ -115,7 +109,6 @@ function Vehicle() {
         }
     };
 
-    // Hàm xử lý khi thay đổi giá trị của input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -258,7 +251,7 @@ function Vehicle() {
                                 <th>Recent maintenance date </th>
                                 <th>currentLocation</th>
                                 <th>Notes</th>
-                                <th>Actions</th>
+                                <th colSpan = {2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -271,7 +264,7 @@ function Vehicle() {
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.type || ""}
+                                                value={update.type}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -281,11 +274,12 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.automaker || ""}
+                                                value={update.automaker}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -295,11 +289,12 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.model || ""}
+                                                value={update.model}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -309,11 +304,12 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.licensePlates || ""}
+                                                value={update.licensePlates}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -323,11 +319,12 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.chassisNumber || ""}
+                                                value={update.chassisNumber}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -337,11 +334,12 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
                                                 className="update"
-                                                value={update.frameNumber || ""}
+                                                value={update.frameNumber}
                                                 onChange={(e) =>
                                                     handleUpdateChange(
                                                         e,
@@ -352,21 +350,19 @@ function Vehicle() {
                                         </td>
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
-                                        <td>{vehicle.runnerKms}</td>
+                                        <td>{vehicle.odometer}</td>
                                         <td>{vehicle.recentMaintenanceDay}</td>
                                         <td>{vehicle.currentLocation}</td>
                                         <td>{vehicle.notes}</td>
-                                        <td
-                                            style={{
-                                                justifyContent: "space-around",
-                                            }}
+                                        <td colSpan={2}
+                                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
                                             <button
                                                 type="submit"
                                                 className="update"
                                                 onClick={() => handleUpdate(vehicle._id)}
                                             >
-                                                Update
+                                                <FontAwesomeIcon icon={faSave} />
                                             </button>
                                         </td>
                                     </tr>
@@ -397,14 +393,18 @@ function Vehicle() {
                                                     handleEdit(vehicle._id)
                                                 }
                                             >
-                                                Edit
+                                               <FontAwesomeIcon
+                                               icon = {faPenToSquare}
+                                               />
                                             </button>
                                             <button
                                                 onClick={() =>
                                                     handleDelete(vehicle._id)
                                                 }
                                             >
-                                                Delete
+                                                <FontAwesomeIcon
+                                                    icon={faTrash}
+                                                />
                                             </button>
                                         </td>
                                     </tr>
