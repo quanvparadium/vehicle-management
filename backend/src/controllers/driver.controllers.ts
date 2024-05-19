@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { ParamsDictionary } from 'express-serve-static-core'
+import { ParamsDictionary } from 'express-serve-static-core/index'
 import { ObjectId } from 'mongodb'
 import { DriverReqBody } from '~/models/requests/Driver.requests'
 import databaseService from '~/services/database.service'
@@ -14,7 +14,7 @@ export const getDriverController = async (req: Request, res: Response) => {
 }
 
 export const getAllDriverController = async (req: Request, res: Response) => {
-    const result = await databaseService.drivers.find({}).toArray();
+    const result = await databaseService.drivers.find({}).toArray()
     // console.log('Backend result', result)
 
     return res.json(result)
@@ -31,31 +31,46 @@ export const createDriverController = async (
     })
 }
 
-export const updateDriverController = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-  
+export const updateDriverController = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params
     const data = req.body
     console.log(data)
     const result = await databaseService.drivers.findOneAndUpdate(
-      {_id: new ObjectId(id)},
-      {
-        $set: {
-          identification: data.identification,
-          fullname: data.fullname,
+        { _id: new ObjectId(id) },
+        {
+            $set: {
+                identification: data.identification,
+                fullname: data.fullname
+            }
         }
-      }
     )
     // console.log(result)
 
     return res.json({
-      message: 'Update ok'
+        message: 'Update ok'
     })
     // const result = await databaseService.drivers.updateOne(
     //   { _id: ne},
     //   {}
     // )
+}
+
+export const deleteDriverController = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params
+
+    try {
+        const result = await databaseService.drivers.deleteOne({ _id: new ObjectId(id) })
+
+        if (result.deletedCount === 1) {
+            return res.json({
+                message: 'Driver deleted successfully'
+            })
+        } else {
+            return res.status(404).json({
+                message: 'Driver not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
 }
