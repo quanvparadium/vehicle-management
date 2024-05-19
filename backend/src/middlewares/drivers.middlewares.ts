@@ -4,39 +4,27 @@ import { validate } from '~/utils/validation'
 export const DriverValidator = validate(
     checkSchema({
         fullname: {
-            in: ['body'],
-            isString: {
-                errorMessage: 'Họ và tên phải là chuỗi'
-            },
-            trim: true,
-            notEmpty: {
-                errorMessage: 'Họ và tên là bắt buộc'
-            },
-            isLength: {
-                options: { min: 3, max: 50 },
-                errorMessage: 'Họ và tên phải từ 3 đến 50 ký tự'
-            }
+            isString: true
         },
         email: {
-            in: ['body'],
             isEmail: {
                 errorMessage: 'Email không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Email là bắt buộc'
             }
         },
         date_of_birth: {
-            in: ['body'],
             isDate: {
                 errorMessage: 'Ngày sinh không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Ngày sinh là bắt buộc'
             }
         },
         identification: {
-            in: ['body'],
             isString: {
                 errorMessage: 'Số căn cước phải là chuỗi'
             },
@@ -46,7 +34,6 @@ export const DriverValidator = validate(
             }
         },
         address: {
-            in: ['body'],
             isString: {
                 errorMessage: 'Địa chỉ phải là chuỗi'
             },
@@ -60,28 +47,28 @@ export const DriverValidator = validate(
             }
         },
         phone_number: {
-            in: ['body'],
             isMobilePhone: {
                 errorMessage: 'Số điện thoại không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Số điện thoại là bắt buộc'
             }
         },
         expire_license: {
-            in: ['body'],
             isDate: {
                 errorMessage: 'Ngày hết hạn bằng lái không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Ngày hết hạn bằng lái là bắt buộc'
             }
         },
         experience: {
-            in: ['body'],
             isInt: {
                 errorMessage: 'Kinh nghiệm phải là số nguyên'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Kinh nghiệm là bắt buộc'
             }

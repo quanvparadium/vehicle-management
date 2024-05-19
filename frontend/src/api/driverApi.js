@@ -13,8 +13,14 @@ const driverApi = {
 
     add(data) {
         const url = `/drivers`;
+        if (!data.email) {
+            // Hiển thị thông báo lỗi cho người dùng
+            console.error("Email is required");
+            return Promise.reject(new Error("Email is required"));
+        }
         return axiosClient.post(url, data);
     },
+    
 
     update(data) {
         const url = `/drivers/${data._id}`;

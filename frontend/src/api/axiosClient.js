@@ -1,18 +1,18 @@
 import Cookies from "js-cookie";
-
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+
+
 
 const axiosClient = axios.create({
     baseURL: BACKEND_URL,
     headers: {
-        // Authorization: `Bearer ${Cookies.get("token")}`,
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTM3MTk0MzUsImV4cCI6MTcxMzgwNTgzNX0.2F9cY3z8BSQ8d4BYPGwAItwUy4cRUZFcjrWtchBtizs`,
+        Authorization: `Bearer ${Cookies.get('token')}`,
     },
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(
+axiosClient.interceptors.request.use(
     function (config) {
         // Do something before request is sent
         return config;
@@ -26,15 +26,52 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axiosClient.interceptors.response.use(
     function (response) {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
-        return response.data; //bỏ header, config
+        // Handle successful responses
+        return response.data;
+    },
+    async function (error) {
+        // Xử lý response lỗi
+        if (error.response && error.response.status === 401) {
+            // AccessToken đã hết hạn, cần lấy lại AccessToken mới
+            try {
+                // Lấy RefreshToken từ localStorage hoặc cookie
+                const refreshToken = Cookies.get('refreshToken');
+
+                // Gọi API để lấy AccessToken mới
+                const { accessToken } = await refreshAccessToken(refreshToken);
+
+                // Lưu AccessToken mới vào localStorage hoặc cookie
+                Cookies.set('accessToken', accessToken);
+
+                // Gửi lại request ban đầu với AccessToken mới
+                const config = error.config;
+                config.headers.Authorization = `Bearer ${accessToken}`;
+                return axiosClient.request(config);
+            } catch (err) {
+                // Xử lý lỗi khi lấy AccessToken mới
+                console.error('Error refreshing access token:', err);
+                return Promise.reject(error);
+            }
+        }
+        return Promise.reject(error);
     },
     function (error) {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
+        if (error.response && error.response.status === 422) {
+            // Kiểm tra xem lỗi có phải do email chưa được nhập không
+            if (error.response.data.errors && error.response.data.errors.email) {
+                console.error("Email is required:", error.response.data.errors.email);
+                // Hiển thị thông báo lỗi cho người dùng
+                alert("Email is required");
+            }
+        }
         return Promise.reject(error);
     }
 );
+async function refreshAccessToken(refreshToken) {
+    // Gọi API để lấy AccessToken mới bằng RefreshToken
+    const response = await axios.post('/refresh-token', { refreshToken });
+    return response.data;
+}
+
 
 export default axiosClient;

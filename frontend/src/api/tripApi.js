@@ -1,25 +1,41 @@
 import axiosClient from "./axiosClient";
+import Cookie from "js-cookie";
 
 const TripApi = {
     getAll() {
-        return axiosClient.get("/trip/", {});
+        const token = Cookie.get("token");
+        return axiosClient.get("/trip/", {
+            headers: { Authorization: `Bearer ${token}` },
+        });
     },
 
     add(json) {
-        return axiosClient.post("/trip/", json, {});
+        const token = Cookie.get("token");
+        return axiosClient.post("/trip/", json, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
     },
 
     delete(id) {
+        const token = Cookie.get("token");
         return axiosClient.delete("/trip/", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             data: { _id: id },
         });
     },
 
     update(id, sta) {
-        return axiosClient.put("/trip/", {
-            ExistTrip: { _id: id },
-            Update: { status: sta },
-        });
+        const token = Cookie.get("token");
+        return axiosClient.put(
+            "/trip/",
+            {
+                ExistTrip: { _id: id },
+                Update: { status: sta },
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
     },
 };
 
