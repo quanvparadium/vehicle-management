@@ -16,11 +16,11 @@ function Vehicle() {
         model: "",
         chassisNumber: "",
         frameNumber: "",
-        state: "",
-        fuelState: "",
-        odometer: "",
+        state: "AVAILABLE",
+        fuelState: "100",
+        odometer: "0",
         recentMaintenanceDay: "",
-        currentLocation: "",
+        currentLocation: "TP.HCM",
         notes: "",
     };
     const initialError = {
@@ -79,7 +79,7 @@ function Vehicle() {
 
             const res = await VehicleApi.getVehicle(id);
             console.log("res",res);
-            setUpdate(res)
+            setUpdate(res);
             setEditId(id);
             
     };
@@ -119,7 +119,7 @@ function Vehicle() {
 
     return (
         <div className="vehicle_container">
-            <h1 style={{ marginTop: "6px", fontWeight: "bold" }}>
+            <h1 style={{ marginTop: "20px",marginBottom: "20px", fontWeight: "bolder" , fontSize: "larger"}}>
                 Vehicle information
             </h1>
             <div className="page">
@@ -221,6 +221,15 @@ function Vehicle() {
                                 )}
                             </div>
                         </div>
+                        <div className="d">
+                            <label>Notes</label>
+                                    <input
+                                        type="text"
+                                        name="notes"
+                                        value={formData.notes}
+                                        onChange={handleInputChange}
+                                    />
+                        </div>
                         <div className="add-button">
                             <button
                                 type="submit"
@@ -238,7 +247,6 @@ function Vehicle() {
                     >
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Type</th>
                                 <th>Automaker</th>
                                 <th>Model</th>
@@ -258,7 +266,6 @@ function Vehicle() {
                             {vehicleList.map((vehicle, index) =>
                                 vehicle._id === editID ? (
                                     <tr key={index} className="edit">
-                                        <td>{vehicle._id}</td>
                                         <td>
                                             <input
                                                 type="text"
@@ -353,7 +360,19 @@ function Vehicle() {
                                         <td>{vehicle.odometer}</td>
                                         <td>{vehicle.recentMaintenanceDay}</td>
                                         <td>{vehicle.currentLocation}</td>
-                                        <td>{vehicle.notes}</td>
+                                        <td>                                           
+                                            <input
+                                                type="text"
+                                                className="update"
+                                                value={update.notes}
+                                                onChange={(e) =>
+                                                    handleUpdateChange(
+                                                        e,
+                                                        "notes"
+                                                    )
+                                                }
+                                            />
+                                        </td>
                                         <td colSpan={2}
                                             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
@@ -368,7 +387,6 @@ function Vehicle() {
                                     </tr>
                                 ) : (
                                     <tr key={index}>
-                                        <td>{vehicle._id}</td>
                                         <td>{vehicle.type}</td>
                                         <td>{vehicle.automaker}</td>
                                         <td>{vehicle.model}</td>
