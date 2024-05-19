@@ -18,13 +18,12 @@ const TripApi = {
 
     delete(id) {
         const token = Cookie.get("token");
-        return axiosClient.delete(
-            "/trip/",
-            {
-                data: { _id: id },
+        return axiosClient.delete("/trip/", {
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+            data: { _id: id },
+        });
     },
 
     update(id, sta) {
