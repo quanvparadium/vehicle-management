@@ -5,10 +5,6 @@ import { BACKEND_URL } from "../config";
 
 const axiosClient = axios.create({
     baseURL: BACKEND_URL,
-    headers: {
-        // Authorization: `Bearer ${Cookies.get("token")}`,
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjYwYWY5YzQzY2M3YTAwOWI3NmVlZDg1IiwidG9rZW5UeXBlIjowLCJpYXQiOjE3MTM3MTk0MzUsImV4cCI6MTcxMzgwNTgzNX0.2F9cY3z8BSQ8d4BYPGwAItwUy4cRUZFcjrWtchBtizs`,
-    },
 });
 
 // Add a request interceptor
