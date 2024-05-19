@@ -72,6 +72,15 @@ export const DriverValidator = validate(
             notEmpty: {
                 errorMessage: 'Kinh nghiệm là bắt buộc'
             }
+        },
+        status: {
+            isString: {
+                errorMessage: 'Trạng thái phải là chuỗi'
+            },
+            trim: true,
+            notEmpty: {
+                errorMessage: 'Trạng thái là bắt buộc'
+            }
         }
     })
 )
