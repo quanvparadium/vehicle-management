@@ -7,6 +7,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Chart from "chart.js/auto";
 import tripApi from "../../api/tripApi";
+import vehicleApi from "../../api/vehicleApi";
+import driverApi from "../../api/driverApi";
 
 function Home() {
     const MONTHS = [
@@ -24,6 +26,8 @@ function Home() {
         "December",
     ];
 
+
+
     function months(current) {
         var index = MONTHS.indexOf(current);
         if (index === -1) return [];
@@ -33,9 +37,113 @@ function Home() {
     const [income, setIncome] = useState(false);
 
     const [doughnut, setDoughnut] = useState();
-    useEffect(() => {
-        const temp = tripApi.getAll();
-    }, []);
+    
+    const [tripCounts, setTripCounts] = useState({
+        AVAILABLE: 0,
+        'IN PROCESS': 0,
+        DONE: 0,
+      });
+    
+    async function countTripStates() {
+        try {
+
+            const response = await tripApi.getAll();
+            console.log("response in home.js: ", response);
+
+            const trips = response.trips; // Trích xuất mảng chuyến đi từ thuộc tính 'trips'
+            
+            // Check if trips is an array
+            if (!Array.isArray(trips)) {
+                throw new Error("API response trips is not an array");
+            }
+         
+
+        let stateCounts = trips.reduce((counts, trip) => {
+            let status = trip.status;
+            if (!counts[status]) {
+                counts[status] = 0;
+            }
+            counts[status]++;
+            return counts;
+        }, {});
+    
+          return stateCounts;
+        } catch (error) {
+          console.error("Error fetching trips:", error);
+          return {
+            AVAILABLE: 0,
+            'IN PROCESS': 0,
+            DONE: 0,
+        };
+        }
+      }
+
+      const [vehicleCounts, setVehicleCounts] = useState({
+        AVAILABLE: 0,
+        RUNNING: 0,
+        'ON MAINTENANCE': 0,
+      });
+    
+    async function countVehicleStates() {
+        try {
+            const vehicles = await vehicleApi.getAllVehicle();
+            console.log("response in home.js/ vehicleStates: ", vehicles);
+
+            //const vehicles = response.trips; // Trích xuất mảng chuyến đi từ thuộc tính 'trips'
+            
+            // Check if trips is an array
+            if (!Array.isArray(vehicles)) {
+                throw new Error("API response vehicles is not an array");
+            }
+         
+
+        let stateCounts = vehicles.reduce((counts, vehicle) => {
+            let state = vehicle.state;
+            if (!counts[state]) {
+                counts[state] = 0;
+            }
+            counts[state]++;
+            return counts;
+        }, {});
+    
+          return stateCounts;
+        } catch (error) {
+          console.error("Error fetching vehicles:", error);
+          return {
+            AVAILABLE: 0,
+            RUNNING: 0,
+            'ON MAINTENANCE': 0,
+          };
+        }
+      }
+
+      async function fetchTripCounts() {
+        try {
+          const counts = await countTripStates();
+          console.log("coutns trips = ", counts);
+          setTripCounts(counts);
+        } catch (error) {
+          console.error("Error fetching trip counts:", error);
+        }
+      }
+
+      async function fetchVehicleCounts() {
+        try {
+          const counts = await countVehicleStates();
+          console.log("coutns vehicle = ", counts);
+          setVehicleCounts(counts);
+        } catch (error) {
+          console.error("Error fetching vehicles counts:", error);
+        }
+      }
+  
+      useEffect(() => {
+        fetchTripCounts();
+        fetchVehicleCounts();
+      }, []);
+
+      
+
 
     useEffect(() => {
         const labels = months("July");
@@ -87,16 +195,16 @@ function Home() {
         });
 
         // Thêm sự kiện lắng nghe thay đổi kích thước cửa sổ
-        window.addEventListener("resize", () => {
+        const resizeChart = () => {
             chart.resize();
-        });
-
-        // Dọn dẹp khi unmount
-        return () => {
-            window.removeEventListener("resize", () => {
-                chart.resize();
-            });
-        };
+          };
+        
+          window.addEventListener("resize", resizeChart);
+        
+          return () => {
+            window.removeEventListener("resize", resizeChart);
+            chart.destroy();
+          };
     });
 
     useEffect(() => {
@@ -112,10 +220,21 @@ function Home() {
             ],
         };
 
-        new Chart(document.getElementById("cost"), {
+        const chart1 = new Chart(document.getElementById("cost"), {
             type: "doughnut",
             data: data,
         });
+
+        const resizeChart1 = () => {
+            chart1.resize();
+          };
+        
+          window.addEventListener("resize", resizeChart1);
+        
+          return () => {
+            window.removeEventListener("resize", resizeChart1);
+            chart1.destroy();
+          };
     });
 
     return (
@@ -125,14 +244,14 @@ function Home() {
                     <div className="box_header">Vehicle</div>
                     <ul className="box_list">
                         <li className="box_item">
-                            Available <span className="box_item1">3000</span>{" "}
+                            Available <span className="box_item1"> {vehicleCounts.AVAILABLE} </span>{" "}
                         </li>
                         <li className="box_item">
-                            Running <span className="box_item1">3000</span>
+                            Running <span className="box_item1"> {vehicleCounts.RUNNING} </span>
                         </li>
                         <li className="box_item">
                             On maintenance{" "}
-                            <span className="box_item1">3000</span>
+                            <span className="box_item1"> {vehicleCounts['ON MAINTENANCE']} </span>
                         </li>
                     </ul>
                 </div>
@@ -153,13 +272,13 @@ function Home() {
                     <div className="box_header">Trip</div>
                     <ul className="box_list">
                         <li className="box_item">
-                            Available <span className="box_item1">3000</span>{" "}
+                            Available <span className="box_item1"> {tripCounts.AVAILABLE} </span>{" "}
                         </li>
                         <li className="box_item">
-                            In process <span className="box_item1">3000</span>
+                            In process <span className="box_item1"> {tripCounts['IN PROCESS']} </span>
                         </li>
                         <li className="box_item">
-                            Done <span className="box_item1">3000</span>
+                            Done <span className="box_item1"> {tripCounts.DONE} </span>
                         </li>
                     </ul>
                 </div>

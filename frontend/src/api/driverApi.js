@@ -1,7 +1,8 @@
 import axiosClient from "./axiosClient";
+import Cookie from "js-cookie";
 
 const driverApi = {
-    getAll(x) {
+    getAll() {
         const url = `/drivers`;
         return axiosClient.get(url);
     },
