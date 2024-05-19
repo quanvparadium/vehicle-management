@@ -1,14 +1,7 @@
-/* body
-{
-    background-color: #B1CAE9;
-} */
-.vehicle_container {
-    background-color: #E4EEF3;
-}
+
 
 .vehicle
 {
-    width: 1200px;
     height: auto;
     background-color:#5883AD;
     border: none;
@@ -59,6 +52,9 @@
 .vehicletype, .automaker, .chassisnumber
 {
     margin-right: 50px;
+}
+.d {
+  margin-bottom: 20px;
 }
 .add-button {
     width: 100%;
@@ -116,7 +112,7 @@
   
   .table-wrapper {
     max-height: 400px;
-    max-width: 1200px;
+    max-width: 100%;
     overflow-y: auto;
     position: relative;
     margin: auto;
@@ -145,20 +141,21 @@
      /* Giới hạn chiều rộng tối đa */
     /* Sử dụng 100% chiều rộng của phần tử cha */
 }
-.update {
-    width: inherit;
-    height: 20px;
-    padding: 3px;
-    margin: 0px;
+
+@media (min-width: 1400px) {
+  .setupWidth {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
-.edit button[type="submit"] {
-    background-color: #e5e5e5; /* Màu nền */
-    color: black; /* Màu chữ */
-    padding: 2px;
-    margin-left: 18px;
-    border: 1px solid black; /* Loại bỏ viền */
-    cursor: pointer; /* Con trỏ hiển thị pointer khi hover */
-    border-radius: 4px; /* Bo tròn góc */
-    font-size: 16px; /* Kích thước font */
-    transition: background-color 0.3s ease; /* Hiệu ứng màu nền */
+@media (max-width: 1400px) and (min-width: 1200px) {
+  .setupWidth {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
+@media (max-width: 700px) {
+  .setupWidth {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+

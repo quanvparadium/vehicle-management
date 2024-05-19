@@ -1,12 +1,13 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
+import VehicleApi from "../../api/vehicleApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    addVehicle,
-    getAllVehicle,
-    updateVehicle,
-    deleteVehicle,
-    getVehicle,
-} from "../../api/vehicleApi";
+    faTrash,
+    faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+
 function Vehicle() {
     const initialFormData = {
         type: "",
@@ -15,11 +16,11 @@ function Vehicle() {
         model: "",
         chassisNumber: "",
         frameNumber: "",
-        state: "",
-        fuelState: "",
-        runnerKms: "",
-        recentMaintenance: "",
-        position: "",
+        state: "AVAILABLE",
+        fuelState: "100",
+        odometer: "0",
+        recentMaintenanceDay: "",
+        currentLocation: "TP.HCM",
         notes: "",
     };
     const initialError = {
@@ -31,9 +32,9 @@ function Vehicle() {
         frameNumber: false,
         state: false,
         fuelState: false,
-        runnerKms: false,
-        recentMaintenance: false,
-        position: false,
+        odometer: false,
+        recentMaintenanceDay: false,
+        currentLocation: false,
         notes: false,
     };
 
@@ -49,24 +50,23 @@ function Vehicle() {
     useEffect(() => {
         async function fetchVehicle() {
             try {
-                const response = await getAllVehicle();
-                console.log("Response", response);
+                const response = await VehicleApi.getAllVehicle();
                 setVehicleList(response);
+                setAdding(false);
             } catch (error) {
                 console.error(error);
             }
         }
         fetchVehicle();
     }, [adding, deleting]);
+    // add: update, "khi data modified thi rerender lai"
 
     // Hàm xử lý thêm mới phương tiện
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             // Gửi request để thêm mới phương tiện
-            await addVehicle(formData);
-            const res = await getAllVehicle();
-            setVehicleList(res);
+            await VehicleApi.addVehicle(formData);
             setAdding(true);
             // Đặt lại form và thông báo lỗi
             setFormData(initialFormData);
@@ -75,53 +75,40 @@ function Vehicle() {
         }
     };
     //
-    const handleEdit = async (id) => {
-        try {
-            const res = await getVehicle(id);
+    async function handleEdit(id) {
+
+            const res = await VehicleApi.getVehicle(id);
+            console.log("res",res);
             setUpdate(res);
             setEditId(id);
-        } catch (error) {
-            console.error("Error edit vehicle:", error);
-        }
+            
     };
     //
-    const handleUpdateChange = (e, fieldName) => {
+    function handleUpdateChange(e, fieldName) {
         const { value } = e.target;
         setUpdate((prevData) => ({
             ...prevData,
             [fieldName]: value,
         }));
     };
-    // Hàm xử lý cập nhật thông tin phương tiện
-    const handleUpdate = async (e) => {
+    async function handleUpdate(id) {
         try {
-            // Gửi request để cập nhật phương tiện
-
-            await updateVehicle(update);
-            const res = await getAllVehicle();
-            setVehicleList(res);
-
+            await VehicleApi.updateVehicle(id,update);
             setEditId(-1);
-            // Cập nhật lại danh sách phương tiện
             setAdding(true);
-            // Đặt lại form và thông báo lỗi
-            // setUpdate(initialFormData);
         } catch (error) {
             console.error("Error updating vehicle:", error);
         }
     };
-    // Hàm xử lý xóa phương tiện
-    const handleDelete = async (id) => {
+    const handleDelete = async (_id) => {
         try {
-            // Gửi request để xóa phương tiện
-            await deleteVehicle(id);
+            await VehicleApi.deleteVehicle(_id);
             setDeleting(true);
         } catch (error) {
             console.error("Error deleting vehicle:", error);
         }
     };
 
-    // Hàm xử lý khi thay đổi giá trị của input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -132,7 +119,7 @@ function Vehicle() {
 
     return (
         <div className="vehicle_container">
-            <h1 style={{ marginTop: "6px", fontWeight: "bold" }}>
+            <h1 style={{ marginTop: "20px",marginBottom: "20px", fontWeight: "bolder" , fontSize: "larger"}}>
                 Vehicle information
             </h1>
             <div className="page">
@@ -234,6 +221,15 @@ function Vehicle() {
                                 )}
                             </div>
                         </div>
+                        <div className="d">
+                            <label>Notes</label>
+                                    <input
+                                        type="text"
+                                        name="notes"
+                                        value={formData.notes}
+                                        onChange={handleInputChange}
+                                    />
+                        </div>
                         <div className="add-button">
                             <button
                                 type="submit"
@@ -251,7 +247,6 @@ function Vehicle() {
                     >
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Type</th>
                                 <th>Automaker</th>
                                 <th>Model</th>
@@ -260,18 +255,17 @@ function Vehicle() {
                                 <th>Frame number</th>
                                 <th>State</th>
                                 <th>Fuel state</th>
-                                <th>Runner kilometers(km)</th>
+                                <th>Odometer (km)</th>
                                 <th>Recent maintenance date </th>
-                                <th>Positon</th>
+                                <th>currentLocation</th>
                                 <th>Notes</th>
-                                <th>Actions</th>
+                                <th colSpan = {2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {vehicleList.map((vehicle, index) =>
-                                vehicle.id === editID ? (
+                                vehicle._id === editID ? (
                                     <tr key={index} className="edit">
-                                        <td>{vehicle.id}</td>
                                         <td>
                                             <input
                                                 type="text"
@@ -287,6 +281,7 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
@@ -301,6 +296,7 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
@@ -315,6 +311,7 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
@@ -329,6 +326,7 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
@@ -343,6 +341,7 @@ function Vehicle() {
                                             />
                                         </td>
                                         <td>
+                                            
                                             <input
                                                 type="text"
                                                 required
@@ -358,27 +357,36 @@ function Vehicle() {
                                         </td>
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
-                                        <td>{vehicle.runnerKms}</td>
-                                        <td>{vehicle.recentMaintenance}</td>
-                                        <td>{vehicle.position}</td>
-                                        <td>{vehicle.notes}</td>
-                                        <td
-                                            style={{
-                                                justifyContent: "space-around",
-                                            }}
+                                        <td>{vehicle.odometer}</td>
+                                        <td>{vehicle.recentMaintenanceDay}</td>
+                                        <td>{vehicle.currentLocation}</td>
+                                        <td>                                           
+                                            <input
+                                                type="text"
+                                                className="update"
+                                                value={update.notes}
+                                                onChange={(e) =>
+                                                    handleUpdateChange(
+                                                        e,
+                                                        "notes"
+                                                    )
+                                                }
+                                            />
+                                        </td>
+                                        <td colSpan={2}
+                                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
                                             <button
                                                 type="submit"
                                                 className="update"
-                                                onClick={() => handleUpdate()}
+                                                onClick={() => handleUpdate(vehicle._id)}
                                             >
-                                                Update
+                                                <FontAwesomeIcon icon={faSave} />
                                             </button>
                                         </td>
                                     </tr>
                                 ) : (
                                     <tr key={index}>
-                                        <td>{vehicle.id}</td>
                                         <td>{vehicle.type}</td>
                                         <td>{vehicle.automaker}</td>
                                         <td>{vehicle.model}</td>
@@ -387,9 +395,9 @@ function Vehicle() {
                                         <td>{vehicle.frameNumber}</td>
                                         <td>{vehicle.state}</td>
                                         <td>{vehicle.fuelState}</td>
-                                        <td>{vehicle.runnerKms}</td>
-                                        <td>{vehicle.recentMaintenance}</td>
-                                        <td>{vehicle.position}</td>
+                                        <td>{vehicle.odometer}</td>
+                                        <td>{vehicle.recentMaintenanceDay}</td>
+                                        <td>{vehicle.currentLocation}</td>
                                         <td>{vehicle.notes}</td>
                                         <td
                                             style={{
@@ -400,17 +408,21 @@ function Vehicle() {
                                         >
                                             <button
                                                 onClick={() =>
-                                                    handleEdit(vehicle.id)
+                                                    handleEdit(vehicle._id)
                                                 }
                                             >
-                                                Edit
+                                               <FontAwesomeIcon
+                                               icon = {faPenToSquare}
+                                               />
                                             </button>
                                             <button
                                                 onClick={() =>
-                                                    handleDelete(vehicle.id)
+                                                    handleDelete(vehicle._id)
                                                 }
                                             >
-                                                Delete
+                                                <FontAwesomeIcon
+                                                    icon={faTrash}
+                                                />
                                             </button>
                                         </td>
                                     </tr>
