@@ -1,15 +1,10 @@
 import { checkSchema } from 'express-validator'
 import { validate } from '~/utils/validation'
-import databaseService from '~/services/database.service'
-import { ErrorWithStatus } from '~/models/Errors'
 
 export const DriverValidator = validate(
     checkSchema({
         fullname: {
-            isString: true,
-            notEmpty: {
-                errorMessage: 'Tên không được để trống'
-            }
+            isString: true
         },
         email: {
             isEmail: {
@@ -18,18 +13,6 @@ export const DriverValidator = validate(
             trim: true,
             notEmpty: {
                 errorMessage: 'Email là bắt buộc'
-            },
-            custom: {
-                options: async (value) => {
-                    const driver = await databaseService.drivers.findOne({ email: value })
-                    if (driver) {
-                        throw new ErrorWithStatus({
-                            message: 'Email đã tồn tại trong hệ thống',
-                            status: 400
-                        })
-                    }
-                    return true
-                }
             }
         },
         date_of_birth: {
@@ -48,18 +31,6 @@ export const DriverValidator = validate(
             trim: true,
             notEmpty: {
                 errorMessage: 'Số căn cước là bắt buộc'
-            },
-            custom: {
-                options: async (value) => {
-                    const driver = await databaseService.drivers.findOne({ identification: value })
-                    if (driver) {
-                        throw new ErrorWithStatus({
-                            message: 'Số căn cước đã tồn tại trong hệ thống',
-                            status: 400
-                        })
-                    }
-                    return true
-                }
             }
         },
         address: {
@@ -82,18 +53,6 @@ export const DriverValidator = validate(
             trim: true,
             notEmpty: {
                 errorMessage: 'Số điện thoại là bắt buộc'
-            },
-            custom: {
-                options: async (value) => {
-                    const driver = await databaseService.drivers.findOne({ phone_number: value })
-                    if (driver) {
-                        throw new ErrorWithStatus({
-                            message: 'Số điện thoại đã tồn tại trong hệ thống',
-                            status: 400
-                        })
-                    }
-                    return true
-                }
             }
         },
         expire_license: {
@@ -112,6 +71,15 @@ export const DriverValidator = validate(
             trim: true,
             notEmpty: {
                 errorMessage: 'Kinh nghiệm là bắt buộc'
+            }
+        },
+        status: {
+            isString: {
+                errorMessage: 'Trạng thái phải là chuỗi'
+            },
+            trim: true,
+            notEmpty: {
+                errorMessage: 'Trạng thái là bắt buộc'
             }
         }
     })
