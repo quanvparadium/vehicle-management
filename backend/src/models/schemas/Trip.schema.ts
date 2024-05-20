@@ -4,8 +4,6 @@ interface TripType {
     _id?: ObjectId
     driver_id: string
     vehicle_id: string
-    driver_name: string
-    vehicle_name: string
     price: number
     status : string
     starting_point: string
@@ -34,8 +32,7 @@ export class Trip {
     date_of_departure: Date
     date_of_arrival: Date  
     expected_time : number  
-    driver_name : string
-    vehicle_name : string
+
 
     constructor(trip: TripType) {
         this._id = trip._id;

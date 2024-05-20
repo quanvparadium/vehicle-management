@@ -14,6 +14,4 @@ export interface TripReqBody {
     date_of_departure: Date
     date_of_arrival: Date  
     expected_time : number  
-    driver_name : string
-    vehicle_name : string
 }
