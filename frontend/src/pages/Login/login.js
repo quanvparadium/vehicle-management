@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-import axiosClient from "../../axios";
+import axiosClient from "../../api/axiosClient";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
