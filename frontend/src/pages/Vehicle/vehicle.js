@@ -257,7 +257,7 @@ function Vehicle() {
                                 <th>Fuel state</th>
                                 <th>Odometer (km)</th>
                                 <th>Recent maintenance date </th>
-                                <th>currentLocation</th>
+                                <th>Current location</th>
                                 <th>Notes</th>
                                 <th colSpan = {2}>Actions</th>
                             </tr>

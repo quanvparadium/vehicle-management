@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-import TripApi from "../../api/tripApi";
 import { options } from "./data";
+import TripApi from "../../api/tripApi";
 
 const Selectt = (prop) => {
     let index = -1;

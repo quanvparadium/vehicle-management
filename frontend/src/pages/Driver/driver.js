@@ -18,6 +18,7 @@ function Driver() {
         email: "",
         expire_license: "",
         experience: "",
+        state: "",
     };
 
     const initialError = {
@@ -60,13 +61,18 @@ function Driver() {
         // const ID =  await driverApi.getNewID();
         // formData.id = ID + 1;
         let check = true;
-        for (let field in formData) {
-            if (field === "email") break;
-            if (formData[field] === "") {
-                check = false;
-                break;
-            }
-        }
+        // for (let field in formData) {
+        //     if (field === "email") break;
+        //     if (formData[field] === "") {
+        //         check = false;
+        //         break;
+        //     }
+        // }
+
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            state: 'ACTIVE'
+        }));
 
         if (check) {
             await driverApi.add(formData);
@@ -292,6 +298,7 @@ function Driver() {
                             <th>Email</th>
                             <th>Expire License</th>
                             <th>Experience</th>
+                            <th>State</th>
                             <th colSpan={2}>Action</th>
                         </tr>
                     </thead>
@@ -406,6 +413,21 @@ function Driver() {
                                             }
                                         />{" "}
                                     </td>
+                                    <td>
+                                        {" "}
+                                        <input
+                                            type="text"
+                                            className="updateInput"
+                                            value={update.state}
+                                            onChange={(e) =>
+                                                handleUpdateChange(
+                                                    e,
+                                                    "state"
+                                                )
+                                            }
+                                        />{" "}
+                                    </td>
+
                                     <td colSpan={2}>
                                         {" "}
                                         <button
@@ -427,6 +449,7 @@ function Driver() {
                                     <td>{driver.email}</td>
                                     <td>{driver.expire_license}</td>
                                     <td>{driver.experience}</td>
+                                    <td>{driver.state}</td>
                                     <td>
                                         <button
                                             onClick={() =>
