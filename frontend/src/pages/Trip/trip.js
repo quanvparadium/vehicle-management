@@ -16,9 +16,11 @@ import { ReactComponent as DeleteIcon } from "../../assets/DeleteIcon.svg";
 
 function Trip() {
     const [listtrips, setListtrips] = useState([]); // take list of trips from db
+    useEffect(() => {}, [listtrips]);
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
     // driver list
     const [listDriver, setListdriver] = useState({});
+    //initianize useEffect
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -37,10 +39,6 @@ function Trip() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log(trip);
-    }, [trip]);
-
     //error
     const [errorMes, setErrorMes] = useState([]);
     //update state in trip
@@ -48,9 +46,12 @@ function Trip() {
         let property;
         switch (name) {
             case "Date":
+                const differenceTime = value[1].getTime() - value[0].getTime();
+
                 property = {
                     date_of_departure: value[0],
                     date_of_arrival: value[1],
+                    expected_time: differenceTime / (1000 * 60 * 60),
                 };
                 break;
             case "vehicle_id":
@@ -158,7 +159,6 @@ function Trip() {
             try {
                 const res = await TripAPi.add(trip);
                 dbtrips();
-                console.log(res);
             } catch (error) {
                 let err = error.response.data.errors;
                 setErrorMes(Object.keys(err));
@@ -193,7 +193,12 @@ function Trip() {
     // take listtrips for db
     async function dbtrips() {
         const temp = await TripAPi.getAll();
-        setListtrips(temp.trips);
+        const temp_listrips = temp.trips.sort((a, b) => {
+            return (
+                new Date(a.date_of_departure) - new Date(b.date_of_departure)
+            );
+        });
+        setListtrips(temp_listrips);
     }
     // use to format date from date data to dd-mm-yyyy
     function formatDate(date) {
@@ -382,18 +387,6 @@ function Trip() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-row px-[10px] gap-[10px]">
-                                <span className="text-cur font-medium">
-                                    Routine:
-                                </span>
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.pathway}
-                                />
-                            </div>
-
                             <div className="flex flex-row  justify-evenly pt-[15px] ">
                                 <div className="flex flex-row gap-[5px]">
                                     <DistanceIcon className="h-[30px]" />
@@ -419,15 +412,25 @@ function Trip() {
 
                             <div className="flex flex-col pb-[10px] px-[10px]">
                                 <span className="text-cur font-medium ">
+                                    Routine
+                                </span>
+                                <div className="scrollBar flex-1 min-w-0 text-gray-500 rounded-[10px] px-[10px] break-words bg-white overflow-y-scroll   max-h-[100px]">
+                                    <p>{curtrip.pathway}</p>
+                                </div>
+                            </div>
+
+                            {/* <div className="flex flex-col pb-[10px] px-[10px]">
+                                <span className="text-cur font-medium ">
                                     Note
                                 </span>
                                 <div className="scrollBar flex-1 min-w-0 text-gray-500 rounded-[10px] px-[10px] break-words bg-white overflow-y-scroll   max-h-[100px]">
                                     <p>{curtrip.note || "NONE"}</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     ))}
             </div>
+            <div className="inline-block h-[100px]" />
         </div>
     );
 }
