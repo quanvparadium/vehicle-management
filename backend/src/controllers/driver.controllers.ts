@@ -10,14 +10,24 @@ export const getDriverController = async (req: Request, res: Response) => {
     // console.log(id)
     const result = await databaseService.drivers.findOne({ _id: new ObjectId(id) })
     // console.log(result)
-    return res.json(result)
+    return res.json({Drivers: result})
 }
 
 export const getAllDriverController = async (req: Request, res: Response) => {
-    const result = await databaseService.drivers.find({}).toArray()
-    // console.log('Backend result', result)
+    try {
+    const result = await databaseService.drivers.find({}).toArray();
+    
+    if (!result || result.length === 0) {
+      return res.status(404).json({
+        message: "No drivers found"
+      });
+    }
 
-    return res.json(result)
+    return res.json({ Drivers: result });
+  } catch (error) {
+    console.error('Error fetching drivers:', error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
 export const createDriverController = async (

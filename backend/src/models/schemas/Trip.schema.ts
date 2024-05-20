@@ -2,8 +2,8 @@ import { ObjectId } from 'mongodb'
 
 interface TripType {
     _id?: ObjectId
-    driver_id: ObjectId
-    vehicle_id: ObjectId
+    driver_id: string
+    vehicle_id: string
     price: number
     status : string
     starting_point: string
@@ -17,8 +17,8 @@ interface TripType {
 
 export class Trip {
     _id : ObjectId
-    driver_id: ObjectId
-    vehicle_id: ObjectId
+    driver_id: string
+    vehicle_id: string
     price: number
     status : string
     starting_point: string
