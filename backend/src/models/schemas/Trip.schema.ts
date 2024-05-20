@@ -15,6 +15,8 @@ interface TripType {
     date_of_departure: Date
     date_of_arrival: Date  
     expected_time : number  
+    driver_name : string
+    vehicle_name : string
 }
 
 export class Trip {
@@ -32,6 +34,8 @@ export class Trip {
     date_of_departure: Date
     date_of_arrival: Date  
     expected_time : number  
+    driver_name : string
+    vehicle_name : string
 
     constructor(trip: TripType) {
         this._id = trip._id;
@@ -48,6 +52,8 @@ export class Trip {
         this.date_of_departure = trip.date_of_departure;
         this.date_of_arrival = trip.date_of_arrival;
         this.expected_time = trip.expected_time;
+        this.driver_name = trip.driver_name;
+        this.vehicle_name = trip.vehicle_name;
     }
 }
 

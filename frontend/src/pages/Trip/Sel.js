@@ -32,7 +32,9 @@ const Sel = (prop) => {
                 className="h-full text-gray-500 mx-[15px]"
                 options={prop.opt}
                 styles={style}
-                onChange={(event) => prop.update(event.value)}
+                onChange={(event) => {
+                    prop.update(event.value, event.label);
+                }}
             />
         </div>
     );

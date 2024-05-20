@@ -10,6 +10,7 @@ interface DriverType {
     phone_number: string
     expire_license: Date
     experience: number
+    state: string
 }
 
 export class Driver {
@@ -22,6 +23,7 @@ export class Driver {
     phone_number: string
     expire_license: Date
     experience: number
+    state: string
 
 
     constructor(driver: DriverType) {
@@ -34,5 +36,6 @@ export class Driver {
         this.phone_number = driver.phone_number
         this.expire_license = driver.expire_license
         this.experience = driver.experience
+        this.state = driver.state
     }
 }

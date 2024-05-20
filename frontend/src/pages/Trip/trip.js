@@ -7,6 +7,7 @@ import Sel from "./Sel";
 import Selectt from "./Selectt";
 import TripAPi from "../../api/tripApi";
 import driverApi from "../../api/driverApi";
+import TripApi from "../../api/tripApi";
 import "./trip.css";
 import { infomation, options, tripTemplate, province } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
@@ -18,18 +19,34 @@ function Trip() {
     const [listtrips, setListtrips] = useState([]); // take list of trips from db
     useEffect(() => {}, [listtrips]);
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
+
+    useEffect(() => {
+        console.log(trip);
+    }, [trip]);
     // driver list
     const [listDriver, setListdriver] = useState({});
+    const [listVehicle, setListvehicle] = useState({});
     //initianize useEffect
     useEffect(() => {
         const fetchData = async () => {
             try {
                 let drivers = await driverApi.getAll();
-                drivers = drivers.map((driver) => ({
+                let vehicles = await TripApi.getVehicle();
+                drivers = drivers.Drivers.map((driver) => ({
                     value: driver.identification,
                     label: driver.fullname,
                 }));
-
+                vehicles = vehicles.result.map((vehicle) => ({
+                    value: vehicle.chassisNumber,
+                    label:
+                        vehicle.automaker +
+                        " " +
+                        vehicle.model +
+                        " (odo: " +
+                        vehicle.odometer +
+                        " km)",
+                }));
+                setListvehicle(vehicles);
                 setListdriver(drivers);
             } catch (error) {
                 console.error("Error fetching drivers:", error);
@@ -46,12 +63,14 @@ function Trip() {
         let property;
         switch (name) {
             case "Date":
-                const differenceTime = value[1].getTime() - value[0].getTime();
+                const differenceTime = parseFloat(
+                    (value[1].getTime() - value[0].getTime()) / (1000 * 60 * 60)
+                ).toFixed(2);
 
                 property = {
                     date_of_departure: value[0],
                     date_of_arrival: value[1],
-                    expected_time: differenceTime / (1000 * 60 * 60),
+                    expected_time: differenceTime,
                 };
                 break;
             case "vehicle_id":
@@ -102,10 +121,19 @@ function Trip() {
         }));
     }
     //update driver by select
-    function updateId(id) {
+    function updateId(id, name) {
         setTrip((prev) => ({
             ...prev,
             driver_id: id,
+            driver_name: name,
+        }));
+    }
+    //update vehicle by select
+    function updateVehicleId(id, name) {
+        setTrip((prev) => ({
+            ...prev,
+            vehicle_id: id,
+            vehicle_name: name,
         }));
     }
     //choose the correct box in search bar
@@ -141,6 +169,8 @@ function Trip() {
             );
         } else if (attribute == "driver_id") {
             return <Sel opt={listDriver} update={updateId} />;
+        } else if (attribute == "vehicle_id") {
+            return <Sel opt={listVehicle} update={updateVehicleId} />;
         } else
             return (
                 <input
@@ -311,25 +341,25 @@ function Trip() {
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium ">
-                                    Vehicals code:
+                                    Vehicals:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.vehicle_id}
+                                    value={curtrip.vehicle_name}
                                 />
                             </div>
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium">
-                                    Driver code:
+                                    Driver:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.driver_id}
+                                    value={curtrip.driver_name}
                                 />
                             </div>
 

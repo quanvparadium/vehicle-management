@@ -29,13 +29,14 @@ export const TripValidator = validate(
         driver_name: {
             in: ['body'],
             isString: true,
-            errorMessage: 'Driver ID phải là chuỗi'
+            errorMessage: 'Driver name phải là chuỗi'
         },
         vehicle_name: {
             in: ['body'],
             isString: true,
-            errorMessage: 'Vehicle ID phải là chuỗi'
+            errorMessage: 'Vehicle name phải là chuỗi'
         },
+
         price: {
             in: ['body'],
             isFloat: {
@@ -86,7 +87,7 @@ export const TripValidator = validate(
         },
         expected_time: {
             in: ['body'],
-            isFloat: {
+            isFloat : {
                 options: { min: 0 },
                 errorMessage: 'Thời gian dự kiến (expected time) phải là số dương'
             }

@@ -41,7 +41,7 @@ function Driver() {
             async function fetchDriver() {
                 try {
                     const temp = await driverApi.getAll();
-                    setDriverList(temp);
+                    setDriverList(temp.Drivers);
                     setAdding(false);
                 } catch (error) {
                     console.error("Error creating driver:", error);
@@ -69,9 +69,9 @@ function Driver() {
         //     }
         // }
 
-        setFormData(prevFormData => ({
+        setFormData((prevFormData) => ({
             ...prevFormData,
-            state: 'ACTIVE'
+            state: "ACTIVE",
         }));
 
         if (check) {
@@ -420,10 +420,7 @@ function Driver() {
                                             className="updateInput"
                                             value={update.state}
                                             onChange={(e) =>
-                                                handleUpdateChange(
-                                                    e,
-                                                    "state"
-                                                )
+                                                handleUpdateChange(e, "state")
                                             }
                                         />{" "}
                                     </td>

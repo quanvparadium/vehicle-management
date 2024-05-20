@@ -45,6 +45,8 @@ const options = [
 const tripTemplate = {
     vehicle_id: null,
     driver_id: null,
+    vehicle_name: null,
+    driver_name: null,
     date_of_departure: null,
     date_of_arrival: null,
     starting_point: null,
