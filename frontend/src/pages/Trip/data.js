@@ -10,7 +10,7 @@ const infomation = [
         index: 1,
         name: [
             { name: "Vehical code", attribute: "vehicle_id" },
-            { name: "Intend time", attribute: "expected_time" },
+            { name: "Price", attribute: "price" },
         ],
     },
     {
@@ -31,12 +31,9 @@ const infomation = [
     },
     {
         index: 4,
-        name: [
-            { name: "Price", attribute: "price" },
-            { name: "Routine", attribute: "pathway" },
-        ],
+        name: [{ name: "Routine", attribute: "pathway" }],
     },
-    // { index: 6, name: [{ name: "Note", attribute: "note" }] },
+    //  { index: 6, name: [{ name: "Note", attribute: "note" }] },
 ];
 
 const options = [
@@ -52,20 +49,20 @@ const tripTemplate = {
     date_of_arrival: null,
     starting_point: null,
     destination: null,
-    pathway: null,
+    pathway: "none",
     distance: null,
     expected_time: null,
     price: null,
     status: "AVAILABLE",
-    // note: null,
+    //  note: "none",
 };
 
 const ditanceSelect = [
-    { value: " ditance leq 100km " },
-    { value: " 100km < ditance leq 200km " },
-    { value: " 200km < ditance leq 500km " },
-    { value: " 500km < ditance leq 1000km " },
-    { value: " 1000km < ditance " },
+    { value: " 0km >> 100km " },
+    { value: " 100km >> 200km " },
+    { value: " 200km >> 500km " },
+    { value: " 500km >> 1000km " },
+    { value: " 1000km >> " },
 ];
 
 const province = [
