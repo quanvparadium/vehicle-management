@@ -54,17 +54,6 @@ axiosClient.interceptors.response.use(
             }
         }
         return Promise.reject(error);
-    },
-    function (error) {
-        if (error.response && error.response.status === 422) {
-            // Kiểm tra xem lỗi có phải do email chưa được nhập không
-            if (error.response.data.errors && error.response.data.errors.email) {
-                console.error("Email is required:", error.response.data.errors.email);
-                // Hiển thị thông báo lỗi cho người dùng
-                alert("Email is required");
-            }
-        }
-        return Promise.reject(error);
     }
 );
 async function refreshAccessToken(refreshToken) {
