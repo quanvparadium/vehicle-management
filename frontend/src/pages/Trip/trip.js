@@ -7,6 +7,7 @@ import Sel from "./Sel";
 import Selectt from "./Selectt";
 import TripAPi from "../../api/tripApi";
 import driverApi from "../../api/driverApi";
+import TripApi from "../../api/tripApi";
 import "./trip.css";
 import { infomation, options, tripTemplate, province } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
@@ -20,15 +21,28 @@ function Trip() {
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
     // driver list
     const [listDriver, setListdriver] = useState({});
+    const [listVehicle, setListvehicle] = useState({});
     //initianize useEffect
     useEffect(() => {
         const fetchData = async () => {
             try {
                 let drivers = await driverApi.getAll();
+                let vehicles = await TripApi.getVehicle();
                 drivers = drivers.Drivers.map((driver) => ({
                     value: driver.identification,
                     label: driver.fullname,
                 }));
+                vehicles = vehicles.result.map((vehicle) => ({
+                    value: vehicle.chassisNumber,
+                    label:
+                        vehicle.automaker +
+                        " " +
+                        vehicle.model +
+                        " (odo: " +
+                        vehicle.odometer +
+                        " km)",
+                }));
+                setListvehicle(vehicles);
                 setListdriver(drivers);
             } catch (error) {
                 console.error("Error fetching drivers:", error);
@@ -107,6 +121,13 @@ function Trip() {
             driver_id: id,
         }));
     }
+    //update driver by select
+    function updateVehicleId(id) {
+        setTrip((prev) => ({
+            ...prev,
+            vehicle_id: id,
+        }));
+    }
     //choose the correct box in search bar
     const chooseElement = (info, attribute) => {
         if (info.index === 2) {
@@ -140,6 +161,8 @@ function Trip() {
             );
         } else if (attribute == "driver_id") {
             return <Sel opt={listDriver} update={updateId} />;
+        } else if (attribute == "vehicle_id") {
+            return <Sel opt={listVehicle} update={updateVehicleId} />;
         } else
             return (
                 <input

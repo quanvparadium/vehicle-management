@@ -9,6 +9,13 @@ const TripApi = {
         });
     },
 
+    getVehicle() {
+        const token = Cookie.get("token");
+        return axiosClient.get("/trip/vehicle", {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+    },
+
     add(json) {
         const token = Cookie.get("token");
         return axiosClient.post("/trip/", json, {
