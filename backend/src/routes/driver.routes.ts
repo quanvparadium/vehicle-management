@@ -57,7 +57,7 @@ driverRouter.post('/', accessTokenValidator, DriverValidator, createDriverContro
  *     ...
  * }
  */
-driverRouter.put('/:id', accessTokenValidator, DriverValidator, updateDriverController)
+driverRouter.put('/:id', accessTokenValidator, updateDriverController)
 
 /**
  * Description: Delete a driver by ID

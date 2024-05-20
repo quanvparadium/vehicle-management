@@ -10,7 +10,7 @@ export const getDriverController = async (req: Request, res: Response) => {
     // console.log(id)
     const result = await databaseService.drivers.findOne({ _id: new ObjectId(id) })
     // console.log(result)
-    return res.json({Drivers: result})
+    return res.json({result})
 }
 
 export const getAllDriverController = async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ export const getAllDriverController = async (req: Request, res: Response) => {
       });
     }
 
-    return res.json({ Drivers: result });
+    return res.json({ result });
   } catch (error) {
     console.error('Error fetching drivers:', error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -48,10 +48,8 @@ export const updateDriverController = async (req: Request, res: Response, next: 
     const result = await databaseService.drivers.findOneAndUpdate(
         { _id: new ObjectId(id) },
         {
-            $set: {
-                identification: data.identification,
-                fullname: data.fullname
-            }
+            $set: 
+                data
         }
     )
     // console.log(result)
