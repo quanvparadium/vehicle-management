@@ -19,6 +19,10 @@ function Trip() {
     const [listtrips, setListtrips] = useState([]); // take list of trips from db
     useEffect(() => {}, [listtrips]);
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
+
+    useEffect(() => {
+        console.log(trip);
+    }, [trip]);
     // driver list
     const [listDriver, setListdriver] = useState({});
     const [listVehicle, setListvehicle] = useState({});
@@ -59,12 +63,14 @@ function Trip() {
         let property;
         switch (name) {
             case "Date":
-                const differenceTime = value[1].getTime() - value[0].getTime();
+                const differenceTime = parseFloat(
+                    (value[1].getTime() - value[0].getTime()) / (1000 * 60 * 60)
+                ).toFixed(2);
 
                 property = {
                     date_of_departure: value[0],
                     date_of_arrival: value[1],
-                    expected_time: differenceTime / (1000 * 60 * 60),
+                    expected_time: differenceTime,
                 };
                 break;
             case "vehicle_id":
@@ -115,17 +121,19 @@ function Trip() {
         }));
     }
     //update driver by select
-    function updateId(id) {
+    function updateId(id, name) {
         setTrip((prev) => ({
             ...prev,
             driver_id: id,
+            driver_name: name,
         }));
     }
-    //update driver by select
-    function updateVehicleId(id) {
+    //update vehicle by select
+    function updateVehicleId(id, name) {
         setTrip((prev) => ({
             ...prev,
             vehicle_id: id,
+            vehicle_name: name,
         }));
     }
     //choose the correct box in search bar
@@ -333,25 +341,25 @@ function Trip() {
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium ">
-                                    Vehicals code:
+                                    Vehicals:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.vehicle_id}
+                                    value={curtrip.vehicle_name}
                                 />
                             </div>
 
                             <div className="flex flex-row px-[10px] gap-[10px]">
                                 <span className="text-cur font-medium">
-                                    Driver code:
+                                    Driver:
                                 </span>
                                 <input
                                     type="text"
                                     readOnly
                                     className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.driver_id}
+                                    value={curtrip.driver_name}
                                 />
                             </div>
 
