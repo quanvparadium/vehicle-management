@@ -49,8 +49,7 @@ export const updateDriverController = async (req: Request, res: Response, next: 
         { _id: new ObjectId(id) },
         {
             $set: {
-                identification: data.identification,
-                fullname: data.fullname
+                data
             }
         }
     )

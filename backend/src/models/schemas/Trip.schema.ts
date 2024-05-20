@@ -4,6 +4,8 @@ interface TripType {
     _id?: ObjectId
     driver_id: string
     vehicle_id: string
+    driver_name: string
+    vehicle_name: string
     price: number
     status : string
     starting_point: string
@@ -19,6 +21,8 @@ export class Trip {
     _id : ObjectId
     driver_id: string
     vehicle_id: string
+    driver_name: string
+    vehicle_name: string
     price: number
     status : string
     starting_point: string
@@ -33,6 +37,8 @@ export class Trip {
         this._id = trip._id;
         this.driver_id = trip.driver_id;
         this.vehicle_id = trip.vehicle_id;
+        this.driver_name = trip.driver_name
+        this.vehicle_name = trip.vehicle_name
         this.price = trip.price;
         this.status = trip.status;
         this.starting_point = trip.starting_point;

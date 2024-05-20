@@ -3,6 +3,8 @@ export interface TripReqBody {
     _id?: ObjectId
     driver_id: string
     vehicle_id: string
+    driver_name: string
+    vehicle_name: string
     price: number
     status : string
     starting_point: string
