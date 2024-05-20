@@ -25,11 +25,10 @@ function Trip() {
         const fetchData = async () => {
             try {
                 let drivers = await driverApi.getAll();
-                drivers = drivers.map((driver) => ({
+                drivers = drivers.Drivers.map((driver) => ({
                     value: driver.identification,
                     label: driver.fullname,
                 }));
-
                 setListdriver(drivers);
             } catch (error) {
                 console.error("Error fetching drivers:", error);
