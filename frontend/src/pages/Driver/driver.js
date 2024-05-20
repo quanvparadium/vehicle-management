@@ -41,7 +41,7 @@ function Driver() {
             async function fetchDriver() {
                 try {
                     const temp = await driverApi.getAll();
-                    setDriverList(temp.Drivers);
+                    setDriverList(temp.result);
                     setAdding(false);
                 } catch (error) {
                     console.error("Error creating driver:", error);

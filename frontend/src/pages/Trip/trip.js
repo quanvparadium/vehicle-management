@@ -32,7 +32,9 @@ function Trip() {
             try {
                 let drivers = await driverApi.getAll();
                 let vehicles = await TripApi.getVehicle();
-                drivers = drivers.Drivers.map((driver) => ({
+                console.log(drivers);
+                console.log(vehicles);
+                drivers = drivers.result.map((driver) => ({
                     value: driver.identification,
                     label: driver.fullname,
                 }));
