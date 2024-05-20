@@ -21,7 +21,6 @@ const driverApi = {
         }
         return axiosClient.post(url, data);
     },
-    
 
     update(data) {
         const url = `/drivers/${data._id}`;

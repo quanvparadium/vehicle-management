@@ -3,10 +3,12 @@ import "rsuite/DateRangePicker/styles/index.css";
 import DateRangePicker from "rsuite/DateRangePicker";
 import swal from "sweetalert";
 
+import Sel from "./Sel";
 import Selectt from "./Selectt";
 import TripAPi from "../../api/tripApi";
+import driverApi from "../../api/driverApi";
 import "./trip.css";
-import { infomation, options, tripTemplate } from "./data";
+import { infomation, options, tripTemplate, province } from "./data";
 import { ReactComponent as DistanceIcon } from "../../assets/DistanceIcon.svg";
 import { ReactComponent as TimeIcon } from "../../assets/TimeIcon.svg";
 import { ReactComponent as PriceIcon } from "../../assets/PriceIcon.svg";
@@ -14,7 +16,29 @@ import { ReactComponent as DeleteIcon } from "../../assets/DeleteIcon.svg";
 
 function Trip() {
     const [listtrips, setListtrips] = useState([]); // take list of trips from db
+    useEffect(() => {}, [listtrips]);
     const [trip, setTrip] = useState({ ...tripTemplate }); // json body
+    // driver list
+    const [listDriver, setListdriver] = useState({});
+    //initianize useEffect
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let drivers = await driverApi.getAll();
+                drivers = drivers.map((driver) => ({
+                    value: driver.identification,
+                    label: driver.fullname,
+                }));
+
+                setListdriver(drivers);
+            } catch (error) {
+                console.error("Error fetching drivers:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     //error
     const [errorMes, setErrorMes] = useState([]);
     //update state in trip
@@ -22,9 +46,12 @@ function Trip() {
         let property;
         switch (name) {
             case "Date":
+                const differenceTime = value[1].getTime() - value[0].getTime();
+
                 property = {
                     date_of_departure: value[0],
                     date_of_arrival: value[1],
+                    expected_time: differenceTime / (1000 * 60 * 60),
                 };
                 break;
             case "vehicle_id":
@@ -60,6 +87,27 @@ function Trip() {
             ...property,
         }));
     };
+
+    //update from and to by select
+    function updateFrom(sta) {
+        setTrip((prev) => ({
+            ...prev,
+            starting_point: sta,
+        }));
+    }
+    function updateTo(sta) {
+        setTrip((prev) => ({
+            ...prev,
+            destination: sta,
+        }));
+    }
+    //update driver by select
+    function updateId(id) {
+        setTrip((prev) => ({
+            ...prev,
+            driver_id: id,
+        }));
+    }
     //choose the correct box in search bar
     const chooseElement = (info, attribute) => {
         if (info.index === 2) {
@@ -78,11 +126,26 @@ function Trip() {
                     />
                 </>
             );
+        } else if (info.index == 3) {
+            const pro = province.map((prov) => ({
+                value: prov.name,
+                label: prov.name,
+            }));
+            return (
+                <Sel
+                    opt={pro}
+                    update={
+                        attribute == "starting_point" ? updateFrom : updateTo
+                    }
+                />
+            );
+        } else if (attribute == "driver_id") {
+            return <Sel opt={listDriver} update={updateId} />;
         } else
             return (
                 <input
                     type="text"
-                    className="w-full h-full focus:outline-none text-gray-500 mx-[15px]"
+                    className="w-[calc(100%-30px)] h-full focus:outline-none text-gray-500 mx-[15px]"
                     onChange={(e) => {
                         updateState(attribute, e.target.value);
                     }}
@@ -96,7 +159,6 @@ function Trip() {
             try {
                 const res = await TripAPi.add(trip);
                 dbtrips();
-                console.log(res);
             } catch (error) {
                 let err = error.response.data.errors;
                 setErrorMes(Object.keys(err));
@@ -131,7 +193,12 @@ function Trip() {
     // take listtrips for db
     async function dbtrips() {
         const temp = await TripAPi.getAll();
-        setListtrips(temp.trips);
+        const temp_listrips = temp.trips.sort((a, b) => {
+            return (
+                new Date(a.date_of_departure) - new Date(b.date_of_departure)
+            );
+        });
+        setListtrips(temp_listrips);
     }
     // use to format date from date data to dd-mm-yyyy
     function formatDate(date) {
@@ -182,7 +249,7 @@ function Trip() {
                                         )}
 
                                         <div
-                                            className={`h-[35px] bg-white flex-1 rounded-[10px] overflow-hidden ${
+                                            className={`h-[35px] bg-white flex-1 rounded-[10px] ${
                                                 errorMes.includes(na.attribute)
                                                     ? "border-red-700 border-[1px]"
                                                     : "noborder"
@@ -208,9 +275,9 @@ function Trip() {
                     >
                         Submit
                     </button>
-                    <button className="bg-custom-logo hover:bg-custom-hover w-[130px] h-[40px] font-bold text-white rounded-[10px]">
+                    {/* <button className="bg-custom-logo hover:bg-custom-hover w-[130px] h-[40px] font-bold text-white rounded-[10px]">
                         Search
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <p className="pt-[20px] font-bold text-[20px]">Trips</p>
@@ -320,18 +387,6 @@ function Trip() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-row px-[10px] gap-[10px]">
-                                <span className="text-cur font-medium">
-                                    Routine:
-                                </span>
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="flex-1 min-w-0 focus:outline-none text-gray-500 rounded-[10px] px-[7px]"
-                                    value={curtrip.pathway}
-                                />
-                            </div>
-
                             <div className="flex flex-row  justify-evenly pt-[15px] ">
                                 <div className="flex flex-row gap-[5px]">
                                     <DistanceIcon className="h-[30px]" />
@@ -357,15 +412,25 @@ function Trip() {
 
                             <div className="flex flex-col pb-[10px] px-[10px]">
                                 <span className="text-cur font-medium ">
+                                    Routine
+                                </span>
+                                <div className="scrollBar flex-1 min-w-0 text-gray-500 rounded-[10px] px-[10px] break-words bg-white overflow-y-scroll   max-h-[100px]">
+                                    <p>{curtrip.pathway}</p>
+                                </div>
+                            </div>
+
+                            {/* <div className="flex flex-col pb-[10px] px-[10px]">
+                                <span className="text-cur font-medium ">
                                     Note
                                 </span>
                                 <div className="scrollBar flex-1 min-w-0 text-gray-500 rounded-[10px] px-[10px] break-words bg-white overflow-y-scroll   max-h-[100px]">
                                     <p>{curtrip.note || "NONE"}</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     ))}
             </div>
+            <div className="inline-block h-[100px]" />
         </div>
     );
 }
