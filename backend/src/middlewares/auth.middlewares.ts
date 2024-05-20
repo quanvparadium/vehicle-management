@@ -83,4 +83,3 @@ export const accessTokenValidator = validate(
         ['headers']
     )
 )
-

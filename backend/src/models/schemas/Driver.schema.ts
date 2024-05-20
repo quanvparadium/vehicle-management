@@ -23,6 +23,7 @@ export class Driver {
     expire_license: Date
     experience: number
 
+
     constructor(driver: DriverType) {
         this._id = driver._id || new ObjectId()
         this.fullname = driver.fullname

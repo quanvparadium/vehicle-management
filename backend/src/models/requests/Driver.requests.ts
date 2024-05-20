@@ -7,4 +7,5 @@ export interface DriverReqBody {
     phone_number: string
     expire_license: Date
     experience: number
+    status: string
 }

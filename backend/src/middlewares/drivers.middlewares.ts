@@ -1,52 +1,68 @@
 import { checkSchema } from 'express-validator'
 import { validate } from '~/utils/validation'
+import databaseService from '~/services/database.service'
+import { ErrorWithStatus } from '~/models/Errors'
 
 export const DriverValidator = validate(
     checkSchema({
         fullname: {
-            in: ['body'],
-            isString: {
-                errorMessage: 'Họ và tên phải là chuỗi'
-            },
-            trim: true,
+            isString: true,
             notEmpty: {
-                errorMessage: 'Họ và tên là bắt buộc'
-            },
-            isLength: {
-                options: { min: 3, max: 50 },
-                errorMessage: 'Họ và tên phải từ 3 đến 50 ký tự'
+                errorMessage: 'Tên không được để trống'
             }
         },
         email: {
-            in: ['body'],
             isEmail: {
                 errorMessage: 'Email không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Email là bắt buộc'
+            },
+            custom: {
+                options: async (value) => {
+                    const driver = await databaseService.drivers.findOne({ email: value })
+                    if (driver) {
+                        throw new ErrorWithStatus({
+                            message: 'Email đã tồn tại trong hệ thống',
+                            status: 400
+                        })
+                    }
+                    return true
+                }
             }
         },
         date_of_birth: {
-            in: ['body'],
             isDate: {
                 errorMessage: 'Ngày sinh không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Ngày sinh là bắt buộc'
             }
         },
         identification: {
-            in: ['body'],
             isString: {
                 errorMessage: 'Số căn cước phải là chuỗi'
             },
             trim: true,
             notEmpty: {
                 errorMessage: 'Số căn cước là bắt buộc'
+            },
+            custom: {
+                options: async (value) => {
+                    const driver = await databaseService.drivers.findOne({ identification: value })
+                    if (driver) {
+                        throw new ErrorWithStatus({
+                            message: 'Số căn cước đã tồn tại trong hệ thống',
+                            status: 400
+                        })
+                    }
+                    return true
+                }
             }
         },
         address: {
-            in: ['body'],
             isString: {
                 errorMessage: 'Địa chỉ phải là chuỗi'
             },
@@ -60,28 +76,40 @@ export const DriverValidator = validate(
             }
         },
         phone_number: {
-            in: ['body'],
             isMobilePhone: {
                 errorMessage: 'Số điện thoại không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Số điện thoại là bắt buộc'
+            },
+            custom: {
+                options: async (value) => {
+                    const driver = await databaseService.drivers.findOne({ phone_number: value })
+                    if (driver) {
+                        throw new ErrorWithStatus({
+                            message: 'Số điện thoại đã tồn tại trong hệ thống',
+                            status: 400
+                        })
+                    }
+                    return true
+                }
             }
         },
         expire_license: {
-            in: ['body'],
             isDate: {
                 errorMessage: 'Ngày hết hạn bằng lái không hợp lệ'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Ngày hết hạn bằng lái là bắt buộc'
             }
         },
         experience: {
-            in: ['body'],
             isInt: {
                 errorMessage: 'Kinh nghiệm phải là số nguyên'
             },
+            trim: true,
             notEmpty: {
                 errorMessage: 'Kinh nghiệm là bắt buộc'
             }
