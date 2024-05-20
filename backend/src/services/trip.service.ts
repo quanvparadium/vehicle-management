@@ -11,7 +11,17 @@ class TripService {
                 ...payload
             })
         )
+        const temp = await databaseService.vehicles.findOne(payload._id);
+        const Update = {
+            odometer : payload.distance + temp.odometer,
+         }
+         const filterObject = {
+            chassisNumber : String(payload.vehicle_id)
+         }
+        const vehicle = await databaseService.vehicles.findOneAndUpdate(filterObject, { $set: Update })
+    
         return {
+            
             message: 'Tạo thành công'
         }
     }

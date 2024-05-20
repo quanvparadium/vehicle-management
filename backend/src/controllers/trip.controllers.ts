@@ -22,6 +22,7 @@ export const createTripController = async (
     next: NextFunction
 ) => {
     const result = await tripService.create(req.body)
+    
     return res.json({
         message: result.message
     })
@@ -78,7 +79,7 @@ export const getVehiclesFilterController = async (req: Request, res: Response) =
     const filterObject = {
         state : "AVAILABLE"
       };
-    const result = await databaseService.vehicles.findOne(filterObject);
+    const result = await databaseService.vehicles.find(filterObject).toArray();
     if (!result) {
         return res.json({
             message: "Không tìm thấy phương tiện có sẵn"

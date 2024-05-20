@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb"
 export interface TripReqBody {
     _id?: ObjectId
-    driver_id: ObjectId
-    vehicle_id: ObjectId
+    driver_id: string
+    vehicle_id: string
     price: number
     status : string
     starting_point: string

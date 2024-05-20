@@ -36,8 +36,8 @@ export const DeleteVehicleController = async (req: Request, res: Response) => {
 }
 
 export const updateVehicleController = async (req: Request, res: Response) => {
-    const { id } = req.params
-    const update = req.body
+        const { id } = req.params
+        const update = req.body
 
    const result = await databaseService.vehicles.findOneAndUpdate({_id: new ObjectId(id)},{ $set: update })
    const result2 = await databaseService.vehicles.findOne({_id: new ObjectId(id)})
