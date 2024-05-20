@@ -20,7 +20,7 @@ const driverApi = {
     update(data) {
         const url = `/drivers/${data._id}`;
         console.log("data patch", data);
-        return axiosClient.put(url, data);
+        return axiosClient.patch(url, data);
     },
 
     remove(id) {
